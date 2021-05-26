@@ -16,6 +16,8 @@ public class TransformGrab : MonoBehaviour
     public LayerMask layerMask;
     public DraggedTransform draggedTransform;
     public float maxDistance = 30;
+    public float pullSpeed = 1;
+    public float scaleSpeed = 1;
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class TransformGrab : MonoBehaviour
 
         if(Physics.Raycast(origin,direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
         {
-            draggedTransform = new DraggedTransform(hit);
+            draggedTransform = new DraggedTransform(hit, transform);
         }
     }
     public void OnButtonUp(XRController controller)
@@ -44,6 +46,8 @@ public class TransformGrab : MonoBehaviour
     public void Update()
     {
         HandleDrag();
+        HandlePull();
+        HandleScale();
     }
     public void HandleDrag()
     {
@@ -52,8 +56,43 @@ public class TransformGrab : MonoBehaviour
         if (draggedTransform == null ||!draggedTransform.transform)
             return;
 
+        // Drag
         Vector3 position = transform.position + transform.forward.normalized * draggedTransform.distance - draggedTransform.offset;
         draggedTransform.transform.position = position;
+
+        draggedTransform.transform.rotation = transform.rotation * draggedTransform.relativeRotation;
+    }
+    public void HandlePull()
+    {
+        if (!handler.pressed)
+            draggedTransform = null;
+        if (draggedTransform == null || !draggedTransform.transform)
+            return;
+
+        float input = inputManager.joystickDir.y;
+        if (Mathf.Abs(input) < 0.2f)
+            return;
+
+        draggedTransform.distance += input * pullSpeed * Time.deltaTime;
+        draggedTransform.distance = Mathf.Clamp(draggedTransform.distance, 0, maxDistance);
+    }
+    public void HandleScale()
+    {
+        if (!handler.pressed)
+            draggedTransform = null;
+        if (draggedTransform == null || !draggedTransform.transform)
+            return;
+
+        float input = inputManager.joystickDir.x;
+        if (Mathf.Abs(input) < 0.2f)
+            return;
+
+        Vector3 localScale = draggedTransform.transform.localScale;
+        localScale += input * Vector3.one * scaleSpeed * Time.deltaTime;
+        localScale.x = Mathf.Clamp(localScale.x, 0, 100);
+        localScale.y = Mathf.Clamp(localScale.y, 0, 100);
+        localScale.z = Mathf.Clamp(localScale.z, 0, 100);
+        draggedTransform.transform.localScale = localScale;
     }
 
 
@@ -68,12 +107,15 @@ public class TransformGrab : MonoBehaviour
         public Transform transform;
         public float distance;
         public Vector3 offset;
+        public Quaternion relativeRotation;
 
-        public DraggedTransform(RaycastHit hit)
+        public DraggedTransform(RaycastHit hit, Transform handTransform)
         {
             transform = hit.transform;
             distance = hit.distance;
             offset = hit.point - hit.transform.position;
+
+            relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
         }
     }
 }

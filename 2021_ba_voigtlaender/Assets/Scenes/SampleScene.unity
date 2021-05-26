@@ -665,8 +665,9 @@ GameObject:
   - component: {fileID: 787712609}
   - component: {fileID: 787712611}
   - component: {fileID: 787712610}
+  - component: {fileID: 787712612}
   m_Layer: 5
-  m_Name: Test
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,10 +714,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 100
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 1
+    m_MinSize: 0
     m_MaxSize: 100
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -724,7 +725,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: Debug
 --- !u!222 &787712611
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -733,6 +734,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787712608}
   m_CullTransparentMesh: 1
+--- !u!114 &787712612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787712608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab0d16733461e904cae6353a0eba6cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &824864354
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,23 +1369,23 @@ MonoBehaviour:
   m_PlayAudioClipOnHoverCanceled: 0
   m_AudioClipForOnHoverCanceled: {fileID: 0}
   m_PlayHapticsOnSelectEntered: 0
-  m_HapticSelectEnterIntensity: 0
-  m_HapticSelectEnterDuration: 0
+  m_HapticSelectEnterIntensity: 0.412
+  m_HapticSelectEnterDuration: 0.1
   m_PlayHapticsOnSelectExited: 0
-  m_HapticSelectExitIntensity: 0
-  m_HapticSelectExitDuration: 0
+  m_HapticSelectExitIntensity: 0.353
+  m_HapticSelectExitDuration: 0.1
   m_PlayHapticsOnSelectCanceled: 0
   m_HapticSelectCancelIntensity: 0
   m_HapticSelectCancelDuration: 0
   m_PlayHapticsOnHoverEntered: 0
-  m_HapticHoverEnterIntensity: 0
-  m_HapticHoverEnterDuration: 0
+  m_HapticHoverEnterIntensity: 0.36
+  m_HapticHoverEnterDuration: 0.1
   m_PlayHapticsOnHoverExited: 0
-  m_HapticHoverExitIntensity: 0
-  m_HapticHoverExitDuration: 0
+  m_HapticHoverExitIntensity: 0.176
+  m_HapticHoverExitDuration: 0.1
   m_PlayHapticsOnHoverCanceled: 0
-  m_HapticHoverCancelIntensity: 0
-  m_HapticHoverCancelDuration: 0
+  m_HapticHoverCancelIntensity: 0.108
+  m_HapticHoverCancelDuration: 0.1
   m_LineType: 0
   m_BlendVisualLinePoints: 1
   m_MaxRaycastDistance: 30
@@ -1455,7 +1468,10 @@ MonoBehaviour:
     transform: {fileID: 0}
     distance: 0
     offset: {x: 0, y: 0, z: 0}
+    relativeRotation: {x: 0, y: 0, z: 0, w: 0}
   maxDistance: 30
+  pullSpeed: 1
+  scaleSpeed: 1
 --- !u!114 &1368417970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,6 +1487,8 @@ MonoBehaviour:
   allButtonHandlers:
   - button: 5
     pressed: 0
+  joystickDir: {x: 0, y: 0}
+  relativeJoystickDir: {x: 0, y: 0, z: 0}
 --- !u!1 &1721450498
 GameObject:
   m_ObjectHideFlags: 0
@@ -2087,7 +2105,10 @@ MonoBehaviour:
     transform: {fileID: 0}
     distance: 0
     offset: {x: 0, y: 0, z: 0}
+    relativeRotation: {x: 0, y: 0, z: 0, w: 0}
   maxDistance: 30
+  pullSpeed: 1
+  scaleSpeed: 1
 --- !u!114 &1761855255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2103,6 +2124,8 @@ MonoBehaviour:
   allButtonHandlers:
   - button: 5
     pressed: 0
+  joystickDir: {x: 0, y: 0}
+  relativeJoystickDir: {x: 0, y: 0, z: 0}
 --- !u!1 &1798573000
 GameObject:
   m_ObjectHideFlags: 0
