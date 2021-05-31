@@ -14,6 +14,8 @@ public class fvInputManager : MonoBehaviour
 
     public Vector2 joystickDir;
     public Vector3 relativeJoystickDir;
+
+    public GameObject currentUIElement;
     private void Awake()
     {
         controller = GetComponent<XRController>();
@@ -30,6 +32,22 @@ public class fvInputManager : MonoBehaviour
     {
         HandleButtonEvents();
         HandleJoystick();
+        HandleRayInteractor();
+    }
+
+    public void HandleRayInteractor()
+    {
+        UnityEngine.EventSystems.RaycastResult result;
+        if(rayInteractor.TryGetCurrentUIRaycastResult(out result))
+        {
+            currentUIElement = result.gameObject;
+            VRDebug.SetLog(result.gameObject.name);
+        }
+        else
+        {
+            VRDebug.SetLog("NONE");
+            currentUIElement = null;
+        }
     }
 
     public void HoverEntered(HoverEnterEventArgs eventArgs)

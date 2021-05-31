@@ -21,5 +21,13 @@ public class VRDebug : MonoBehaviour
 
         instance.text.text += "\n" + message;
     }
+    public static void SetLog(string message)
+    {
+        Debug.Log(message);
+        if (!instance)
+            return;
+
+        instance.text.text = message;
+    }
 
 }

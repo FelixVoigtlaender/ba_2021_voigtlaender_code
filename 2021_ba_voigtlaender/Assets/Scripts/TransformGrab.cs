@@ -10,7 +10,7 @@ public class TransformGrab : MonoBehaviour
     [Header("Input")]
     public InputHelpers.Button button = InputHelpers.Button.None;
     fvInputManager inputManager;
-    public fvInputManager.ButtonHandler handler;
+    fvInputManager.ButtonHandler handler;
 
     [Header("Dragging")]
     public LayerMask layerMask;
@@ -59,8 +59,10 @@ public class TransformGrab : MonoBehaviour
         // Drag
         Vector3 position = transform.position + transform.forward.normalized * draggedTransform.distance - draggedTransform.offset;
         draggedTransform.transform.position = position;
-
         draggedTransform.transform.rotation = transform.rotation * draggedTransform.relativeRotation;
+
+        if (draggedTransform.rigid)
+            draggedTransform.rigid.velocity = Vector3.zero;
     }
     public void HandlePull()
     {
@@ -108,6 +110,7 @@ public class TransformGrab : MonoBehaviour
         public float distance;
         public Vector3 offset;
         public Quaternion relativeRotation;
+        public Rigidbody rigid;
 
         public DraggedTransform(RaycastHit hit, Transform handTransform)
         {
@@ -116,6 +119,8 @@ public class TransformGrab : MonoBehaviour
             offset = hit.point - hit.transform.position;
 
             relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
+
+            rigid = hit.transform.GetComponent<Rigidbody>();
         }
     }
 }

@@ -21,17 +21,24 @@ public class BezierCurve : MonoBehaviour
     public void Update()
     {
 		UpdateBezier();
-    }
+		HandleNormals();
+
+	}
 	public void UpdateBezier()
     {
 		if (start == null || !start.transform)
 			return;
 		if (end == null || !end.transform)
 			return;
+
+		float distance = (start.transform.position - end.transform.position).magnitude;
+		float dirMagnitude = 1f;
+		if (distance < 2.2f)
+			dirMagnitude = (distance / 2) * 0.8f;
 		Vector3 p0 = start.transform.position + start.offset;
-		Vector3 p1 = p0 + start.dir;
+		Vector3 p1 = p0 + start.transform.TransformVector(start.dir).normalized * dirMagnitude;
 		Vector3 p3 = end.transform.position + end.offset;
-		Vector3 p2 = p3 + end.dir;
+		Vector3 p2 = p3 + end.transform.TransformVector(end.dir).normalized * dirMagnitude;
 
 		line.positionCount = pointCount;
 		for(int i = 0; i < pointCount; i++)
@@ -42,7 +49,28 @@ public class BezierCurve : MonoBehaviour
 		}
     }
 
-    private void OnDrawGizmos()
+
+
+	public void HandleNormals()
+	{
+		if (start == null || !start.transform)
+			return;
+		if (end == null || !end.transform)
+			return;
+
+		Vector3 deltaStart = start.transform.position - Camera.main.transform.position;
+		Vector3 deltaEnd = end.transform.position - Camera.main.transform.position;
+
+		Vector3 deltaMid = (deltaStart.normalized + deltaEnd.normalized).normalized;
+		Vector3 up = Vector3.up;
+		Vector3 right = Vector3.Cross(up, deltaMid).normalized;
+
+		start.dir = GetLocalNormals(start.transform.position, end.transform.position, up, right);
+		end.dir = GetLocalNormals(end.transform.position, start.transform.position, up, right);
+
+	}
+
+	private void OnDrawGizmos()
     {
 		if (start == null || !start.transform)
 			return;
@@ -51,9 +79,9 @@ public class BezierCurve : MonoBehaviour
 
 
 		Vector3 p0 = start.transform.position + start.offset;
-		Vector3 p1 = p0 + start.dir;
+		Vector3 p1 = p0 + start.transform.TransformVector(start.dir);
 		Vector3 p2 = end.transform.position + end.offset;
-		Vector3 p3 = p2 + end.dir;
+		Vector3 p3 = p2 + start.transform.TransformVector(end.dir);
 
 		Gizmos.color = Color.green;
 		Gizmos.DrawLine(p0, p1);
@@ -77,6 +105,26 @@ public class BezierCurve : MonoBehaviour
 		B += ttt * p3;
 
 		return B;
+	}
+
+	public Vector3 GetLocalNormals(Vector3 start, Vector3 end, Vector3 up, Vector3 right)
+	{
+		float horizontal = Vector3.Dot(right, end - start);
+		float vertical = Vector3.Dot(up, end - start);
+
+
+		Vector3 normal = Vector3.zero;
+		if (Mathf.Abs(horizontal) > Mathf.Abs(vertical))
+		{
+			//Horizontal
+			normal = Vector3.right * Mathf.Sign(horizontal);
+		}
+		else
+		{
+			//Vertical
+			normal = Vector3.up * Mathf.Sign(vertical);
+		}
+		return normal;
 	}
 
 	[System.Serializable]

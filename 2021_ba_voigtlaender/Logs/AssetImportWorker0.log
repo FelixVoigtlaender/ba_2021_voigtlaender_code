@@ -15,12 +15,12 @@ D:/Git/ba_2021_voigtlaender_code/2021_ba_voigtlaender
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-51348
+63403
 Successfully changed project path to: D:/Git/ba_2021_voigtlaender_code/2021_ba_voigtlaender
 D:/Git/ba_2021_voigtlaender_code/2021_ba_voigtlaender
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 77.19 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 1.12 ms.
+Refreshing native plugins compatible for Editor in 86.08 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 1.86 ms.
 Initialize engine version: 2020.3.0f1 (c7b5465681fb)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path D:/Git/ba_2021_voigtlaender_code/2021_ba_voigtlaender/Assets
@@ -36,28 +36,28 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56368
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56272
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.0f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.005751 seconds.
+Registered in 0.006249 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 79.44 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
+Refreshing native plugins compatible for Editor in 73.58 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.09 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  3.639 seconds
+- Completed reload, in  6.349 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.003133 seconds.
+Registered in 0.006823 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 111.67 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 86.58 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.10 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
@@ -69,52 +69,52 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  2.104 seconds
+- Completed reload, in  1.859 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.92 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.10 ms.
-Unloading 2964 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 132.9 MB.
-System memory in use after: 133.1 MB.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.10 seconds
+Refreshing native plugins compatible for Editor in 0.65 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Unloading 2966 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 133.0 MB.
+System memory in use after: 133.2 MB.
 
-Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3411.
-Total: 3.862800 ms (FindLiveObjects: 0.348500 ms CreateObjectMapping: 0.196200 ms MarkObjects: 3.188300 ms  DeleteObjects: 0.127600 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/Scripts/fvInputManager.cs
-  artifactKey: Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/fvInputManager.cs using Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff0eb0d6a871fedb6820c4c0c6137828') in 0.082069 seconds
-  Import took 0.093432 seconds .
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3413.
+Total: 3.227700 ms (FindLiveObjects: 0.287500 ms CreateObjectMapping: 0.142300 ms MarkObjects: 2.677200 ms  DeleteObjects: 0.119100 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 262.337799 seconds.
-  path: Assets/Scripts/fvInputManager.cs
-  artifactKey: Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/fvInputManager.cs using Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35444d6df9cde28c390e5bf0f61e3388') in 0.008028 seconds
-  Import took 0.072508 seconds .
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd726d7919dcb7103fe029e1db4cfc33') in 0.066780 seconds
+  Import took 0.074851 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.225488 seconds.
-  path: Assets/Scripts/fvInputManager.cs
-  artifactKey: Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/fvInputManager.cs using Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35444d6df9cde28c390e5bf0f61e3388') in 0.008724 seconds
-  Import took 0.022194 seconds .
+  Time since last request: 8.675974 seconds.
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ba26277b720918f84565591c3ad845e') in 0.013792 seconds
+  Import took 0.022230 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.227436 seconds.
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ba26277b720918f84565591c3ad845e') in 0.013548 seconds
+  Import took 0.024635 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.010081 seconds.
+Registered in 0.002429 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.73 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.08 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
@@ -126,27 +126,27 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  1.458 seconds
+- Completed reload, in  1.459 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.72 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.15 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.8 MB.
-System memory in use after: 126.0 MB.
+Refreshing native plugins compatible for Editor in 0.82 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 125.9 MB.
+System memory in use after: 126.1 MB.
 
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3415.
-Total: 5.254700 ms (FindLiveObjects: 0.559500 ms CreateObjectMapping: 0.419800 ms MarkObjects: 4.052200 ms  DeleteObjects: 0.220300 ms)
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3417.
+Total: 3.191300 ms (FindLiveObjects: 0.356100 ms CreateObjectMapping: 0.249900 ms MarkObjects: 2.506100 ms  DeleteObjects: 0.077400 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002403 seconds.
+Registered in 0.008815 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.72 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
+Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.11 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
@@ -157,174 +157,42 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  1.574 seconds
+- Completed reload, in  1.450 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 0.70 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.9 MB.
-System memory in use after: 126.1 MB.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 126.0 MB.
+System memory in use after: 126.2 MB.
 
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3419.
-Total: 3.194800 ms (FindLiveObjects: 0.339300 ms CreateObjectMapping: 0.138700 ms MarkObjects: 2.624100 ms  DeleteObjects: 0.090400 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 482.247697 seconds.
-  path: Assets/Scripts/fvInputManager.cs
-  artifactKey: Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/fvInputManager.cs using Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74c8f1b013a794f79ad3d0524370378b') in 0.008733 seconds
-  Import took 0.020947 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002397 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.68 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.456 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.75 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.9 MB.
-System memory in use after: 126.1 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3423.
-Total: 3.052100 ms (FindLiveObjects: 0.291500 ms CreateObjectMapping: 0.132700 ms MarkObjects: 2.552200 ms  DeleteObjects: 0.073700 ms)
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3421.
+Total: 3.558900 ms (FindLiveObjects: 0.392100 ms CreateObjectMapping: 0.291200 ms MarkObjects: 2.788500 ms  DeleteObjects: 0.085100 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 568.694664 seconds.
-  path: Assets/Scripts/fvInputManager.cs
-  artifactKey: Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/fvInputManager.cs using Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a010403a900605b8afe2b61f1e1aaccc') in 0.006748 seconds
-  Import took 0.013859 seconds .
+  Time since last request: 982.830147 seconds.
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36a266158f0dda87ed4ca0b3e48eca9b') in 0.006867 seconds
+  Import took 0.014385 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.428647 seconds.
-  path: Assets/Scripts/fvInputManager.cs
-  artifactKey: Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/fvInputManager.cs using Guid(21794c34dfbd2c941ac38f31d56d8dfe) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a010403a900605b8afe2b61f1e1aaccc') in 0.009338 seconds
-  Import took 0.018037 seconds .
+  Time since last request: 2.222526 seconds.
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36a266158f0dda87ed4ca0b3e48eca9b') in 0.005799 seconds
+  Import took 0.011726 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.003340 seconds.
+Registered in 0.002881 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.31 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.10 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  2.375 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.75 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.9 MB.
-System memory in use after: 126.1 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3427.
-Total: 3.414400 ms (FindLiveObjects: 0.429600 ms CreateObjectMapping: 0.262800 ms MarkObjects: 2.641200 ms  DeleteObjects: 0.078500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003793 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.876 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.08 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.10 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.9 MB.
-System memory in use after: 126.1 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3431.
-Total: 5.784300 ms (FindLiveObjects: 0.726900 ms CreateObjectMapping: 0.509700 ms MarkObjects: 4.387700 ms  DeleteObjects: 0.157500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002474 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.73 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.452 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.9 MB.
-System memory in use after: 126.1 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3435.
-Total: 3.293600 ms (FindLiveObjects: 0.340100 ms CreateObjectMapping: 0.220400 ms MarkObjects: 2.652000 ms  DeleteObjects: 0.079600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002616 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.09 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
@@ -336,213 +204,42 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  3.431 seconds
+- Completed reload, in  1.451 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.81 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.18 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 125.9 MB.
-System memory in use after: 126.1 MB.
+Refreshing native plugins compatible for Editor in 0.71 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 126.0 MB.
+System memory in use after: 126.2 MB.
 
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3439.
-Total: 10.092800 ms (FindLiveObjects: 0.413600 ms CreateObjectMapping: 0.431100 ms MarkObjects: 9.167000 ms  DeleteObjects: 0.078700 ms)
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3425.
+Total: 4.710300 ms (FindLiveObjects: 0.405200 ms CreateObjectMapping: 0.303000 ms MarkObjects: 3.921100 ms  DeleteObjects: 0.079100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 241.383442 seconds.
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8b714fed19743bada6951752287a085') in 0.007162 seconds
+  Import took 0.014713 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.858259 seconds.
+  path: Assets/Scripts/ConnectionGrab.cs
+  artifactKey: Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/ConnectionGrab.cs using Guid(f0504b3b442b40346b5d7175e8b29807) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8b714fed19743bada6951752287a085') in 0.018502 seconds
+  Import took 0.024831 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002370 seconds.
+Registered in 0.002374 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.92 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.14 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.535 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 0.72 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3443.
-Total: 4.191200 ms (FindLiveObjects: 0.953900 ms CreateObjectMapping: 0.296700 ms MarkObjects: 2.863700 ms  DeleteObjects: 0.074700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002379 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.87 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.575 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3447.
-Total: 3.540000 ms (FindLiveObjects: 0.442000 ms CreateObjectMapping: 0.295700 ms MarkObjects: 2.624700 ms  DeleteObjects: 0.175600 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 1711.429215 seconds.
-  path: Assets/Scripts/VRDebugExtension.cs
-  artifactKey: Guid(b662dacc4b2276d479c14983f10057cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/VRDebugExtension.cs using Guid(b662dacc4b2276d479c14983f10057cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6cb6a45e60c966690baa909c13657b6d') in 0.029084 seconds
-  Import took 0.038473 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000963 seconds.
-  path: Assets/Scripts/VRDebugExtension.cs
-  artifactKey: Guid(b662dacc4b2276d479c14983f10057cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/VRDebugExtension.cs using Guid(b662dacc4b2276d479c14983f10057cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6cb6a45e60c966690baa909c13657b6d') in 0.015372 seconds
-  Import took 0.024941 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003085 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.73 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.624 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3452.
-Total: 3.674700 ms (FindLiveObjects: 0.399600 ms CreateObjectMapping: 0.328400 ms MarkObjects: 2.867200 ms  DeleteObjects: 0.078200 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002233 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.76 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.437 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.68 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2831 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 3455.
-Total: 3.724000 ms (FindLiveObjects: 0.545000 ms CreateObjectMapping: 0.193300 ms MarkObjects: 2.900300 ms  DeleteObjects: 0.083300 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 37.028197 seconds.
-  path: Assets/Scripts/VRDebug.cs
-  artifactKey: Guid(ab0d16733461e904cae6353a0eba6cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/VRDebug.cs using Guid(ab0d16733461e904cae6353a0eba6cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa8d162772ce3ad11690abf4437b09ae') in 0.021969 seconds
-  Import took 0.037809 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.011789 seconds.
-  path: Assets/Scripts/VRDebug.cs
-  artifactKey: Guid(ab0d16733461e904cae6353a0eba6cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/VRDebug.cs using Guid(ab0d16733461e904cae6353a0eba6cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa8d162772ce3ad11690abf4437b09ae') in 0.010764 seconds
-  Import took 0.019331 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.007791 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  3.734 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.75 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3460.
-Total: 3.642700 ms (FindLiveObjects: 0.286700 ms CreateObjectMapping: 0.147600 ms MarkObjects: 3.107300 ms  DeleteObjects: 0.098900 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003511 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.01 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.10 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
@@ -554,190 +251,27 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  1.754 seconds
+- Completed reload, in  1.446 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.68 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.70 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 126.0 MB.
 System memory in use after: 126.2 MB.
 
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3464.
-Total: 2.925500 ms (FindLiveObjects: 0.305200 ms CreateObjectMapping: 0.171900 ms MarkObjects: 2.373300 ms  DeleteObjects: 0.073700 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 42.898844 seconds.
-  path: Assets/Scripts/VRDebug.cs
-  artifactKey: Guid(ab0d16733461e904cae6353a0eba6cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scripts/VRDebug.cs using Guid(ab0d16733461e904cae6353a0eba6cc5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a679c4ffaf857bf0250b204210c00607') in 0.032290 seconds
-  Import took 0.049347 seconds .
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3429.
+Total: 4.319600 ms (FindLiveObjects: 0.657200 ms CreateObjectMapping: 0.359200 ms MarkObjects: 3.221400 ms  DeleteObjects: 0.079700 ms)
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.002341 seconds.
+Registered in 0.002525 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.73 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.19 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.482 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.76 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.15 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3468.
-Total: 4.870900 ms (FindLiveObjects: 0.375800 ms CreateObjectMapping: 0.227100 ms MarkObjects: 3.757400 ms  DeleteObjects: 0.508500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002568 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.66 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.12 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.454 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.2 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3472.
-Total: 3.024700 ms (FindLiveObjects: 0.312200 ms CreateObjectMapping: 0.167900 ms MarkObjects: 2.468100 ms  DeleteObjects: 0.074500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.008987 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.489 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.79 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.08 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.0 MB.
-System memory in use after: 126.3 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3476.
-Total: 3.649000 ms (FindLiveObjects: 0.331700 ms CreateObjectMapping: 0.213500 ms MarkObjects: 2.419400 ms  DeleteObjects: 0.682400 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.002404 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.68 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.486 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 0.69 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.07 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.1 MB.
-System memory in use after: 126.3 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3480.
-Total: 2.918600 ms (FindLiveObjects: 0.296700 ms CreateObjectMapping: 0.134300 ms MarkObjects: 2.410100 ms  DeleteObjects: 0.075600 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.009214 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.67 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
-NullReferenceException: Object reference not set to an instance of an object
-  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
-  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
-
-(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
-
-Mono: successfully reloaded assembly
-- Completed reload, in  1.534 seconds
-Platform modules already initialized, skipping
-Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
 Refreshing native plugins compatible for Editor in 0.74 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.08 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 126.1 MB.
-System memory in use after: 126.3 MB.
-
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3484.
-Total: 3.288100 ms (FindLiveObjects: 0.398700 ms CreateObjectMapping: 0.189000 ms MarkObjects: 2.556200 ms  DeleteObjects: 0.142000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.009407 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 0.81 ms, found 3 plugins.
-Preloading 1 native plugins for Editor in 0.09 ms.
 Invoked RoslynAnalysisRunner static constructor.
 RoslynAnalysisRunner will not be running.
 RoslynAnalysisRunner has terminated.
@@ -748,16 +282,140 @@ NullReferenceException: Object reference not set to an instance of an object
 (Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
 
 Mono: successfully reloaded assembly
-- Completed reload, in  1.535 seconds
+- Completed reload, in  1.404 seconds
 Platform modules already initialized, skipping
 Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
-Refreshing native plugins compatible for Editor in 1.06 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.01 ms, found 3 plugins.
 Preloading 1 native plugins for Editor in 0.08 ms.
-Unloading 2832 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 126.0 MB.
+System memory in use after: 126.2 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3433.
+Total: 3.814600 ms (FindLiveObjects: 0.369100 ms CreateObjectMapping: 0.256600 ms MarkObjects: 3.043800 ms  DeleteObjects: 0.142600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002345 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.74 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+NullReferenceException: Object reference not set to an instance of an object
+  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
+  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
+
+(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.402 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.70 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 126.0 MB.
+System memory in use after: 126.2 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3437.
+Total: 3.682800 ms (FindLiveObjects: 0.387700 ms CreateObjectMapping: 0.284800 ms MarkObjects: 2.911100 ms  DeleteObjects: 0.097900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.052381 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.76 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.10 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+NullReferenceException: Object reference not set to an instance of an object
+  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
+  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
+
+(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  3.135 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 1.12 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.09 ms.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 126.0 MB.
+System memory in use after: 126.2 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3441.
+Total: 6.876600 ms (FindLiveObjects: 0.490600 ms CreateObjectMapping: 0.415000 ms MarkObjects: 5.594600 ms  DeleteObjects: 0.374000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002592 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.93 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.10 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+NullReferenceException: Object reference not set to an instance of an object
+  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
+  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
+
+(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.616 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
 System memory in use before: 126.1 MB.
 System memory in use after: 126.3 MB.
 
-Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3488.
-Total: 3.243000 ms (FindLiveObjects: 0.288500 ms CreateObjectMapping: 0.135000 ms MarkObjects: 2.740200 ms  DeleteObjects: 0.077100 ms)
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3445.
+Total: 5.962000 ms (FindLiveObjects: 0.318000 ms CreateObjectMapping: 0.149400 ms MarkObjects: 5.163900 ms  DeleteObjects: 0.328600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002373 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.08 ms.
+Invoked RoslynAnalysisRunner static constructor.
+RoslynAnalysisRunner will not be running.
+RoslynAnalysisRunner has terminated.
+NullReferenceException: Object reference not set to an instance of an object
+  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x0004c] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:243 
+  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x000b0] in D:\Git\ba_2021_voigtlaender_code\2021_ba_voigtlaender\Library\PackageCache\com.unity.xr.oculus@1.8.1\Runtime\OculusLoader.cs:228 
+
+(Filename: Library/PackageCache/com.unity.xr.oculus@1.8.1/Runtime/OculusLoader.cs Line: 243)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.411 seconds
+Platform modules already initialized, skipping
+Shader 'Universal Render Pipeline/Particles/Lit': fallback shader 'Universal Render Pipeline/Particles/SimpleLit' not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 3 plugins.
+Preloading 1 native plugins for Editor in 0.07 ms.
+Unloading 2833 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 126.1 MB.
+System memory in use after: 126.3 MB.
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 3449.
+Total: 3.439600 ms (FindLiveObjects: 0.430700 ms CreateObjectMapping: 0.297500 ms MarkObjects: 2.636800 ms  DeleteObjects: 0.072700 ms)
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file
