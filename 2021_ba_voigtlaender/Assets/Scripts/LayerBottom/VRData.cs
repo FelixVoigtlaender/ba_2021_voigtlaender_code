@@ -17,6 +17,10 @@ public class VRString : VRData
 {
     public string value;
 
+    public VRString(string value)
+    {
+        this.value = value;
+    }
 
     public override bool IsType(VRData data)
     {
@@ -32,6 +36,12 @@ public class VRString : VRData
 public class VRFloat : VRData
 {
     public float value;
+
+
+    public VRFloat(float value)
+    {
+        this.value = value;
+    }
     public override bool IsType(VRData data)
     {
         return data is VRFloat;
@@ -46,6 +56,10 @@ public class VRFloat : VRData
 public class VRInt : VRData
 {
     public int value;
+    public VRInt(int value)
+    {
+        this.value = value;
+    }
     public override bool IsType(VRData data)
     {
         return data is VRInt;
@@ -61,6 +75,10 @@ public class VRInt : VRData
 public class VRVector3 : VRData
 {
     public Vector3 value;
+    public VRVector3(Vector3 value)
+    {
+        this.value = value;
+    }
     public override bool IsType(VRData data)
     {
         return data is VRVector3;
@@ -74,6 +92,11 @@ public class VRVector3 : VRData
 
 public class VREventDat : VRData
 {
+    public Vector3 value;
+    public VREventDat(Vector3 value)
+    {
+        this.value = value;
+    }
     public override bool IsType(VRData data)
     {
         return data is VREventDat;
@@ -88,6 +111,10 @@ public class VREventDat : VRData
 public class VRBool : VRData
 {
     public bool value;
+    public VRBool(bool value)
+    {
+        this.value = value;
+    }
     public override bool IsType(VRData data)
     {
         return data is VRBool;

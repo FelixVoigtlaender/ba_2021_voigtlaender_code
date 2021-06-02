@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VREvent : VRLogicElement
+public abstract class VREvent : VRLogicElement
 {
     public override void SetupInputs()
     {

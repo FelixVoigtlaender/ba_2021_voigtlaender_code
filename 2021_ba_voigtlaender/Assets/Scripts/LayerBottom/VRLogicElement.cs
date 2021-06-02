@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRLogicElement : MonoBehaviour
+public abstract class VRLogicElement 
 {
     public List<VRPort> inputs;
     public List<VRPort> outputs;
 
-
-    private void Awake()
+    public abstract string Name();
+    public virtual void SetupPorts()
     {
         SetupInputs();
         SetupOutputs();
@@ -24,14 +24,10 @@ public class VRLogicElement : MonoBehaviour
         outputs = new List<VRPort>();
     }
 
-    public virtual VRData GetData()
-    {
-        return null;
-    }
     public virtual void Trigger()
     {
-
     }
+
 
 
 

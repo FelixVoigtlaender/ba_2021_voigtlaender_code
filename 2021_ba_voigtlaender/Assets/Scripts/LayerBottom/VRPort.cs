@@ -1,20 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class VRPort
 {
     public PortType type = PortType.INPUT;
     public VRData dataType;
-    public VRLogicElement element;
     public VRConnection connection;
-    public VRPort(VRLogicElement element, PortType type, VRData dataType)
+    public event Func<VRData> GetElementData;
+    public event Action<VRData> SetElementData;
+    VRLogicElement element;
+    public VRPort(Func<VRData> GetElementData, VRData dataType)
+    {
+        this.GetElementData = GetElementData;
+        this.type = PortType.OUTPUT;
+        this.dataType = dataType;
+    }
+    public VRPort(VRLogicElement element, VRData dataType)
     {
         this.element = element;
-        this.type = type;
+        this.type = PortType.INPUT;
+        this.dataType = dataType;
+    }
+    public VRPort(Action<VRData> SetElementData, VRData dataType)
+    {
+        this.SetElementData = SetElementData;
+        this.type = PortType.INPUT;
         this.dataType = dataType;
     }
 
+    public bool IsConnected()
+    {
+        return connection != null;
+    }
 
     public VRData GetData()
     {
@@ -24,10 +43,21 @@ public class VRPort
         VRData data = null;
         if (connection.end == this)
             data = connection.GetData();
-        if (connection.start == this)
-            data = element.GetData();
+        if (connection.start == this && GetElementData!=null)
+            data = GetElementData();
 
         return data;
+    }
+    public void SetData(VRData data)
+    {
+
+        if (!connection)
+            return;
+
+        if (connection.end == this && SetElementData != null)
+            SetElementData(data);
+        if (connection.start == this)
+            connection.SetData(data);
     }
 
     public void Trigger()

@@ -27,7 +27,12 @@ public class VRConnection : MonoBehaviour
             return null;
 
         return start.GetData();
-
+    }
+    public void SetData(VRData data)
+    {
+        if (end == null)
+            return;
+        end.SetData(data);
     }
     
     public void Trigger()
