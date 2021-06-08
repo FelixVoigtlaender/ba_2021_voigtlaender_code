@@ -27,8 +27,4 @@ public abstract class VRLogicElement
     public virtual void Trigger()
     {
     }
-
-
-
-
 }

@@ -13,4 +13,8 @@ public abstract class VREvent : VRLogicElement
         base.SetupOutputs();
     }
 
+    public virtual void Update()
+    {
+
+    }
 }
