@@ -4,21 +4,21 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using System;
 using UnityEngine.XR;
+using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(XRController))]
 public class fvInputManager : MonoBehaviour
 {
     public List<ButtonHandler> allButtonHandlers = new List<ButtonHandler>();
-    private XRController controller;
     private XRRayInteractor rayInteractor;
 
     public Vector2 joystickDir;
     public Vector3 relativeJoystickDir;
 
+    public InputActionReference joystick;
+
     public GameObject currentUIElement;
     private void Awake()
     {
-        controller = GetComponent<XRController>();
         rayInteractor = GetComponent<XRRayInteractor>();
 
         rayInteractor.hoverEntered.AddListener(HoverEntered);
@@ -30,7 +30,6 @@ public class fvInputManager : MonoBehaviour
 
     private void Update()
     {
-        HandleButtonEvents();
         HandleJoystick();
         HandleRayInteractor();
     }
@@ -71,31 +70,12 @@ public class fvInputManager : MonoBehaviour
         VRDebug.Log($"SelectExited {eventArgs.interactor.name}");
     }
 
-    private void HandleButtonEvents()
-    {
-        foreach(ButtonHandler handler in allButtonHandlers)
-        {
-            handler.HandleState(controller);
-        }
-    }
     private void HandleJoystick()
     {
-        Vector2 primary2dValue;
-        InputFeatureUsage<Vector2> primary2DVector = CommonUsages.primary2DAxis;
-        if(controller.inputDevice.TryGetFeatureValue(primary2DVector, out primary2dValue))
-        {
-            relativeJoystickDir = (transform.forward * primary2dValue.y + transform.right * primary2dValue.x);
-            joystickDir = primary2dValue;
-
-            Debug.DrawRay(transform.position, relativeJoystickDir * 0.1f);
-        }
-        else
-        {
-            joystickDir = relativeJoystickDir = Vector2.zero;
-        }
+        joystickDir = joystick.action.ReadValue<Vector2>();
     }
 
-    public ButtonHandler FindButtonHandler(InputHelpers.Button button)
+    public ButtonHandler FindButtonHandler(InputActionReference button)
     {
         foreach (ButtonHandler handler in allButtonHandlers)
         {
@@ -103,8 +83,7 @@ public class fvInputManager : MonoBehaviour
                 return handler;
         }
 
-        ButtonHandler newHandler = new ButtonHandler();
-        newHandler.button = button;
+        ButtonHandler newHandler = new ButtonHandler(button);
         allButtonHandlers.Add(newHandler);
 
         return newHandler;
@@ -113,30 +92,30 @@ public class fvInputManager : MonoBehaviour
     [System.Serializable]
     public class ButtonHandler
     {
-        public InputHelpers.Button button = InputHelpers.Button.None;
-        public event Action<XRController> OnButtonDown;
-        public event Action<XRController> OnButtonUp;
-        public bool pressed;
-        private bool previousPress = false;
+        public InputActionReference button;
+        public event Action<InputAction.CallbackContext> OnButtonDown;
+        public event Action<InputAction.CallbackContext> OnButtonUp;
+        public bool isPressed;
 
-        public void HandleState(XRController controller)
+
+        public ButtonHandler(InputActionReference button)
         {
-            if(controller.inputDevice.IsPressed(button, out pressed, controller.axisToPressThreshold))
-            {
-                if (previousPress != pressed)
-                {
-                    previousPress = pressed;
+            this.button = button;
+            isPressed = false;
 
-                    if (pressed)
-                    {
-                        OnButtonDown?.Invoke(controller);
-                    }
-                    else
-                    {
-                        OnButtonUp?.Invoke(controller);
-                    }
-                }
-            }
+            button.action.performed += ActionPerformed;
+            button.action.canceled += ActionCanceled;
+        }
+
+        public void ActionPerformed(InputAction.CallbackContext context)
+        {
+            isPressed = true;
+            OnButtonDown?.Invoke(context);
+        }
+        public void ActionCanceled(InputAction.CallbackContext context)
+        {
+            isPressed = false;
+            OnButtonUp?.Invoke(context);
         }
     }
 }

@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
 
 
 [RequireComponent(typeof(fvInputManager))]
 public class TransformGrab : MonoBehaviour
 {
     [Header("Input")]
-    public InputHelpers.Button button = InputHelpers.Button.None;
+    public InputActionReference button;
     fvInputManager inputManager;
     fvInputManager.ButtonHandler handler;
 
@@ -29,7 +29,7 @@ public class TransformGrab : MonoBehaviour
         handler.OnButtonUp += OnButtonUp;
     }
 
-    public void OnButtonDown(XRController controller)
+    public void OnButtonDown(InputAction.CallbackContext context)
     {
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
@@ -39,7 +39,7 @@ public class TransformGrab : MonoBehaviour
             draggedTransform = new DraggedTransform(hit, transform);
         }
     }
-    public void OnButtonUp(XRController controller)
+    public void OnButtonUp(InputAction.CallbackContext context)
     {
         draggedTransform = null;
     }
@@ -51,7 +51,7 @@ public class TransformGrab : MonoBehaviour
     }
     public void HandleDrag()
     {
-        if (!handler.pressed)
+        if (!handler.isPressed)
             draggedTransform = null;
         if (draggedTransform == null ||!draggedTransform.transform)
             return;
@@ -66,7 +66,7 @@ public class TransformGrab : MonoBehaviour
     }
     public void HandlePull()
     {
-        if (!handler.pressed)
+        if (!handler.isPressed)
             draggedTransform = null;
         if (draggedTransform == null || !draggedTransform.transform)
             return;
@@ -80,7 +80,7 @@ public class TransformGrab : MonoBehaviour
     }
     public void HandleScale()
     {
-        if (!handler.pressed)
+        if (!handler.isPressed)
             draggedTransform = null;
         if (draggedTransform == null || !draggedTransform.transform)
             return;

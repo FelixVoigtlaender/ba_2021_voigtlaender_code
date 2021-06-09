@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.InputSystem;
 
 public class ConnectionGrab : MonoBehaviour
 {
     [Header("Input")]
-    public InputHelpers.Button button = InputHelpers.Button.None;
+    public InputActionReference button;
     fvInputManager inputManager;
     fvInputManager.ButtonHandler handler;
 
@@ -30,7 +30,7 @@ public class ConnectionGrab : MonoBehaviour
         //HandleNormals();
     }
 
-    public void OnButtonDown(XRController controller)
+    public void OnButtonDown(InputAction.CallbackContext context)
     {
         GameObject startObj = inputManager.currentUIElement;
         if (!startObj)
@@ -47,7 +47,7 @@ public class ConnectionGrab : MonoBehaviour
 
     public void HandleDrag()
     {
-        if (!handler.pressed)
+        if (!handler.isPressed)
             return;
         if (currentConnection == null)
             return;
@@ -64,7 +64,7 @@ public class ConnectionGrab : MonoBehaviour
         }
     }
 
-    public void OnButtonUp(XRController controller)
+    public void OnButtonUp(InputAction.CallbackContext context)
     {
         GameObject endObj = inputManager.currentUIElement;
         if (!endObj)
