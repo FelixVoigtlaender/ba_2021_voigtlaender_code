@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class VisPort : MonoBehaviour
 {
-    VRPort vrPort;
-    public Image image;
+    public VRPort vrPort;
+    public RawImage image;
     public void Setup(VRPort vrPort)
     {
         this.vrPort = vrPort;

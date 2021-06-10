@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class VRConnection : MonoBehaviour
+public class VRConnection 
 {
     public event Action OnPortChanged;
 
@@ -44,6 +44,9 @@ public class VRConnection : MonoBehaviour
 
     public void ConnectStart(VRPort port)
     {
+        if (start == port)
+            return;
+
         this.start = port;
 
         OnPortChanged?.Invoke();
@@ -51,22 +54,54 @@ public class VRConnection : MonoBehaviour
 
     public void ConnectEnd(VRPort port)
     {
+        if (end == port)
+            return;
+
         this.end = port;
 
         OnPortChanged?.Invoke();
     }
 
+    public bool Connect(VRPort portA)
+    {
+        if (!CanConnect(portA))
+            return false;
+        
+        //TODO
+
+        return true;
+    }
+    public bool Connect(VRPort portA, VRPort portB)
+    {
+        if (!CanConnect(portA, portB))
+            return false;
+
+        start = portA.type == PortType.OUTPUT ? portA : portB;
+        end = portA.type == PortType.INPUT ? portA : portB;
+
+        return true;
+    }
+
+    public bool CanConnect(VRPort portA, VRPort portB)
+    {
+        if (portA == null && portB == null)
+            return false;
+        if (portA == null ^ portB == null)
+            return true;
+        if (portA.type == portB.type)
+            return false;
+        if (!portA.dataType.IsType(portB.dataType))
+            return false;
+
+        return true;
+    }
+
     public bool CanConnect(VRPort port)
     {
-        if (start != null && end != null)
-            return false;
-        if (start == null && start == null)
+        if (GetActivePort() == null)
             return true;
 
-        VRPort activePort = GetActivePort();
-
-        return port.CanConnect(activePort.dataType);
-        
+        return CanConnect(GetActivePort(), port);   
     }
 
     public VRPort GetActivePort()

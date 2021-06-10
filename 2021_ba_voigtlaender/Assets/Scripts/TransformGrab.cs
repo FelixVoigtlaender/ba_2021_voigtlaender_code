@@ -34,7 +34,14 @@ public class TransformGrab : MonoBehaviour
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
 
-        if(Physics.Raycast(origin,direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
+
+        if (inputManager.currentUIElement)
+        {
+            Canvas canvas = inputManager.currentUIElement.GetComponentInParent<Canvas>();
+            if (canvas)
+                draggedTransform = new DraggedTransform(canvas.transform, transform);
+        }
+        else if(Physics.Raycast(origin,direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
         {
             draggedTransform = new DraggedTransform(hit, transform);
         }
@@ -56,6 +63,8 @@ public class TransformGrab : MonoBehaviour
         if (draggedTransform == null ||!draggedTransform.transform)
             return;
 
+
+        VRDebug.SetLog("CurrentDrag: " + draggedTransform.transform.name);
         // Drag
         Vector3 position = transform.position + transform.forward.normalized * draggedTransform.distance - draggedTransform.offset;
         draggedTransform.transform.position = position;
@@ -121,6 +130,14 @@ public class TransformGrab : MonoBehaviour
             relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
 
             rigid = hit.transform.GetComponent<Rigidbody>();
+        }
+        public DraggedTransform(Transform transform, Transform handTransform)
+        {
+            this.transform = transform;
+            distance =Vector3.Distance(transform.position,handTransform.position);
+            offset = Vector3.zero;
+
+            relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
         }
     }
 }

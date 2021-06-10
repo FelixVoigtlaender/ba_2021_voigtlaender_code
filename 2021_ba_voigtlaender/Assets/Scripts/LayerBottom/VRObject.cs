@@ -2,19 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRObject : MonoBehaviour
+[System.Serializable]
+public class VRObject
 {
     public List<VRProperty> properties;
     public List<VREvent> vrEvents;
+    public GameObject gameObject;
 
-    private void Start()
+    public void Setup(GameObject gameObject)
     {
-        
-    }
-
-
-    public void Setup()
-    {
+        this.gameObject = gameObject;
         SetupProperties();
     }
 

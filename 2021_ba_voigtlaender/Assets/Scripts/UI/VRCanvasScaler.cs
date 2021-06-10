@@ -5,10 +5,21 @@ using UnityEngine;
 public class VRCanvasScaler : MonoBehaviour
 {
     RectTransform rect;
-    public float scaleRatio = 0.01f;
+    public float scaleRatio = 0.0005f;
+
+    private void Awake()
+    {
+        if (TryGetComponent(out Canvas canvas))
+        {
+            if (!canvas.worldCamera)
+                canvas.worldCamera = Camera.main;
+        }
+    }
+
     private void Start()
     {
-        rect = GetRectTransform();   
+        rect = GetRectTransform();  
+        
     }
     public void Update()
     {

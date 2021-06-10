@@ -37,7 +37,7 @@ public class VRPort
 
     public VRData GetData()
     {
-        if (!connection)
+        if (connection  == null)
             return null;
 
         VRData data = null;
@@ -51,7 +51,7 @@ public class VRPort
     public void SetData(VRData data)
     {
 
-        if (!connection)
+        if (connection == null)
             return;
 
         if (connection.end == this && SetElementData != null)

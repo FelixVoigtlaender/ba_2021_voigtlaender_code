@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VisObject : MonoBehaviour
 {
     VRObject vrObject;
     List<VisProperty> visProperties = new List<VisProperty>();
 
-    private void Start()
-    {
-        vrObject = GetComponent<VRObject>();
-    }
+    public Transform propertyHolder;
+    public Text textName;
+    public BezierCurve lineToObject;
+    public float hoverDistance = 2;
 
     public void Setup(VRObject vrObject)
     {
+        transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
+
         this.vrObject = vrObject;
+        textName.text = vrObject.gameObject.name;
 
+        lineToObject.start.Connect(vrObject.gameObject.transform);
+        lineToObject.end.Connect(transform);
 
+        PopulateProperties();
     }
 
     public void PopulateProperties()
@@ -27,7 +34,7 @@ public class VisObject : MonoBehaviour
             if (!propertyPrefab)
                 continue;
 
-            GameObject propertyObj = Instantiate(propertyPrefab, transform);
+            GameObject propertyObj = Instantiate(propertyPrefab, propertyHolder);
             VisProperty visProperty = propertyObj.GetComponent<VisProperty>();
             visProperty.Setup(vrProperty);
             visProperties.Add(visProperty);

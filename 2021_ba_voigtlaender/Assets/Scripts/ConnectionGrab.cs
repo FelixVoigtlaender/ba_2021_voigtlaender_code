@@ -10,10 +10,15 @@ public class ConnectionGrab : MonoBehaviour
     fvInputManager inputManager;
     fvInputManager.ButtonHandler handler;
 
+    [Header("Object")]
+    public LayerMask objectLayer;
+
     [Header("Connection")]
     public GameObject connectionPrefab;
     BezierCurve currentConnection;
     float distance;
+
+    VisConnection currentVisConnection;
     
 
     private void Awake()
@@ -35,52 +40,34 @@ public class ConnectionGrab : MonoBehaviour
         GameObject startObj = inputManager.currentUIElement;
         if (!startObj)
             return;
+        if (!startObj.TryGetComponent(out VisPort visPort))
+            return;
 
-        currentConnection = InitConnection(startObj.transform);
-        //Set start
-        ConnectBezier(currentConnection.start, startObj.transform);
+        GameObject objVisConnection = VisManager.instance.InitPrefab(VisManager.instance.prefabVisConnection);
+        currentVisConnection = objVisConnection.GetComponent<VisConnection>();
+        currentVisConnection.Setup(visPort);
 
-        //Set end
-        currentConnection.end.transform.position = startObj.transform.position;
-        distance = (currentConnection.end.transform.position - transform.position).magnitude;
+        distance = (visPort.transform.position - transform.position).magnitude;
     }
 
     public void HandleDrag()
     {
         if (!handler.isPressed)
             return;
-        if (currentConnection == null)
+        if (currentVisConnection == null)
             return;
 
         GameObject endObj = inputManager.currentUIElement;
-        if (endObj)
-        {
-            currentConnection.end.transform.position = endObj.transform.position;
-            currentConnection.end.transform.rotation = endObj.transform.rotation;
-        }
-        else
-        {
-            currentConnection.end.transform.position = transform.position + transform.forward * distance;
-        }
+        Vector3 position = transform.position + transform.forward * distance;
+        currentVisConnection.Drag(position, endObj);
     }
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
-        GameObject endObj = inputManager.currentUIElement;
-        if (!endObj)
-        {
-            if (currentConnection)
-                Destroy(currentConnection.gameObject);
-
-            currentConnection = null;
+        if (!currentVisConnection)
             return;
-        }
-
-
-        ConnectBezier(currentConnection.end, endObj.transform);
-
-
-        currentConnection = null;
+        currentVisConnection.Release();
+        currentVisConnection = null;
     }
 
 
@@ -92,12 +79,6 @@ public class ConnectionGrab : MonoBehaviour
         return bezier;
     }
 
-    public void ConnectBezier(BezierCurve.BezierConnection connection, Transform parent)
-    {
-        connection.transform.parent = parent;
-        connection.transform.localPosition = Vector3.zero;
-        connection.transform.localRotation = Quaternion.identity;
-    }
 
     public void HandleNormals()
     {

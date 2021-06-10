@@ -5,11 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class BezierCurve : MonoBehaviour
 {
-
+	[Header("Line")]
+	public LineRenderer line;
+	public int pointCount = 100;
+	[Header("Start/End")]
 	public BezierConnection start;
 	public BezierConnection end;
-	public int pointCount = 100;
-	LineRenderer line;
 
 	public void Awake()
     {
@@ -17,8 +18,12 @@ public class BezierCurve : MonoBehaviour
     }
 
 
+	public void SetColor(Color color)
+    {
+		line.endColor = line.startColor = color;
+    }
 
-    public void Update()
+	public void Update()
     {
 		UpdateBezier();
 		HandleNormals();
@@ -26,6 +31,8 @@ public class BezierCurve : MonoBehaviour
 	}
 	public void UpdateBezier()
     {
+		if (!line)
+			return;
 		if (start == null || !start.transform)
 			return;
 		if (end == null || !end.transform)
@@ -49,13 +56,20 @@ public class BezierCurve : MonoBehaviour
 		}
     }
 
+    private void OnValidate()
+    {
+		Update();
+    }
 
 
-	public void HandleNormals()
+
+    public void HandleNormals()
 	{
 		if (start == null || !start.transform)
 			return;
 		if (end == null || !end.transform)
+			return;
+		if (!Camera.main)
 			return;
 
 		Vector3 deltaStart = start.transform.position - Camera.main.transform.position;
@@ -133,5 +147,17 @@ public class BezierCurve : MonoBehaviour
 		public Transform transform;
 		public Vector3 offset;
 		public Vector3 dir;
-    }
+
+		public void Connect(Transform parent)
+		{
+			transform.parent = parent;
+			transform.localPosition = Vector3.zero;
+			transform.localRotation = Quaternion.identity;
+		}
+		public void Hover(Transform parent)
+        {
+			transform.position = parent.position; 
+			transform.rotation = parent.rotation;
+		}
+	}
 }
