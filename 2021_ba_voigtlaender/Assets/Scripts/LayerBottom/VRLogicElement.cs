@@ -9,6 +9,11 @@ public abstract class VRLogicElement
     public List<VRPort> outputs;
 
     public abstract string Name();
+
+    public virtual void Setup()
+    {
+        SetupPorts();
+    }
     public virtual void SetupPorts()
     {
         SetupInputs();

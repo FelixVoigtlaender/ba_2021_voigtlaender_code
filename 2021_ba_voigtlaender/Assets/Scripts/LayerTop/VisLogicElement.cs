@@ -13,11 +13,15 @@ public class VisLogicElement : MonoBehaviour
     public List<VisPort> visInPorts;
     public List<VisPort> visOutPorts;
 
-    public void Setup(VRLogicElement element)
+    public virtual void Setup(VRLogicElement element)
     {
         this.element = element;
         textName.text = element.Name();
         PopulateVisPorts(element);
+    }
+
+    public virtual void Init()
+    {
     }
 
     public void PopulateVisPorts(VRLogicElement element)

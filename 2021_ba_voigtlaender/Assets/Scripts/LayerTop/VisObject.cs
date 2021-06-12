@@ -13,15 +13,22 @@ public class VisObject : MonoBehaviour
     public BezierCurve lineToObject;
     public float hoverDistance = 2;
 
+    public Canvas canvas;
+
+    private void Awake()
+    {
+        canvas = GetComponentInParent<Canvas>();
+    }
+
     public void Setup(VRObject vrObject)
     {
-        transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
+        canvas.transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
 
         this.vrObject = vrObject;
         textName.text = vrObject.gameObject.name;
 
         lineToObject.start.Connect(vrObject.gameObject.transform);
-        lineToObject.end.Connect(transform);
+        lineToObject.end.Connect(canvas.transform);
 
         PopulateProperties();
     }

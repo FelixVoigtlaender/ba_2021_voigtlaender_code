@@ -16,7 +16,7 @@ public class VRVariable : VRLogicElement
     public void Setup(VRData vrData)
     {
         this.vrData = vrData;
-        SetupPorts();
+        base.Setup();
     }
     public override void SetupOutputs()
     {
@@ -33,6 +33,8 @@ public class VRVariable : VRLogicElement
 
     public VRData GetData()
     {
+        if (input.IsConnected())
+            vrData.SetData(input.GetData());
         return vrData;
     }
 }

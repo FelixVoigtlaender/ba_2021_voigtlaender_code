@@ -75,9 +75,15 @@ public class VRConnection
     {
         if (!CanConnect(portA, portB))
             return false;
+        if (!portA.CanConnect(portB.dataType))
+            return false;
+        if (!portA.CanConnect(portB.dataType))
+            return false;
 
         start = portA.type == PortType.OUTPUT ? portA : portB;
         end = portA.type == PortType.INPUT ? portA : portB;
+
+        start.connection = end.connection = this;
 
         return true;
     }
@@ -88,9 +94,9 @@ public class VRConnection
             return false;
         if (portA == null ^ portB == null)
             return true;
-        if (portA.type == portB.type)
+        if (!portA.CanConnect(portB.dataType))
             return false;
-        if (!portA.dataType.IsType(portB.dataType))
+        if (!portB.CanConnect(portA.dataType))
             return false;
 
         return true;

@@ -85,12 +85,23 @@ public class VisManager : MonoBehaviour
     public GameObject InitPrefab(GameObject prefab)
     {
         Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
-        return InitPrefab(prefab, position);
+        return InitPrefabWithCanvas(prefab, position);
     }
-    public GameObject InitPrefab(GameObject prefab, Vector3 position)
+    public GameObject InitPrefabWithCanvas(GameObject prefab, Vector3 position)
     {
-        GameObject obj = Instantiate(prefab);
-        obj.transform.position = position;
+        GameObject obj =null;
+        if (!prefab.TryGetComponent(out Canvas canvas))
+        {
+            GameObject objCanvas = Instantiate(prefabUICanvas);
+            objCanvas.transform.position = position;
+
+            obj = Instantiate(prefab,objCanvas.transform);
+        }
+        else
+        {
+            obj = Instantiate(prefab);
+            obj.transform.position = position;
+        }
         return obj;
     }
 

@@ -13,7 +13,8 @@ public abstract class VRProperty : VRLogicElement
     public abstract bool IsType(VRObject vrObject);
     public virtual void Setup(VRObject vrObject) 
     {
-        SetupPorts();
+        this.vrObject = vrObject;
+        base.Setup();
     }
 
     public static List<VRProperty> GetAllPorperties()

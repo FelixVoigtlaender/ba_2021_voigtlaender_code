@@ -43,7 +43,7 @@ public class ConnectionGrab : MonoBehaviour
         if (!startObj.TryGetComponent(out VisPort visPort))
             return;
 
-        GameObject objVisConnection = VisManager.instance.InitPrefab(VisManager.instance.prefabVisConnection);
+        GameObject objVisConnection =Instantiate(VisManager.instance.prefabVisConnection);
         currentVisConnection = objVisConnection.GetComponent<VisConnection>();
         currentVisConnection.Setup(visPort);
 

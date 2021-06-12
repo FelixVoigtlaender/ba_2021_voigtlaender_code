@@ -44,7 +44,12 @@ public class VisConnection : MonoBehaviour
         {
             VRVariable vrVariable = VRManager.instance.InitVRVariable(startVisPort.vrPort.dataType, false);
             GameObject objVisVariable = VisManager.instance.InitVRLogicElement(vrVariable);
-            objVisVariable.transform.position = lastPosition;
+
+            Canvas canvas = objVisVariable.GetComponentInParent<Canvas>();
+            canvas.transform.position = lastPosition;
+
+
+
             if (!objVisVariable)
                 return;
             VisVariable visVariable = objVisVariable.GetComponent<VisVariable>();
@@ -60,11 +65,13 @@ public class VisConnection : MonoBehaviour
         VisPort visPortA = startVisPort;
         VisPort visPortB = endVisPort;
 
-        vrConnection.Connect(visPortA.vrPort, visPortB.vrPort);
+        bool isConnected = vrConnection.Connect(visPortA.vrPort, visPortB.vrPort);
         startVisPort = visPortA.vrPort == vrConnection.start ? visPortA : visPortB;
         endVisPort = visPortA.vrPort == vrConnection.end ? visPortA : visPortB;
 
         bezierCurve.start.Connect(startVisPort.transform);
         bezierCurve.end.Connect(endVisPort.transform);
+
+        VRDebug.Log($"Connected {isConnected}");
     }
 }

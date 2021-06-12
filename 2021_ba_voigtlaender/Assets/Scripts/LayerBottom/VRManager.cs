@@ -10,6 +10,7 @@ public class VRManager : MonoBehaviour
     public event Action<VREvent> OnInitVREvent;
     public event Action<VRVariable> OnInitVRVariable;
     public event Action<VRConnection> OnInitVRConnection;
+    public event Action<VRAction> OnInitVRAction;
 
 
     public List<VRObject> vrObjects = new List<VRObject>();
@@ -20,6 +21,15 @@ public class VRManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Update()
+    {
+        DatEvent datEvent = new DatEvent(Time.time);
+        foreach(VREvent vrEvent in vrEvents)
+        {
+            vrEvent.Update(datEvent);
+        }
     }
 
     public VREvent InitVREvent(string name, bool notify = true)
@@ -35,6 +45,19 @@ public class VRManager : MonoBehaviour
             OnInitVREvent?.Invoke(vrEvent);
 
         return vrEvent;
+    }
+    public VRAction InitVRAction(string name, bool notify = true)
+    {
+        VRAction vrAction = VRAction.GetAction(name);
+        if (vrAction == null)
+            return null;
+
+        vrAction.Setup();
+
+        if (notify)
+            OnInitVRAction?.Invoke(vrAction);
+
+        return vrAction;
     }
 
     public VRConnection InitVRConnection(VRPort start, VRPort end, bool notify = true)

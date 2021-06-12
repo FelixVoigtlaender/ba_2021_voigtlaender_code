@@ -7,7 +7,7 @@ public abstract class VRData
     public abstract bool IsType(VRData data);
     public abstract Color GetColor();
     public abstract string GetName();
-
+    public abstract void SetData(VRData data);
     public Color DecimalToColor(int r, int g, int b)
     {
         return new Color(r / 255f, g / 255f, b / 255f);
@@ -38,6 +38,11 @@ public class DatString : VRData
     {
         return value.ToString();
     }
+
+    public override void SetData(VRData data)
+    {
+        value = ((DatString)data).value;
+    }
 }
 
 public class DatFloat : VRData
@@ -60,7 +65,11 @@ public class DatFloat : VRData
     }
     public override string GetName()
     {
-        return value.ToString();
+        return value.ToString("0.00");
+    }
+    public override void SetData(VRData data)
+    {
+        value = ((DatFloat)data).value;
     }
 }
 
@@ -83,6 +92,10 @@ public class DatInt : VRData
     public override string GetName()
     {
         return value.ToString();
+    }
+    public override void SetData(VRData data)
+    {
+        value = ((DatInt)data).value;
     }
 }
 
@@ -107,6 +120,10 @@ public class DatVector3 : VRData
     {
         return value.ToString();
     }
+    public override void SetData(VRData data)
+    {
+        value = ((DatVector3)data).value;
+    }
 }
 
 public class DatEvent : VRData
@@ -128,6 +145,10 @@ public class DatEvent : VRData
     public override string GetName()
     {
         return value.ToString();
+    }
+    public override void SetData(VRData data)
+    {
+        value = ((DatEvent)data).value;
     }
 }
 
@@ -151,6 +172,10 @@ public class DatBool : VRData
     {
         return value.ToString();
     }
+    public override void SetData(VRData data)
+    {
+        value = ((DatBool)data).value;
+    }
 }
 
 public class DatObj : VRData
@@ -171,7 +196,13 @@ public class DatObj : VRData
     }
     public override string GetName()
     {
+        if (value == null)
+            return "NULL";
         return value.ToString();
+    }
+    public override void SetData(VRData data)
+    {
+        value = ((DatObj)data).value;
     }
 }
 

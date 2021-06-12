@@ -64,6 +64,9 @@ public class EventDistance : VREvent
 
     public override void Update(DatEvent vREventDat)
     {
+
+        VRDebug.SetLog($"{Name()}: UPDATE {vREventDat.value.ToString("0.0")}");
+        VRDebug.SetLog($"{Name()}: {inObjA.IsConnected()} {inObjB.IsConnected()} {inDistance.IsConnected()}");
         if (!inObjA.IsConnected() || !inObjB.IsConnected() || !inDistance.IsConnected())
             return;
 
@@ -77,7 +80,14 @@ public class EventDistance : VREvent
         float distance = datDistance.value;
 
         if (Vector3.Distance(posA, posB) < distance)
+        {
             outEvent.SetData(vREventDat);
+            VRDebug.SetLog($"{Name()}: TRIGGERED");
+        }
+        else
+        {
+            VRDebug.SetLog($"{Name()}: NOT-TRIGGERED");
+        }
 
     }
 
