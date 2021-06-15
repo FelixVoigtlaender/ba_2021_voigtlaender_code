@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class VRObject
 {
-    public List<VRProperty> properties;
-    public List<VREvent> vrEvents;
+    public List<VRProperty> properties = new List<VRProperty>();
+    public List<VREvent> vrEvents = new List<VREvent>();
     public GameObject gameObject;
+    public event Action OnDelete;
+
+
 
     public void Setup(GameObject gameObject)
     {
@@ -31,9 +35,22 @@ public class VRObject
 
     public void Trigger()
     {
-        foreach(VREvent vrEvent in vrEvents)
+        foreach(VRProperty property in properties)
         {
-            vrEvent.Trigger();
+            property.Trigger();
         }
+    }
+
+    public void Delete()
+    {
+        foreach(VRProperty prop in properties)
+        {
+            prop?.Delete();
+        }
+        foreach (VREvent vrEvent in vrEvents)
+        {
+            vrEvent?.Delete();
+        }
+        OnDelete?.Invoke();
     }
 }

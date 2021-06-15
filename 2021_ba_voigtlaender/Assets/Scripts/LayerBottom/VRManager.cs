@@ -75,8 +75,6 @@ public class VRManager : MonoBehaviour
 
     public VRObject InitVRObject(GameObject gameObject, bool notify = true)
     {
-        if (FindVRObject(gameObject) != null)
-            return null;
 
         VRObject vrObject = new VRObject();
         vrObject.Setup(gameObject);

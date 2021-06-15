@@ -26,6 +26,7 @@ public class VisObject : MonoBehaviour
 
         this.vrObject = vrObject;
         textName.text = vrObject.gameObject.name;
+        vrObject.OnDelete += OnDelete;
 
         lineToObject.start.Connect(vrObject.gameObject.transform);
         lineToObject.end.Connect(canvas.transform);
@@ -45,6 +46,18 @@ public class VisObject : MonoBehaviour
             VisProperty visProperty = propertyObj.GetComponent<VisProperty>();
             visProperty.Setup(vrProperty);
             visProperties.Add(visProperty);
+        }
+    }
+    public void Delete()
+    {
+        vrObject.Delete();
+    }
+    public void OnDelete()
+    {
+        Canvas rootCanvas = GetComponentInParent<Canvas>();
+        if(rootCanvas && rootCanvas.gameObject)
+        {
+            Destroy(rootCanvas.gameObject);
         }
     }
 }

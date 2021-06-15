@@ -6,9 +6,12 @@ using System;
 public class VRConnection 
 {
     public event Action OnPortChanged;
+    public event Action OnDelete;
+    public event Action<VRData> OnActive;
 
     public VRPort start;
     public VRPort end;
+
 
     public VRPort GetOtherPort(VRPort myPort)
     {
@@ -26,12 +29,18 @@ public class VRConnection
         if (start == null)
             return null;
 
-        return start.GetData();
+        VRData vrData = start.GetData();
+        OnActive?.Invoke(vrData);
+
+        return vrData;
     }
     public void SetData(VRData data)
     {
         if (end == null)
             return;
+
+        OnActive?.Invoke(data);
+
         end.SetData(data);
     }
     
@@ -80,10 +89,11 @@ public class VRConnection
         if (!portA.CanConnect(portB.dataType))
             return false;
 
-        start = portA.type == PortType.OUTPUT ? portA : portB;
-        end = portA.type == PortType.INPUT ? portA : portB;
+        start = portA.portType == PortType.OUTPUT ? portA : portB;
+        end = portA.portType == PortType.INPUT ? portA : portB;
 
-        start.connection = end.connection = this;
+        start.AddConnection(this);
+        end.AddConnection(this);
 
         return true;
     }
@@ -120,5 +130,14 @@ public class VRConnection
             return end;
 
         return null;
+    }
+
+    public void Delete()
+    {
+        start?.RemoveConnection(this);
+        end?.RemoveConnection(this);
+
+        start = end = null;
+        OnDelete?.Invoke();
     }
 }

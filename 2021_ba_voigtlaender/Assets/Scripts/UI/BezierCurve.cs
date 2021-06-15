@@ -43,9 +43,9 @@ public class BezierCurve : MonoBehaviour
 		if (distance < 2.2f)
 			dirMagnitude = (distance / 2) * 0.8f;
 		Vector3 p0 = start.transform.position + start.offset;
-		Vector3 p1 = p0 + start.transform.TransformVector(start.dir).normalized * dirMagnitude;
+		Vector3 p1 = p0 + start.transform.TransformVector(start.normals).normalized * dirMagnitude;
 		Vector3 p3 = end.transform.position + end.offset;
-		Vector3 p2 = p3 + end.transform.TransformVector(end.dir).normalized * dirMagnitude;
+		Vector3 p2 = p3 + end.transform.TransformVector(end.normals).normalized * dirMagnitude;
 
 		line.positionCount = pointCount;
 		for(int i = 0; i < pointCount; i++)
@@ -79,8 +79,10 @@ public class BezierCurve : MonoBehaviour
 		Vector3 up = Vector3.up;
 		Vector3 right = Vector3.Cross(up, deltaMid).normalized;
 
-		start.dir = GetLocalNormals(start.transform.position, end.transform.position, up, right);
-		end.dir = GetLocalNormals(end.transform.position, start.transform.position, up, right);
+		if(start.dynamicNormals)
+			start.normals = GetLocalNormals(start.transform.position, end.transform.position, up, right);
+		if(end.dynamicNormals)
+			end.normals = GetLocalNormals(end.transform.position, start.transform.position, up, right);
 
 	}
 
@@ -93,9 +95,9 @@ public class BezierCurve : MonoBehaviour
 
 
 		Vector3 p0 = start.transform.position + start.offset;
-		Vector3 p1 = p0 + start.transform.TransformVector(start.dir);
+		Vector3 p1 = p0 + start.transform.TransformVector(start.normals);
 		Vector3 p2 = end.transform.position + end.offset;
-		Vector3 p3 = p2 + start.transform.TransformVector(end.dir);
+		Vector3 p3 = p2 + start.transform.TransformVector(end.normals);
 
 		Gizmos.color = Color.green;
 		Gizmos.DrawLine(p0, p1);
@@ -141,12 +143,19 @@ public class BezierCurve : MonoBehaviour
 		return normal;
 	}
 
+	public void Delete()
+    {
+		start?.Delete();
+		end?.Delete();
+    }
+
 	[System.Serializable]
 	public class BezierConnection
     {
 		public Transform transform;
 		public Vector3 offset;
-		public Vector3 dir;
+		public Vector3 normals;
+		public bool dynamicNormals = true;
 
 		public void Connect(Transform parent)
 		{
@@ -159,5 +168,10 @@ public class BezierCurve : MonoBehaviour
 			transform.position = parent.position; 
 			transform.rotation = parent.rotation;
 		}
+		public void Delete()
+        {
+			if (!transform)
+				Destroy(transform);
+        }
 	}
 }

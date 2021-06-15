@@ -47,19 +47,19 @@ public class EventDistance : VREvent
     {
         base.SetupOutputs();
         outEvent = new VRPort(GetData, new DatEvent(0f));
-        outputs.Add(outEvent);
+        vrOutputs.Add(outEvent);
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
         inDistance = new VRPort(this, new DatFloat(0));
-        inputs.Add(inDistance);
+        vrInputs.Add(inDistance);
 
         inObjA = new VRPort(this, new DatObj(null));
-        inputs.Add(inObjA);
+        vrInputs.Add(inObjA);
 
         inObjB = new VRPort(this, new DatObj(null));
-        inputs.Add(inObjB);
+        vrInputs.Add(inObjB);
     }
 
     public override void Update(DatEvent vREventDat)

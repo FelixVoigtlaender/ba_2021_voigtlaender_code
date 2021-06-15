@@ -4,21 +4,52 @@ using UnityEngine;
 
 public class VisConnection : MonoBehaviour
 {
+    [Header("Setup")]
     public BezierCurve bezierCurve;
     public VRConnection vrConnection;
+    [Header("Colors")]
+    public Color activeColor = Color.white;
+    public Color inactiveColor = Color.gray;
+    public Color errorColor = Color.red;
+    Color normalColor;
 
     VisPort startVisPort;
     VisPort endVisPort;
     Vector3 lastPosition;
+
+
     public void Setup(VisPort start)
     {
         vrConnection = VRManager.instance.InitVRConnection(start.vrPort, null, false);
+        vrConnection.OnDelete += OnDelete;
         bezierCurve.start.Connect(start.transform);
         bezierCurve.end.Hover(start.transform);
         startVisPort = start;
-        bezierCurve.SetColor(start.vrPort.dataType.GetColor());
+        normalColor = start.vrPort.dataType.GetColor();
+        bezierCurve.SetColor(normalColor);
 
         lastPosition = start.transform.position;
+        vrConnection.OnActive += OnActive;
+
+
+        ResetColor();
+    }
+
+    public void OnActive(VRData vrData)
+    {
+        if (vrData == null)
+            bezierCurve.SetColor(normalColor * errorColor);
+        else
+            bezierCurve.SetColor(normalColor * activeColor);
+    }
+
+    private void FixedUpdate()
+    {
+        ResetColor();
+    }
+    public void ResetColor()
+    {
+        bezierCurve.SetColor(normalColor * inactiveColor);
     }
 
     public void Drag(Vector3 position, GameObject uiObject)
@@ -55,7 +86,7 @@ public class VisConnection : MonoBehaviour
             VisVariable visVariable = objVisVariable.GetComponent<VisVariable>();
             visVariable.Setup(vrVariable);
 
-            if (startVisPort.vrPort.type == PortType.INPUT)
+            if (startVisPort.vrPort.portType == PortType.INPUT)
                 endVisPort = visVariable.visOutPorts[0];
             else
                 endVisPort = visVariable.visInPorts[0];
@@ -70,8 +101,27 @@ public class VisConnection : MonoBehaviour
         endVisPort = visPortA.vrPort == vrConnection.end ? visPortA : visPortB;
 
         bezierCurve.start.Connect(startVisPort.transform);
+        bezierCurve.start.dynamicNormals = false;
+        bezierCurve.start.normals = Vector3.right;
+
         bezierCurve.end.Connect(endVisPort.transform);
+        bezierCurve.end.dynamicNormals = false;
+        bezierCurve.end.normals = Vector3.left;
 
         VRDebug.Log($"Connected {isConnected}");
+    }
+
+    public void Delete()
+    {
+        vrConnection?.Delete();
+    }
+    public void OnDelete()
+    {
+        bezierCurve?.Delete();
+        if (gameObject!=null)
+            Destroy(gameObject);
+
+        if (vrConnection != null)
+            vrConnection.OnDelete -= OnDelete;
     }
 }

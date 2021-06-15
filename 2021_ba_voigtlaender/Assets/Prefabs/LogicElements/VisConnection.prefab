@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bezierCurve: {fileID: 7866749346100581473}
+  activeColor: {r: 1, g: 1, b: 1, a: 1}
+  inactiveColor: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
+  errorColor: {r: 0.39215687, g: 0, b: 0, a: 1}
 --- !u!1001 &3621045142047284722
 PrefabInstance:
   m_ObjectHideFlags: 0

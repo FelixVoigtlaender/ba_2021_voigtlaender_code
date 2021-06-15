@@ -4,14 +4,11 @@ using UnityEngine;
 
 public abstract class VRAction : VRLogicElement
 {
-    public List<VRVariable> vrVariables = new List<VRVariable>();
-
     public override void Setup()
     {
-        SetupVariables();
         base.Setup();
     }
-    public abstract void SetupVariables();
+    public override abstract void SetupVariables();
 
     public static List<VRAction> GetAllActions()
     {
@@ -61,17 +58,17 @@ public class ActPosition : VRAction
         base.SetupInputs();
 
         inTrigger = new VRPort(SetData, new DatEvent(0f));
-        inputs.Add(inTrigger);
+        vrInputs.Add(inTrigger);
 
         inObject = new VRPort(this, new DatObj(null));
-        inputs.Add(inObject);
+        vrInputs.Add(inObject);
     }
 
     public override void SetupOutputs()
     {
         base.SetupOutputs();
         outTrigger = new VRPort(GetElementData, new DatEvent(0));
-        outputs.Add(outTrigger);
+        vrOutputs.Add(outTrigger);
     }
 
     public void SetData(VRData datEvent)

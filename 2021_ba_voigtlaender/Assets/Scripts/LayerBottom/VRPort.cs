@@ -5,76 +5,114 @@ using System;
 
 public class VRPort
 {
-    public PortType type = PortType.INPUT;
+    public PortType portType = PortType.INPUT;
     public VRData dataType;
-    public VRConnection connection;
+    //public VRConnection connection;
+    public List<VRConnection> connections = new List<VRConnection>();
+
     public event Func<VRData> GetElementData;
     public event Action<VRData> SetElementData;
+    public event Action OnDelete;
     VRLogicElement element;
     public VRPort(Func<VRData> GetElementData, VRData dataType)
     {
         this.GetElementData = GetElementData;
-        this.type = PortType.OUTPUT;
+        this.portType = PortType.OUTPUT;
         this.dataType = dataType;
     }
     public VRPort(VRLogicElement element, VRData dataType)
     {
         this.element = element;
-        this.type = PortType.INPUT;
+        this.portType = PortType.INPUT;
         this.dataType = dataType;
     }
     public VRPort(Action<VRData> SetElementData, VRData dataType)
     {
         this.SetElementData = SetElementData;
-        this.type = PortType.INPUT;
+        this.portType = PortType.INPUT;
         this.dataType = dataType;
     }
 
     public bool IsConnected()
     {
-        return connection != null;
+        return connections.Count != 0;
     }
 
     public VRData GetData()
     {
-        if (connection  == null)
+        if (connections.Count == 0)
             return null;
 
         VRData data = null;
-        if (connection.end == this)
-            data = connection.GetData();
-        if (connection.start == this && GetElementData!=null)
-            data = GetElementData();
+        switch (portType)
+        {
+            case PortType.INPUT:
+                data = connections[0].GetData();
+                break;
+            case PortType.OUTPUT:
+                data = GetElementData();
+                break;
+        }
 
         return data;
     }
     public void SetData(VRData data)
     {
-
-        if (connection == null)
+        if (connections.Count == 0)
             return;
 
-        if (connection.end == this && SetElementData != null)
-            SetElementData(data);
-        if (connection.start == this)
-            connection.SetData(data);
+        switch (portType)
+        {
+            case PortType.INPUT:
+                SetElementData(data);
+                break;
+            case PortType.OUTPUT:
+                foreach(VRConnection connection in connections)
+                {
+
+                    connection.SetData(data);
+                }
+                break;
+        }
     }
 
     public void Trigger()
     {
-        if (type == PortType.INPUT && element != null)
+        if (portType == PortType.INPUT && element != null)
             element.Trigger();
-        if (type == PortType.OUTPUT && connection != null)
-            connection.Trigger();
+        if (portType == PortType.OUTPUT && connections.Count == 0)
+        {
+            foreach (VRConnection connection in connections)
+            {
+                connection.Trigger();
+            }
+        }
     }
 
 
     public bool CanConnect(VRData data)
     {
-        if (this.connection != null)
-            return false;
-
         return dataType.IsType(data);
+    }
+
+    public void Delete()
+    {
+        List<VRConnection> oldConnections = new List<VRConnection>(connections);
+        connections.Clear();
+        foreach (VRConnection connection in oldConnections)
+        {
+            connection?.Delete();
+        }
+
+        OnDelete?.Invoke();
+    }
+    public void RemoveConnection(VRConnection connection)
+    {
+        connections.Remove(connection);
+    }
+    public void AddConnection(VRConnection connection)
+    {
+        connections.Add(connection);
     }
 }
 

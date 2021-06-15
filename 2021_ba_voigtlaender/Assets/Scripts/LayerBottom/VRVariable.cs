@@ -22,13 +22,13 @@ public class VRVariable : VRLogicElement
     {
         base.SetupOutputs();
         output = new VRPort(GetData, vrData);
-        outputs.Add(output);
+        vrOutputs.Add(output);
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
         input = new VRPort(this, vrData);
-        inputs.Add(input);
+        vrInputs.Add(input);
     }
 
     public VRData GetData()
