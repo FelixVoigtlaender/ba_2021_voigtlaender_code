@@ -39,7 +39,7 @@ public class TransformGrab : MonoBehaviour
         {
             Canvas canvas = inputManager.currentUIElement.GetComponentInParent<Canvas>();
             if (canvas)
-                draggedTransform = new DraggedTransform(canvas.transform, transform);
+                draggedTransform = new DraggedTransform(canvas.transform, transform,inputManager.currentUIHitPosition);
         }
         else if(Physics.Raycast(origin,direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
         {
@@ -66,7 +66,9 @@ public class TransformGrab : MonoBehaviour
 
         VRDebug.SetLog("CurrentDrag: " + draggedTransform.transform.name);
         // Drag
-        Vector3 position = transform.position + transform.forward.normalized * draggedTransform.distance - draggedTransform.offset;
+        Vector3 handOffset = (transform.position - draggedTransform.startHandPosition);
+        float handDirOffset = Vector3.Dot(transform.forward.normalized, handOffset)*1.1f;
+        Vector3 position = transform.position + transform.forward.normalized * (draggedTransform.distance + handDirOffset) - draggedTransform.offset;
         draggedTransform.transform.position = position;
         draggedTransform.transform.rotation = transform.rotation * draggedTransform.relativeRotation;
 
@@ -121,11 +123,15 @@ public class TransformGrab : MonoBehaviour
         public Quaternion relativeRotation;
         public Rigidbody rigid;
 
+        public Vector3 startHandPosition;
+
         public DraggedTransform(RaycastHit hit, Transform handTransform)
         {
             transform = hit.transform;
             distance = hit.distance;
             offset = hit.point - hit.transform.position;
+            startHandPosition = handTransform.position;
+
 
             relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
 
@@ -136,6 +142,16 @@ public class TransformGrab : MonoBehaviour
             this.transform = transform;
             distance =Vector3.Distance(transform.position,handTransform.position);
             offset = Vector3.zero;
+            startHandPosition = handTransform.position;
+
+            relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
+        }
+        public DraggedTransform(Transform transform, Transform handTransform, Vector3 worldHitPosition)
+        {
+            this.transform = transform;
+            distance = Vector3.Distance(transform.position, handTransform.position);
+            offset = worldHitPosition - transform.position;
+            startHandPosition = handTransform.position;
 
             relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
         }

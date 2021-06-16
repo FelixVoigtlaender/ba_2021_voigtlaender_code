@@ -16,14 +16,11 @@ public class UIOnHoverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        VRDebug.Log("Pointer Enter");
         //scaleTransform.localScale = cachedScale;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-
-        VRDebug.Log("Pointer Exit");
         //scaleTransform.localScale = new Vector3(0, 0, 0);
     }
 }

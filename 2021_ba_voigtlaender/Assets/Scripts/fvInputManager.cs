@@ -17,6 +17,7 @@ public class fvInputManager : MonoBehaviour
     public InputActionReference joystick;
 
     public GameObject currentUIElement;
+    public Vector3 currentUIHitPosition;
     private void Awake()
     {
         rayInteractor = GetComponent<XRRayInteractor>();
@@ -40,6 +41,7 @@ public class fvInputManager : MonoBehaviour
         if(rayInteractor.TryGetCurrentUIRaycastResult(out result))
         {
             currentUIElement = result.gameObject;
+            currentUIHitPosition = result.worldPosition;
             VRDebug.SetLog(result.gameObject.name);
         }
         else

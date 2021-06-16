@@ -12,6 +12,7 @@ public class VisObject : MonoBehaviour
     public Text textName;
     public BezierCurve lineToObject;
     public float hoverDistance = 2;
+    public MiniatureMaker miniature;
 
     public Canvas canvas;
 
@@ -27,6 +28,8 @@ public class VisObject : MonoBehaviour
         this.vrObject = vrObject;
         textName.text = vrObject.gameObject.name;
         vrObject.OnDelete += OnDelete;
+
+        miniature.CopyMesh(vrObject.gameObject);
 
         lineToObject.start.Connect(vrObject.gameObject.transform);
         lineToObject.end.Connect(canvas.transform);
