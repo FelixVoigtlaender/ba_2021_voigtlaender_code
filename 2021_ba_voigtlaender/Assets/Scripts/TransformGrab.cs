@@ -45,6 +45,11 @@ public class TransformGrab : MonoBehaviour
         {
             draggedTransform = new DraggedTransform(hit, transform);
         }
+
+        if(draggedTransform!=null && draggedTransform.transform && draggedTransform.transform.GetComponent<BlockDrag>())
+        {
+            draggedTransform = null;
+        }
     }
     public void OnButtonUp(InputAction.CallbackContext context)
     {

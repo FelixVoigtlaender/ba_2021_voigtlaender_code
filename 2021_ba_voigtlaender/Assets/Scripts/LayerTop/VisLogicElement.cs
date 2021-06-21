@@ -85,7 +85,7 @@ public class VisLogicElement : MonoBehaviour
         return true;
     }
 
-    public void OnDelete()
+    public virtual void OnDelete()
     {
         if (rootCanvas.gameObject)
             Destroy(rootCanvas.gameObject);

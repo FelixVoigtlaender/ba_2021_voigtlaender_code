@@ -33,6 +33,8 @@ public class InitLogic : MonoBehaviour
 
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
         {
+            if (hit.collider.GetComponent<BlockCode>())
+                return;
             VRManager.instance.InitVRObject(hit.collider.gameObject);
         }
     }

@@ -12,7 +12,7 @@ public class VRConnection
     public VRPort start;
     public VRPort end;
 
-
+    int lastTick = 0;
     public VRPort GetOtherPort(VRPort myPort)
     {
         VRPort otherPort = null;
@@ -26,22 +26,36 @@ public class VRConnection
 
     public VRData GetData()
     {
-        if (start == null)
+
+        if (start == null || !CheckTick())
             return null;
 
         VRData vrData = start.GetData();
         OnActive?.Invoke(vrData);
 
+
         return vrData;
     }
     public void SetData(VRData data)
     {
-        if (end == null)
+        if (end == null || !CheckTick())
             return;
 
         OnActive?.Invoke(data);
 
         end.SetData(data);
+    }
+
+    public bool CheckTick()
+    {
+
+        if (lastTick == VRManager.tickIndex)
+        {
+            OnActive?.Invoke(null);
+            return false;
+        }
+        lastTick = VRManager.tickIndex;
+        return true;
     }
     
     public void Trigger()

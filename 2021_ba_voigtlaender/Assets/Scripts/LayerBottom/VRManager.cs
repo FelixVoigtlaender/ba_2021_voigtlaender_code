@@ -11,6 +11,7 @@ public class VRManager : MonoBehaviour
     public event Action<VRVariable> OnInitVRVariable;
     public event Action<VRConnection> OnInitVRConnection;
     public event Action<VRAction> OnInitVRAction;
+    public static int tickIndex = 0;
 
 
     public List<VRObject> vrObjects = new List<VRObject>();
@@ -25,8 +26,9 @@ public class VRManager : MonoBehaviour
 
     private void Update()
     {
+        tickIndex++;
         DatEvent datEvent = new DatEvent(Time.time);
-        foreach(VREvent vrEvent in vrEvents)
+        foreach (VREvent vrEvent in vrEvents)
         {
             vrEvent.Update(datEvent);
         }

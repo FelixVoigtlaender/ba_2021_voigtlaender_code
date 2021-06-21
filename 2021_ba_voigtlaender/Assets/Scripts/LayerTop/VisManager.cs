@@ -13,6 +13,9 @@ public class VisManager : MonoBehaviour
 
     [Header("Object")]
     public GameObject prefabVisObject;
+    public GameObject prefabVisVector;
+    private VisVector visVector;
+    private Transform visVectorTrans;
     [Header("Property")]
     public GameObject[] prefabVisProperties;
     public GameObject[] prefabVisEvents;
@@ -29,6 +32,20 @@ public class VisManager : MonoBehaviour
         VRManager.instance.OnInitVRObject += OnInitVRObject;
         VRManager.instance.OnInitVREvent += OnInitVREvent;
         VRManager.instance.OnInitVRVariable += OnInitVRVariable;
+    }
+
+    public VisVector DemandVisVector()
+    {
+        if (!visVectorTrans)
+            visVectorTrans = Instantiate(prefabVisVector).transform;
+        if (visVector != null)
+            visVector.transform = null;
+
+        visVector = new VisVector();
+        visVector.transform = visVectorTrans;
+        visVector.transform.gameObject.SetActive(true);
+
+        return visVector;
     }
 
     public void OnInitVRObject(VRObject vrObject)
@@ -135,4 +152,9 @@ public class VisManager : MonoBehaviour
     }
 }
 
+
+public class VisVector
+{
+    public Transform transform;
+}
 
