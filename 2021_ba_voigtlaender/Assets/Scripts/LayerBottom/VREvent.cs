@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public abstract class VREvent : VRLogicElement
 {
     public virtual void Update(DatEvent vREventDat)
@@ -30,13 +31,15 @@ public abstract class VREvent : VRLogicElement
 }
 
 
+[System.Serializable]
 public class EventDistance : VREvent
 {
     VRPort outEvent;
 
-    VRPort inDistance;
-    VRPort inObjA;
-    VRPort inObjB;
+
+    VRVariable varDistance;
+    VRVariable varObjA;
+    VRVariable varObjB;
 
     public override string Name()
     {
@@ -49,35 +52,40 @@ public class EventDistance : VREvent
         outEvent = new VRPort(GetData, new DatEvent(0f));
         vrOutputs.Add(outEvent);
     }
-    public override void SetupInputs()
+    public override void SetupVariables()
     {
-        base.SetupInputs();
-        inDistance = new VRPort(this, new DatFloat(0));
-        vrInputs.Add(inDistance);
+        base.SetupVariables();
 
-        inObjA = new VRPort(this, new DatObj(null));
-        vrInputs.Add(inObjA);
+        varDistance = new VRVariable();
+        varDistance.Setup(new DatFloat(0));
+        vrVariables.Add(varDistance);
 
-        inObjB = new VRPort(this, new DatObj(null));
-        vrInputs.Add(inObjB);
+        varObjA = new VRVariable();
+        varObjA.Setup(new DatObj(null));
+        vrVariables.Add(varObjA);
+
+        varObjB = new VRVariable();
+        varObjB.Setup(new DatObj(null));
+        vrVariables.Add(varObjB);
     }
 
     public override void Update(DatEvent vREventDat)
     {
 
-        VRDebug.SetLog($"{Name()}: UPDATE {vREventDat.value.ToString("0.0")}");
-        VRDebug.SetLog($"{Name()}: {inObjA.IsConnected()} {inObjB.IsConnected()} {inDistance.IsConnected()}");
-        if (!inObjA.IsConnected() || !inObjB.IsConnected() || !inDistance.IsConnected())
+        VRDebug.SetLog($"{Name()}: UPDATE {vREventDat.Value.ToString("0.0")}");
+
+        DatObj datObjA =(DatObj) varObjA.GetData();
+        DatObj datObjB = (DatObj) varObjB.GetData();
+        DatFloat datDistance = (DatFloat)varDistance.GetData();
+
+
+        VRDebug.SetLog($"{Name()}: {datObjA.Value!=null} {datObjB.Value != null} {datDistance.Value}");
+        if (datObjA.Value == null || datObjB.Value == null)
             return;
 
-        DatObj datObjA =(DatObj) inObjA.GetData();
-        DatObj datObjB = (DatObj)inObjB.GetData();
-        DatFloat datDistance = (DatFloat)inDistance.GetData();
-
-
-        Vector3 posA = datObjA.value.gameObject.transform.position;
-        Vector3 posB = datObjB.value.gameObject.transform.position;
-        float distance = datDistance.value;
+        Vector3 posA = datObjA.Value.gameObject.transform.position;
+        Vector3 posB = datObjB.Value.gameObject.transform.position;
+        float distance = datDistance.Value;
 
         if (Vector3.Distance(posA, posB) < distance)
         {

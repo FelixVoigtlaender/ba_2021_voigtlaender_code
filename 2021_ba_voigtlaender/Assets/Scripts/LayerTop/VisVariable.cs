@@ -14,10 +14,17 @@ public class VisVariable : VisLogicElement
 
         textName.text = vrVariable.vrData.GetName();
         HandleTypes(vrVariable.vrData);
+
+        vrVariable.vrData.OnDataChanged += OnDataChanged;
     }
     public override bool IsType(VRLogicElement vrLogicElement)
     {
         return vrLogicElement is VRVariable;
+    }
+
+    public void OnDataChanged(VRData vrData)
+    {
+        textName.text = vrData.GetName();
     }
 
     public void HandleTypes(VRData data)
@@ -26,8 +33,8 @@ public class VisVariable : VisLogicElement
         {
             case DatFloat datFloat :
                 slider.gameObject.SetActive(true);
-                slider.value = datFloat.value;
-                slider.onValueChanged.AddListener(value => { datFloat.value = value; textName.text = datFloat.GetName(); });
+                slider.value = datFloat.Value;
+                slider.onValueChanged.AddListener(value => { datFloat.Value = value; textName.text = datFloat.GetName(); });
                 break;
             default:
                 break;

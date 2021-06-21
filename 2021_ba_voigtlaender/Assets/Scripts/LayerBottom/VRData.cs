@@ -1,26 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+[System.Serializable]
 public abstract class VRData 
 {
     public abstract bool IsType(VRData data);
     public abstract Color GetColor();
     public abstract string GetName();
     public abstract void SetData(VRData data);
+
+    public event Action<VRData> OnDataChanged;
+    protected void DataChanged()
+    {
+        OnDataChanged?.Invoke(this);
+    }
     public Color DecimalToColor(int r, int g, int b)
     {
         return new Color(r / 255f, g / 255f, b / 255f);
     }
 }
 
+[System.Serializable]
 public class DatString : VRData
 {
-    public string value;
+    private string value;
+    public string Value 
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
 
     public DatString(string value)
     {
-        this.value = value;
+        this.Value = value;
     }
 
 
@@ -36,23 +49,29 @@ public class DatString : VRData
 
     public override string GetName()
     {
-        return value.ToString();
+        return Value.ToString();
     }
 
     public override void SetData(VRData data)
     {
-        value = ((DatString)data).value;
+        Value = ((DatString)data).Value;
     }
 }
 
+[System.Serializable]
 public class DatFloat : VRData
 {
-    public float value;
+    private float value;
+    public float Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
 
 
     public DatFloat(float value)
     {
-        this.value = value;
+        this.Value = value;
     }
     public override bool IsType(VRData data)
     {
@@ -65,20 +84,26 @@ public class DatFloat : VRData
     }
     public override string GetName()
     {
-        return value.ToString("0.00");
+        return Value.ToString("0.00");
     }
     public override void SetData(VRData data)
     {
-        value = ((DatFloat)data).value;
+        Value = ((DatFloat)data).Value;
     }
 }
 
+[System.Serializable]
 public class DatInt : VRData
 {
-    public int value;
+    private int value;
+    public int Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
     public DatInt(int value)
     {
-        this.value = value;
+        this.Value = value;
     }
     public override bool IsType(VRData data)
     {
@@ -91,21 +116,27 @@ public class DatInt : VRData
     }
     public override string GetName()
     {
-        return value.ToString();
+        return Value.ToString();
     }
     public override void SetData(VRData data)
     {
-        value = ((DatInt)data).value;
+        Value = ((DatInt)data).Value;
     }
 }
 
 
+[System.Serializable]
 public class DatVector3 : VRData
 {
-    public Vector3 value;
+    private Vector3 value;
+    public Vector3 Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
     public DatVector3(Vector3 value)
     {
-        this.value = value;
+        this.Value = value;
     }
     public override bool IsType(VRData data)
     {
@@ -118,20 +149,26 @@ public class DatVector3 : VRData
     }
     public override string GetName()
     {
-        return value.ToString();
+        return Value.ToString();
     }
     public override void SetData(VRData data)
     {
-        value = ((DatVector3)data).value;
+        Value = ((DatVector3)data).Value;
     }
 }
 
+[System.Serializable]
 public class DatEvent : VRData
 {
-    public float value;
+    private float value;
+    public float Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
     public DatEvent(float value)
     {
-        this.value = value;
+        this.Value = value;
     }
     public override bool IsType(VRData data)
     {
@@ -144,20 +181,26 @@ public class DatEvent : VRData
     }
     public override string GetName()
     {
-        return value.ToString();
+        return Value.ToString();
     }
     public override void SetData(VRData data)
     {
-        value = ((DatEvent)data).value;
+        Value = ((DatEvent)data).Value;
     }
 }
 
+[System.Serializable]
 public class DatBool : VRData
 {
-    public bool value;
+    private bool value;
+    public bool Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
     public DatBool(bool value)
     {
-        this.value = value;
+        this.Value = value;
     }
     public override bool IsType(VRData data)
     {
@@ -170,20 +213,26 @@ public class DatBool : VRData
     }
     public override string GetName()
     {
-        return value.ToString();
+        return Value.ToString();
     }
     public override void SetData(VRData data)
     {
-        value = ((DatBool)data).value;
+        Value = ((DatBool)data).Value;
     }
 }
 
+[System.Serializable]
 public class DatObj : VRData
 {
-    public VRObject value;
+    private VRObject value;
+    public VRObject Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
     public DatObj(VRObject value)
     {
-        this.value = value;
+        this.Value = value;
     }
     public override bool IsType(VRData data)
     {
@@ -196,13 +245,15 @@ public class DatObj : VRData
     }
     public override string GetName()
     {
-        if (value == null)
+        if (Value == null)
             return "NULL";
-        return value.ToString();
+        if (Value.gameObject == null)
+            return "NULL-OBJ";
+        return Value.gameObject.ToString();
     }
     public override void SetData(VRData data)
     {
-        value = ((DatObj)data).value;
+        Value = ((DatObj)data).Value;
     }
 }
 

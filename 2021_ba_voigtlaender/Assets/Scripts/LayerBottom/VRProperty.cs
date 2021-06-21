@@ -152,7 +152,7 @@ public class PropPosition : VRProperty
             return;
 
         DatVector3 vrVector3 = (DatVector3)input.GetData();
-        vrObject.gameObject.transform.position = vrVector3.value;
+        vrObject.gameObject.transform.position = vrVector3.Value;
     }
 
 }
@@ -194,6 +194,6 @@ public class PropScale : VRProperty
             return;
 
         DatFloat vrFloat = (DatFloat)input.GetData();
-        vrObject.gameObject.transform.localScale = Vector3.one * vrFloat.value;
+        vrObject.gameObject.transform.localScale = Vector3.one * vrFloat.Value;
     }
 }

@@ -38,7 +38,7 @@ public class VRManager : MonoBehaviour
         if (vrEvent == null)
             return null;
 
-        vrEvent.SetupPorts();
+        vrEvent.Setup();
         vrEvents.Add(vrEvent);
 
         if (notify)

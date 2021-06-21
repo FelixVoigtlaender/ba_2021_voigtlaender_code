@@ -8,7 +8,6 @@ public abstract class VRAction : VRLogicElement
     {
         base.Setup();
     }
-    public override abstract void SetupVariables();
 
     public static List<VRAction> GetAllActions()
     {
@@ -47,6 +46,7 @@ public class ActPosition : VRAction
 
     public override void SetupVariables()
     {
+        base.SetupVariables();
         DatVector3 datPosition = new DatVector3(Vector3.zero);
         varPosition = new VRVariable();
         varPosition.Setup(datPosition);
@@ -80,7 +80,7 @@ public class ActPosition : VRAction
 
         DatObj datObj = (DatObj) inObject.GetData();
         DatVector3 datVector3 =(DatVector3) varPosition.GetData();
-        datObj.value.gameObject.transform.position = datVector3.value;
+        datObj.Value.gameObject.transform.position = datVector3.Value;
 
         if (outTrigger.IsConnected())
             outTrigger.SetData(datEvent);
