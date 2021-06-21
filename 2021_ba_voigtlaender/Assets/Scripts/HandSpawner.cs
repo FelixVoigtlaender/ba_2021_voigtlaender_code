@@ -25,7 +25,7 @@ public class HandSpawner : MonoBehaviour
 
         if(currentElement.transform.localPosition.magnitude > 0.05f)
         {
-            currentElement.transform.SetParent(null);
+            currentElement.transform.SetParent(null, true);
             currentElement = null;
         }
     }
