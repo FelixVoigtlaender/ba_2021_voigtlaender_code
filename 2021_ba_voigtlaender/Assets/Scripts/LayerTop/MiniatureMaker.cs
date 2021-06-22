@@ -39,8 +39,8 @@ public class MiniatureMaker : MonoBehaviour
 
         transform.localScale = miniSize;
 
-        VRDebug.Log(meshBounds.ToString());
-        VRDebug.Log(normObjSize.ToString());
+        //VRDebug.Log(meshBounds.ToString());
+        //VRDebug.Log(normObjSize.ToString());
     }
 
     float MaxFromVector3(Vector3 vector)

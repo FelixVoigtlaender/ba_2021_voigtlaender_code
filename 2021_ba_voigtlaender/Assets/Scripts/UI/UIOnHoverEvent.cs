@@ -3,24 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UIOnHoverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public abstract class UIOnHoverEvent : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Transform scaleTransform;
-    Vector3 cachedScale;
 
-    void Start()
+    public float easeTime = .1f;
+    public float waitTime = 5f;
+    protected float lastEntry;
+    protected float lastExit;
+
+
+
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
-
-        cachedScale = scaleTransform.localScale;
+        lastEntry = Time.time;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public virtual void OnPointerExit(PointerEventData eventData)
     {
-        //scaleTransform.localScale = cachedScale;
+        lastExit = Time.time;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        //scaleTransform.localScale = new Vector3(0, 0, 0);
-    }
 }

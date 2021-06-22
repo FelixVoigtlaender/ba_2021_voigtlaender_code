@@ -40,7 +40,7 @@ public class VisLogicElement : MonoBehaviour
 
         List<VisVariable> visVariables = new List<VisVariable>();
 
-        VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
+        //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
 
         foreach (VRVariable vrVariable in element.vrVariables)
         {

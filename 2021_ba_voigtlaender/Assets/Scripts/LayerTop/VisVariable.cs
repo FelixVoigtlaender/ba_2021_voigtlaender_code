@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using DG.Tweening;
 public class VisVariable : VisLogicElement
 {
     VRVariable vrVariable;
@@ -18,8 +18,6 @@ public class VisVariable : VisLogicElement
         SetupTypes(vrVariable.vrData);
 
         vrVariable.vrData.OnDataChanged += OnDataChanged;
-        if (button)
-            button.onClick.AddListener(ButtonPressed);
     }
 
     public void SetupTypes(VRData data)
@@ -31,6 +29,13 @@ public class VisVariable : VisLogicElement
                 slider.value = datFloat.Value;
                 slider.onValueChanged.RemoveAllListeners();
                 slider.onValueChanged.AddListener(value => { datFloat.Value = value; textName.text = datFloat.GetName(); });
+                break;
+            case DatVector3 datVector:
+                if (button)
+                {
+                    button.gameObject.SetActive(true);
+                    button.onClick.AddListener(ButtonPressed);
+                }
                 break;
             default:
                 break;
@@ -75,8 +80,17 @@ public class VisVariable : VisLogicElement
                 slider.value = datFloat.Value;
                 break;
             case DatVector3 datVector:
-                visVector = VisManager.instance.DemandVisVector();
-                visVector.transform.position = datVector.Value;
+                if(visVector!=null && visVector.transform && visVector.transform.gameObject.activeSelf)
+                {
+                    visVector.transform.gameObject.SetActive(false);
+                }
+                else
+                {
+                    visVector = VisManager.instance.DemandVisVector();
+                    Vector3 position = datVector.Value.magnitude > 0.1f ? datVector.Value : transform.position + Vector3.up * 0.2f;
+                    visVector.transform.position = transform.position;
+                    visVector.transform.DOMove(position, 0.2f);
+                }
                 break;
             default:
                 break;

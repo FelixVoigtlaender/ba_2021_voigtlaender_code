@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1412705494961069399}
   - component: {fileID: 2477751564487703590}
   - component: {fileID: 8606920927766171538}
-  - component: {fileID: 3210266147462486068}
+  - component: {fileID: 8927285101106630671}
   m_Layer: 5
   m_Name: VisObjectPanel
   m_TagString: Untagged
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3210266147462486068
+--- !u!114 &8927285101106630671
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -88,9 +88,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 59255515662877851}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c02fa1f1da398a43bb92bc0f51b8dd5, type: 3}
+  m_Script: {fileID: 11500000, guid: bb997277bfce9b145b33f4a9c055e63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  easeTime: 0.1
+  waitTime: 5
   scaleTransform: {fileID: 5383676845751756254}
 --- !u!1 &5383676845751756255
 GameObject:

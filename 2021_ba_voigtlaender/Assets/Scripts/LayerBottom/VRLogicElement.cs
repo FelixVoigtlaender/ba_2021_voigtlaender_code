@@ -45,6 +45,7 @@ public abstract class VRLogicElement
 
     public virtual void Delete()
     {
+        VRDebug.Log("DELETING: " + this.ToString());
         foreach(VRPort input in vrInputs)
         {
             input?.Delete();

@@ -87,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1135005589823400801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,6 +344,18 @@ PrefabInstance:
     - target: {fileID: 1412705494961069399, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383676845751756254, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383676845751756254, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.054718018
+      objectReference: {fileID: 0}
+    - target: {fileID: 5383676845751756254, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 95.98804
       objectReference: {fileID: 0}
     - target: {fileID: 8527981899649056498, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
       propertyPath: m_Positions.Array.data[0].x
@@ -1545,7 +1557,8 @@ PrefabInstance:
       propertyPath: m_Positions.Array.data[99].z
       value: 1.257
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3210266147462486068, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dca79015c08297c4a94dd0fb81d7074f, type: 3}
 --- !u!224 &6263381365817744276 stripped
 RectTransform:
