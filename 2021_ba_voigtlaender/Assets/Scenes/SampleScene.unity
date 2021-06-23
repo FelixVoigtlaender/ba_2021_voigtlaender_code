@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.104336135, g: 0.13375816, b: 0.27694494, a: 1}
+  m_IndirectSpecularColor: {r: 0.0995717, g: 0.10730714, b: 0.15735582, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2840,9 +2840,9 @@ MonoBehaviour:
   prefabVisProperties:
   - {fileID: 4362529494445662840, guid: 7df94dd68c5e6eb41a4734d70d1fa2b4, type: 3}
   prefabVisEvents:
-  - {fileID: 1021512815669408470, guid: 003b65fa6b5a88f47823460aea1b4681, type: 3}
+  - {fileID: 59255515662877851, guid: a7ce978120c2e80408aadae10a00c964, type: 3}
   prefabLogicElements:
-  - {fileID: 2926938254219120392, guid: c962cb35640d4624eaed2243066454db, type: 3}
+  - {fileID: 59255515662877851, guid: a7ce978120c2e80408aadae10a00c964, type: 3}
   - {fileID: 6594920457516108982, guid: 0fbb5aeaa36ec2a40969ab70646fc25d, type: 3}
   prefabVisPort: {fileID: 7433788244925163418, guid: bf210f967713b9c4fb5e8b328df8051d, type: 3}
 --- !u!1 &1584996513
@@ -5188,10 +5188,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LeftHandCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3570745308033768110, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-      propertyPath: buttonSpawns.Array.data[0].prefab
-      value: 
-      objectReference: {fileID: 2926938254219120392, guid: c962cb35640d4624eaed2243066454db, type: 3}
     - target: {fileID: 3608030419551338785, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5332,6 +5328,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 2102891831}
+    - target: {fileID: 7360078462474747995, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7360078462700312312, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
