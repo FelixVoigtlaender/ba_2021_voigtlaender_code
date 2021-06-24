@@ -32,7 +32,8 @@ public class TransformGrab : MonoBehaviour
         handler.OnButtonUp += OnButtonUp;
 
         otherHand = FindOtherHand();
-        otherHand.isDominant = false;
+        if(isDominant)
+            otherHand.isDominant = false;
     }
     TransformGrab FindOtherHand()
     {
@@ -85,24 +86,32 @@ public class TransformGrab : MonoBehaviour
             return;
 
 
-        VRDebug.SetLog("CurrentDrag: " + draggedTransform.transform.name);
-        // Rotation
-        draggedTransform.transform.rotation = transform.rotation * draggedTransform.relativeRotation;
-        // Drag
-        Vector3 handOffset = (transform.position - draggedTransform.startHandPosition);
-        float handDirOffset = Vector3.Dot(transform.forward.normalized, handOffset)*1.1f;
-        draggedTransform.goalPosition = transform.position + transform.forward.normalized * (draggedTransform.distance + handDirOffset) - draggedTransform.offset;
-        draggedTransform.currentPosition = Vector3.SmoothDamp(draggedTransform.transform.position, draggedTransform.goalPosition, ref draggedTransform.smoothVelocity,0.1f);
-
         if (draggedTransform.rigid)
+        {
             draggedTransform.rigid.velocity = Vector3.zero;
+            draggedTransform.rigid.angularVelocity = Vector3.zero;
+        }
 
         if (otherHand.draggedTransform!=null && otherHand.draggedTransform.transform == draggedTransform.transform)
         {
+            // Dual Weild
             HandleDualWeild();
         }
         else
         {
+            // Single Weild
+            VRDebug.SetLog("SINGLE WEILD");
+
+            // Rotation
+            draggedTransform.transform.rotation = transform.rotation * draggedTransform.relativeRotation;
+
+            // Drag
+            Vector3 worldHitDelta = draggedTransform.transform.TransformVector(draggedTransform.relativeHitPosition);
+            Vector3 handOffset = (transform.position - draggedTransform.startHandPosition);
+            float handDirOffset = Vector3.Dot(transform.forward.normalized, handOffset) * 1.1f;
+
+            draggedTransform.goalPosition = transform.position + transform.forward.normalized * (draggedTransform.distance + handDirOffset) - worldHitDelta;
+            draggedTransform.currentPosition = Vector3.SmoothDamp(draggedTransform.transform.position, draggedTransform.goalPosition, ref draggedTransform.smoothVelocity, 0.1f);
 
             draggedTransform.transform.position = draggedTransform.currentPosition;
         }
@@ -111,10 +120,64 @@ public class TransformGrab : MonoBehaviour
 
     public void HandleDualWeild()
     {
-        DraggedTransform otherTransform = otherHand.draggedTransform;
+        if (!isDominant)
+            return;
 
-        Vector3 dif = otherTransform.currentPosition - draggedTransform.currentPosition;
+        VRDebug.SetLog("DUAL WEILD");
+        DraggedTransform otherTransform = otherHand.draggedTransform;
+        Transform blockTransform = draggedTransform.transform;
+
+        // Initial Grab state
+        Vector3 initialDif = otherTransform.relativeHitPosition - draggedTransform.relativeHitPosition;
+        Debug.DrawLine(blockTransform.TransformPoint(otherTransform.relativeHitPosition), blockTransform.TransformPoint(draggedTransform.relativeHitPosition));
+
+        Vector3 initialDifMidPoint = draggedTransform.relativeHitPosition + initialDif * 0.5f;
+        Debug.DrawRay(blockTransform.TransformPoint(initialDifMidPoint), Vector3.up*0.02f);
+
+
+        // Current Grab state
+        Vector3 relativeHitPosition = blockTransform.InverseTransformPoint(transform.position + transform.forward.normalized * (draggedTransform.distance));
+        Vector3 otherRelativeHitPosition = blockTransform.InverseTransformPoint(otherHand.transform.position + otherHand.transform.forward.normalized * (otherTransform.distance));
+
+        Vector3 dif = otherRelativeHitPosition - relativeHitPosition;
+        Debug.DrawLine(blockTransform.TransformPoint(otherRelativeHitPosition), blockTransform.TransformPoint(relativeHitPosition), Color.red);
+        Vector3 difMidPoint = relativeHitPosition + dif * 0.5f;
         //TODO
+
+
+        //Rotation
+        //Vector3 worldInitialDifDir = blockTransform.TransformDirection(dif.normalized).normalized;
+        //Vector3 worldDifDir = blockTransform.TransformDirection(initialDif.normalized).normalized;
+
+        Vector3 axis = Vector3.Cross(initialDif.normalized, dif.normalized);
+
+        if (!draggedTransform.rectTransform)
+        {
+            blockTransform.Rotate(axis, Vector3.Angle(initialDif, dif));
+
+
+            draggedTransform.relativeRotation = Quaternion.Inverse(transform.rotation) * blockTransform.rotation;
+            otherTransform.relativeRotation = Quaternion.Inverse(otherHand.transform.rotation) * blockTransform.rotation;
+        }
+
+        //Position
+        Vector2 deltaMid = difMidPoint - initialDifMidPoint;
+        blockTransform.position += blockTransform.TransformPoint(difMidPoint) - blockTransform.TransformPoint(initialDifMidPoint);
+
+        //Scaling
+        if (!draggedTransform.rectTransform)
+        {
+            Vector3 scale = blockTransform.localScale;
+            scale *= dif.magnitude / initialDif.magnitude;
+            blockTransform.localScale = scale;
+        }
+        else
+        {
+            RectTransform rectTransform = draggedTransform.rectTransform;
+            VRDebug.SetLog(rectTransform.sizeDelta.ToString());
+        }
+
+
     }
 
     public void HandlePull()
@@ -162,7 +225,7 @@ public class TransformGrab : MonoBehaviour
         public Transform transform;
         public RectTransform rectTransform;
         public float distance;
-        public Vector3 offset;
+        public Vector3 relativeHitPosition;
         public Quaternion relativeRotation;
         public Rigidbody rigid;
 
@@ -173,11 +236,17 @@ public class TransformGrab : MonoBehaviour
         public Vector3 goalPosition;
         public Vector3 currentPosition;
 
+        // For Transforms with Collider
         public DraggedTransform(RaycastHit hit, Transform handTransform)
         {
             transform = hit.transform;
             distance = hit.distance;
-            offset = hit.point - hit.transform.position;
+
+            relativeHitPosition = hit.transform.InverseTransformPoint(hit.point);
+            //offset = hit.point - hit.transform.position;
+
+
+
             startHandPosition = handTransform.position;
             rectTransform = transform.GetComponent<RectTransform>();
 
@@ -185,21 +254,12 @@ public class TransformGrab : MonoBehaviour
 
             rigid = hit.transform.GetComponent<Rigidbody>();
         }
-        public DraggedTransform(Transform transform, Transform handTransform)
-        {
-            this.transform = transform;
-            distance =Vector3.Distance(transform.position,handTransform.position);
-            offset = Vector3.zero;
-            startHandPosition = handTransform.position;
-            rectTransform = transform.GetComponent<RectTransform>();
-
-            relativeRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
-        }
+        // For Transforms with UI
         public DraggedTransform(Transform transform, Transform handTransform, Vector3 worldHitPosition)
         {
             this.transform = transform;
             distance = Vector3.Distance(transform.position, handTransform.position);
-            offset = worldHitPosition - transform.position;
+            relativeHitPosition = transform.InverseTransformPoint(worldHitPosition);
             startHandPosition = handTransform.position;
             rectTransform = transform.GetComponent<RectTransform>();
 
