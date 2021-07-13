@@ -18,8 +18,6 @@ public class HandRemover : MonoBehaviour
     }
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        //VRDebug.Log("Delete Pressed");
-        
         if (!inputManager.currentUIElement)
             return;
         VisObject visObject = inputManager.currentUIElement.GetComponentInParent<VisObject>();

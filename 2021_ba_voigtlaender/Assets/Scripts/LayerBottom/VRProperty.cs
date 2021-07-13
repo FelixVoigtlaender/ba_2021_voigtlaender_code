@@ -9,6 +9,8 @@ public abstract class VRProperty : VRLogicElement
     protected VRPort output;
     protected VRPort input;
 
+    static List<VRProperty> allProperties;
+
     public abstract VRData GetData();
     
     public abstract bool IsType(VRObject vrObject);
@@ -20,10 +22,12 @@ public abstract class VRProperty : VRLogicElement
 
     public static List<VRProperty> GetAllPorperties()
     {
-        List<VRProperty> allProperties = new List<VRProperty>();
+        if (allProperties != null)
+            return allProperties;
 
 
-        IEnumerable<Type> subClasses = GetAllSubclassOf(typeof(VRProperty));
+        allProperties = new List<VRProperty>();
+        IEnumerable<Type> subClasses = VRManager.GetAllSubclassOf(typeof(VRProperty));
         foreach(Type type in subClasses)
         {
             VRProperty vrProperty = (VRProperty) Activator.CreateInstance(type);
@@ -31,20 +35,16 @@ public abstract class VRProperty : VRLogicElement
         }
         return allProperties;
     }
-    public static IEnumerable<Type> GetAllSubclassOf(Type parent)
-    {
-        foreach (var a in AppDomain.CurrentDomain.GetAssemblies())
-            foreach (var t in a.GetTypes())
-                if (t.IsSubclassOf(parent)) yield return t;
-    }
+
 }
 
 
 public class PropTrigger : VRProperty
 {
+    VRVariable eventVariable;
     public override string Name()
     {
-        return "Set Properties";
+        return "Apply Changes";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -52,17 +52,29 @@ public class PropTrigger : VRProperty
         return true;
     }
 
+    public override void SetupVariables()
+    {
+        base.SetupVariables();
+        eventVariable = new VRVariable();
+        eventVariable.Setup(new DatEvent(-1));
+        eventVariable.name = "Apply Changes";
+        eventVariable.OnVariableChanged+= SetData;
+
+        vrVariables.Add(eventVariable);
+    }
+
+
     public override void SetupOutputs()
     {
         base.SetupOutputs();
         output = new VRPort(GetData, new DatEvent(-1));
-        vrOutputs.Add(output);
+        //vrOutputs.Add(output);
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
         input = new VRPort(SetData, new DatEvent(-1));
-        vrInputs.Add(input);
+        //vrInputs.Add(input);
     }
 
     public override VRData GetData()
@@ -102,11 +114,12 @@ public class PropObj : VRProperty
     {
         base.SetupInputs();
         input = new VRPort(this, new DatObj(new VRObject()));
-        vrInputs.Add(input);
+        //vrInputs.Add(input);
     }
 
     public override VRData GetData()
     {
+        VRDebug.print("GettingObject: " + vrObject.gameObject);
         return new DatObj(vrObject);
     }
 
@@ -118,6 +131,8 @@ public class PropObj : VRProperty
 
 public class PropPosition : VRProperty
 {
+    VRVariable positionVariable;
+
     public override string Name()
     {
         return "Position";
@@ -128,17 +143,17 @@ public class PropPosition : VRProperty
         return true;
     }
 
-    public override void SetupOutputs()
+
+    public override void SetupVariables()
     {
-        base.SetupOutputs();
-        output = new VRPort(GetData, new DatVector3(Vector3.zero));
-        vrOutputs.Add(output);
-    }
-    public override void SetupInputs()
-    {
-        base.SetupInputs();
-        input = new VRPort(this, new DatVector3(Vector3.zero));
-        vrInputs.Add(input);
+        base.SetupVariables();
+        positionVariable = new VRVariable();
+        positionVariable.Setup(new DatVector3(vrObject.gameObject.transform.position));
+        positionVariable.name = "Position";
+        positionVariable.OnSetData += SetData;
+        positionVariable.OnGetData += GetData;
+
+        vrVariables.Add(positionVariable);
     }
 
     public override VRData GetData()
@@ -146,12 +161,15 @@ public class PropPosition : VRProperty
         return new DatVector3(vrObject.gameObject.transform.position);
     }
 
+    public void SetData(VRData vrData)
+    {
+        DatVector3 datVector = (DatVector3)vrData;
+        vrObject.gameObject.transform.position = datVector.Value;
+    }
+
     public override void Trigger()
     {
-        if (!input.IsConnected())
-            return;
-
-        DatVector3 vrVector3 = (DatVector3)input.GetData();
+        DatVector3 vrVector3 = (DatVector3)positionVariable.vrData;
         vrObject.gameObject.transform.position = vrVector3.Value;
     }
 
@@ -159,7 +177,7 @@ public class PropPosition : VRProperty
 
 public class PropScale : VRProperty
 {
-
+    VRVariable scaleVariable;
     public override string Name()
     {
         return "Scale";
@@ -170,17 +188,22 @@ public class PropScale : VRProperty
         return true;
     }
 
-    public override void SetupOutputs()
+    public override void SetupVariables()
     {
-        base.SetupOutputs();
-        output = new VRPort(GetData, new DatFloat(0));
-        vrOutputs.Add(output);
-    }
-    public override void SetupInputs()
-    {
-        base.SetupInputs();
-        input = new VRPort(this, new DatFloat(0));
-        vrInputs.Add(input);
+        base.SetupVariables();
+
+        DatFloat datFloat = new DatFloat(vrObject.gameObject.transform.localScale.x);
+        datFloat.max = 3;
+
+        scaleVariable = new VRVariable();
+
+        scaleVariable.Setup(datFloat);
+        scaleVariable.name = "Scale";
+        scaleVariable.allowDatName = true;
+        scaleVariable.OnSetData += SetData;
+        scaleVariable.OnGetData += GetData;
+
+        vrVariables.Add(scaleVariable);
     }
 
     public override VRData GetData()
@@ -188,12 +211,15 @@ public class PropScale : VRProperty
         return new DatFloat(vrObject.gameObject.transform.localScale.x);
     }
 
+    public void SetData(VRData vrData)
+    {
+        DatFloat datFloat = (DatFloat)vrData;
+        vrObject.gameObject.transform.localScale = Vector3.one * datFloat.Value;
+    }
+
     public override void Trigger()
     {
-        if (!input.IsConnected())
-            return;
-
-        DatFloat vrFloat = (DatFloat)input.GetData();
+        DatFloat vrFloat = (DatFloat)scaleVariable.vrData;
         vrObject.gameObject.transform.localScale = Vector3.one * vrFloat.Value;
     }
 }

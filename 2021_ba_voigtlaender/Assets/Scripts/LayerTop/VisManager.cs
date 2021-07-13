@@ -112,7 +112,12 @@ public class VisManager : MonoBehaviour
             GameObject objCanvas = Instantiate(prefabUICanvas);
             objCanvas.transform.position = position;
 
-            obj = Instantiate(prefab,objCanvas.transform);
+            PanelHolder panelHolder = objCanvas.GetComponentInChildren<PanelHolder>();
+
+            if(panelHolder)
+                obj = Instantiate(prefab, panelHolder.transform);
+            else
+                obj = Instantiate(prefab,objCanvas.transform);
         }
         else
         {

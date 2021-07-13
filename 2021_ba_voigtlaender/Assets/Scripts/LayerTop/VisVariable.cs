@@ -14,7 +14,7 @@ public class VisVariable : VisLogicElement
         this.vrVariable = (VRVariable)element;
         base.Setup(element);
 
-        textName.text = vrVariable.vrData.GetName();
+        textName.text = vrVariable.Name();
         SetupTypes(vrVariable.vrData);
 
         vrVariable.vrData.OnDataChanged += OnDataChanged;
@@ -26,15 +26,43 @@ public class VisVariable : VisLogicElement
         {
             case DatFloat datFloat:
                 slider.gameObject.SetActive(true);
+                if (datFloat.useMinMax)
+                {
+                    slider.minValue = datFloat.min;
+                    slider.maxValue = datFloat.max;
+                }
                 slider.value = datFloat.Value;
                 slider.onValueChanged.RemoveAllListeners();
-                slider.onValueChanged.AddListener(value => { datFloat.Value = value; textName.text = datFloat.GetName(); });
+                slider.onValueChanged.AddListener(value => { datFloat.Value = value; textName.text = vrVariable.Name(); });
                 break;
             case DatVector3 datVector:
                 if (button)
                 {
                     button.gameObject.SetActive(true);
-                    button.onClick.AddListener(ButtonPressed);
+                    button.onClick.AddListener(()=> 
+                    {
+                        if (visVector != null && visVector.transform && visVector.transform.gameObject.activeSelf)
+                        {
+                            visVector.transform.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            visVector = VisManager.instance.DemandVisVector();
+                            Vector3 position = datVector.Value.magnitude > 0.1f ? datVector.Value : transform.position + Vector3.up * 0.2f;
+                            visVector.transform.position = transform.position;
+                            visVector.transform.DOMove(position, 0.2f);
+                        }
+                    });
+                }
+                break;
+            case DatEvent datEvent:
+                if (button)
+                {
+                    button.gameObject.SetActive(true);
+                    button.onClick.AddListener(() =>
+                    {
+                        vrVariable.SetData(new DatEvent(VRManager.tickIndex));
+                    });
                 }
                 break;
             default:
@@ -45,7 +73,7 @@ public class VisVariable : VisLogicElement
     public void OnDataChanged(VRData vrData)
     {
         if(textName)
-            textName.text = vrData.GetName();
+            textName.text = vrVariable.Name();
     }
 
     private void Update()
@@ -64,33 +92,6 @@ public class VisVariable : VisLogicElement
             case DatVector3 datVector:
                 if (visVector != null && visVector.transform)
                     datVector.Value = visVector.transform.position;
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void ButtonPressed()
-    {
-        if (vrVariable == null || vrVariable.vrData == null)
-            return;
-        switch (vrVariable.vrData)
-        {
-            case DatFloat datFloat:
-                slider.value = datFloat.Value;
-                break;
-            case DatVector3 datVector:
-                if(visVector!=null && visVector.transform && visVector.transform.gameObject.activeSelf)
-                {
-                    visVector.transform.gameObject.SetActive(false);
-                }
-                else
-                {
-                    visVector = VisManager.instance.DemandVisVector();
-                    Vector3 position = datVector.Value.magnitude > 0.1f ? datVector.Value : transform.position + Vector3.up * 0.2f;
-                    visVector.transform.position = transform.position;
-                    visVector.transform.DOMove(position, 0.2f);
-                }
                 break;
             default:
                 break;

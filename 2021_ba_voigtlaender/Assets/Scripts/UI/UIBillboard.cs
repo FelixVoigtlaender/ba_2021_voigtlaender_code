@@ -11,7 +11,11 @@ public class UIBillboard : MonoBehaviour
     {
         Vector3 forward = GetForward();
 
-        transform.forward = forward;
+        //transform.forward = forward;
+
+        float angle = Vector3.SignedAngle(Vector3.forward, forward, Vector3.up);
+        transform.localEulerAngles = new Vector3(0, angle, 0);
+
     }
 
     public Vector3 GetForward()

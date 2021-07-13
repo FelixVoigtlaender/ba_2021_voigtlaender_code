@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 1447989497535495866}
   - component: {fileID: 4357764994817642434}
   - component: {fileID: 4839714023878470427}
+  - component: {fileID: 8574596280184988055}
   m_Layer: 5
   m_Name: VisibilityToggle
   m_TagString: Untagged
@@ -364,3 +365,16 @@ MonoBehaviour:
   waitTime: 0.1
   moveTransform: {fileID: 6527328836852888438}
   moveZ: -10
+--- !u!114 &8574596280184988055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6451536377819164548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31da92c0ae509b5478ff30978a8821d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: Visibility

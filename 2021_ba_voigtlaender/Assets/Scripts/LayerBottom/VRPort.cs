@@ -13,6 +13,7 @@ public class VRPort
     public event Func<VRData> GetElementData;
     public event Action<VRData> SetElementData;
     public event Action OnDelete;
+    public event Action OnConnect;
     VRLogicElement element;
     public VRPort(Func<VRData> GetElementData, VRData dataType)
     {
@@ -113,6 +114,7 @@ public class VRPort
     public void AddConnection(VRConnection connection)
     {
         connections.Add(connection);
+        OnConnect?.Invoke();
     }
 }
 

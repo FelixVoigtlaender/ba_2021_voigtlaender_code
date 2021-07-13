@@ -24,12 +24,20 @@ public class VisLogicElement : MonoBehaviour
         PopulateVisPorts(element);
 
         visVariables = PopulateVisVariables(element, variableHolder);
-
-        rootCanvas = GetComponentInParent<Canvas>();
+        rootCanvas = GetRootCanvas();
     }
 
     public virtual void Init()
     {
+    }
+
+    public Canvas GetRootCanvas()
+    {
+        if (rootCanvas)
+            return rootCanvas;
+
+        rootCanvas = GetComponentInParent<Canvas>();
+        return rootCanvas;
     }
 
 

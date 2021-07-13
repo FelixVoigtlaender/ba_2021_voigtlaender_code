@@ -25,7 +25,10 @@ public class HandSpawner : MonoBehaviour
 
         if(currentElement.transform.localPosition.magnitude > 0.05f)
         {
-            currentElement.transform.SetParent(null, true);
+            Vector3 worldPosition = currentElement.transform.position;
+            currentElement.transform.SetParent(null, false);
+            currentElement.transform.position = worldPosition;
+            //currentElement.localScale = Vector3.one;
             currentElement = null;
         }
     }
@@ -37,6 +40,7 @@ public class HandSpawner : MonoBehaviour
         Transform root = objLogicElement.transform.root;
         root.SetParent(spawnTransform);
         root.localPosition = Vector3.zero;
+        root.localScale = Vector3.one * 0.1f;
         currentElement = root;
 
 

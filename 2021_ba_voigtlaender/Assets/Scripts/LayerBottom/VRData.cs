@@ -67,7 +67,9 @@ public class DatFloat : VRData
         get { return value; }
         set { this.value = value; DataChanged(); }
     }
-
+    public bool useMinMax = true;
+    public float min = 0;
+    public float max = 10;
 
     public DatFloat(float value)
     {
@@ -181,7 +183,7 @@ public class DatEvent : VRData
     }
     public override string GetName()
     {
-        return Value.ToString();
+        return "Event: " + Value.ToString();
     }
     public override void SetData(VRData data)
     {

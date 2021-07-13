@@ -10,12 +10,13 @@ public class VRObject
     public List<VREvent> vrEvents = new List<VREvent>();
     public GameObject gameObject;
     public event Action OnDelete;
-
+    public Rigidbody rigid;
 
 
     public void Setup(GameObject gameObject)
     {
         this.gameObject = gameObject;
+        rigid = gameObject.GetComponent<Rigidbody>();
         SetupProperties();
     }
 

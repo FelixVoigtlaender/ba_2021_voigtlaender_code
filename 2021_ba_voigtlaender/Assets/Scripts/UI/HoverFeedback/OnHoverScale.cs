@@ -29,7 +29,7 @@ public class OnHoverScale : UIOnHoverEvent
     {
         lastExit = Time.time;
 
-        Invoke("Close", 5);
+        Invoke("Close", waitTime);
     }
 
 

@@ -30,7 +30,6 @@ public class VRDebug : MonoBehaviour
 
     public static void Log(string message)
     {
-        Debug.Log(message);
         if (!instance)
             return;
 

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+using DG.Tweening;
 public abstract class VRAction : VRLogicElement
 {
+
+    static List<VRAction> allActions;
     public override void Setup()
     {
         base.Setup();
@@ -11,9 +14,18 @@ public abstract class VRAction : VRLogicElement
 
     public static List<VRAction> GetAllActions()
     {
-        List<VRAction> allEvents = new List<VRAction>();
-        allEvents.Add(new ActPosition());
-        return allEvents;
+        if (allActions != null)
+            return allActions;
+
+
+        allActions = new List<VRAction>();
+        IEnumerable<Type> subClasses = VRManager.GetAllSubclassOf(typeof(VRAction));
+        foreach (Type type in subClasses)
+        {
+            VRAction obj = (VRAction)Activator.CreateInstance(type);
+            allActions.Add(obj);
+        }
+        return allActions;
     }
 
     public static VRAction GetAction(string name)
@@ -30,27 +42,41 @@ public abstract class VRAction : VRLogicElement
 }
 
 
-public class ActPosition : VRAction
+public class ActMove : VRAction
 {
     VRVariable varPosition;
+    VRVariable varObject;
+    VRVariable varDuration;
 
     VRPort inTrigger;
-    VRPort inObject;
-
-    VRPort outTrigger;
 
     public override string Name()
     {
-        return "Set Position";
+        return "Move";
     }
 
     public override void SetupVariables()
     {
         base.SetupVariables();
+
+
+        DatObj datObj = new DatObj(new VRObject());
+        varObject = new VRVariable();
+        varObject.Setup(datObj);
+        vrVariables.Add(varObject);
+
         DatVector3 datPosition = new DatVector3(Vector3.zero);
         varPosition = new VRVariable();
         varPosition.Setup(datPosition);
         vrVariables.Add(varPosition);
+
+        DatFloat datFloat = new DatFloat(1);
+        datFloat.max = 3;
+        varDuration = new VRVariable();
+        varDuration.Setup(datFloat);
+        varDuration.allowDatName = true;
+        varDuration.name = "Duration";
+        vrVariables.Add(varDuration);
     }
 
     public override void SetupInputs()
@@ -59,35 +85,28 @@ public class ActPosition : VRAction
 
         inTrigger = new VRPort(SetData, new DatEvent(0f));
         vrInputs.Add(inTrigger);
-
-        inObject = new VRPort(this, new DatObj(null));
-        vrInputs.Add(inObject);
     }
 
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        outTrigger = new VRPort(GetElementData, new DatEvent(0));
-        vrOutputs.Add(outTrigger);
     }
 
     public void SetData(VRData datEvent)
     {
         VRDebug.SetLog($"{Name()}: TRIGGERED");
 
-        if (!inObject.IsConnected())
+        DatObj datObj = (DatObj)varObject.GetData();
+        DatFloat duration = (DatFloat)varDuration.GetData();
+        DatVector3 position = (DatVector3)varPosition.GetData();
+
+        if (datObj.Value == null ||datObj.Value.gameObject==null)
             return;
 
-        DatObj datObj = (DatObj) inObject.GetData();
-        DatVector3 datVector3 =(DatVector3) varPosition.GetData();
-        datObj.Value.gameObject.transform.position = datVector3.Value;
-
-        if (outTrigger.IsConnected())
-            outTrigger.SetData(datEvent);
+        if(datObj.Value.rigid)
+            datObj.Value.gameObject.transform.DOMove(position.Value, duration.Value).OnUpdate(()=>datObj.Value.rigid.velocity = Vector3.zero);
+        else
+            datObj.Value.gameObject.transform.DOMove(position.Value, duration.Value);
     }
 
-    public VRData GetElementData()
-    {
-        return new DatEvent(-1);
-    }
 }

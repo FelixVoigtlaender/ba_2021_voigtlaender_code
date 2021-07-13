@@ -19,4 +19,9 @@ public class VisEvent : VisLogicElement
         vrEvent = VRManager.instance.InitVREvent(eventName,false);
         Setup(vrEvent);
     }
+    public override void Setup(VRLogicElement element)
+    {
+        base.Setup(element);
+        vrEvent = (VREvent)element;
+    }
 }

@@ -5,15 +5,23 @@ using System;
 [System.Serializable]
 public class VRVariable : VRLogicElement
 {
-    string name = "";
+    public string name = "";
+    public bool allowDatName = false;
     public VRData vrData;
     protected VRPort output;
     protected VRPort input;
 
     public event Action<VRData> OnVariableChanged;
+    public event Action<VRData> OnSetData;
+    public event Func<VRData> OnGetData;
     public override string Name()
     {
-        return name;
+        if (name.Length > 0)
+        {
+            return allowDatName ? name + " " + vrData.GetName() : name;
+
+        }
+        return vrData.GetName();
     }
 
     public void Setup(VRData vrData)
@@ -32,7 +40,8 @@ public class VRVariable : VRLogicElement
     public override void SetupInputs()
     {
         base.SetupInputs();
-        input = new VRPort(this, vrData);
+        input = new VRPort(SetData, vrData);
+        input.OnConnect += () => GetData();
         vrInputs.Add(input);
     }
 
@@ -43,7 +52,18 @@ public class VRVariable : VRLogicElement
             vrData.SetData(input.GetData());
             OnVariableChanged?.Invoke(vrData);
         }
+        else if (OnGetData != null)
+        {
+            vrData = OnGetData();
+        }
 
         return vrData;
+    }
+    public void SetData(VRData vrData)
+    {
+        vrData.SetData(vrData);
+        OnVariableChanged?.Invoke(vrData);
+        output.SetData(vrData);
+        OnSetData?.Invoke(vrData);
     }
 }

@@ -19,5 +19,12 @@ public class VisAction : VisLogicElement
         vrAction = VRManager.instance.InitVRAction(actionName);
         Setup(vrAction);
     }
+    public override void Setup(VRLogicElement element)
+    {
+        base.Setup(element);
+        vrAction = (VRAction)element;
+    }
+
+
 
 }

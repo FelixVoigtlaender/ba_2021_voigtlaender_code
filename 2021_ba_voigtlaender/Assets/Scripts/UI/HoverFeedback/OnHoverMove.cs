@@ -32,11 +32,11 @@ public class OnHoverMove : UIOnHoverEvent
     {
         lastExit = Time.time;
 
-        Invoke("Close", waitTime);
+        Invoke("Revert", waitTime);
     }
 
 
-    public void Close()
+    public void Revert()
     {
         moveTransform.DOAnchorPos3DZ(0, easeTime);
     }

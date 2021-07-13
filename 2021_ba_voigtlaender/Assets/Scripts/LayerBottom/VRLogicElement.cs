@@ -15,6 +15,7 @@ public abstract class VRLogicElement
 
     public virtual void Setup()
     {
+        OnDelete = null;
         SetupPorts();
         SetupVariables();
     }
@@ -39,6 +40,16 @@ public abstract class VRLogicElement
         vrVariables = new List<VRVariable>();
     }
 
+    public virtual bool VariablesCheck()
+    {
+        foreach(VRVariable variable in vrVariables)
+        {
+            if (variable.GetData() == null)
+                return false;
+        }
+        return true;
+    }
+
     public virtual void Trigger()
     {
     }
@@ -60,5 +71,14 @@ public abstract class VRLogicElement
         }
 
         OnDelete?.Invoke();
+    }
+
+    public VRLogicElement ShallowCopy()
+    {
+        return (VRLogicElement) this.MemberwiseClone();
+    }
+    public VRLogicElement CreateInstance()
+    {
+        return (VRLogicElement)Activator.CreateInstance(this.GetType());
     }
 }
