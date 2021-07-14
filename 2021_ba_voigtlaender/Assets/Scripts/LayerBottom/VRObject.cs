@@ -24,13 +24,15 @@ public class VRObject
     {
         properties = new List<VRProperty>();
         List<VRProperty> possibleProperties = VRProperty.GetAllPorperties();
-        foreach(VRProperty vRProperty in possibleProperties)
+        foreach(VRProperty vrProperty in possibleProperties)
         {
-            if (!vRProperty.IsType(this))
+            if (!vrProperty.IsType(this))
                 continue;
 
-            vRProperty.Setup(this);
-            properties.Add(vRProperty);
+            VRProperty vrPropertyClone = (VRProperty) vrProperty.CreateInstance();
+
+            vrPropertyClone.Setup(this);
+            properties.Add(vrPropertyClone);
         }
     }
 

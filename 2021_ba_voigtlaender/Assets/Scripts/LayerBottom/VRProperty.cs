@@ -83,6 +83,7 @@ public class PropTrigger : VRProperty
     }
     public void SetData(VRData vrData)
     {
+        VRDebug.Log("Applying to: " + vrObject.gameObject.name);
         vrObject.Trigger();
     }
 

@@ -46,8 +46,6 @@ public class EventPopulation : MonoBehaviour
 
     public void RepopulateList(int index)
     {
-        VRDebug.Log("REPOPULATING");
-
         List<VREvent> allVREvents = VREvent.GetAllEvents();
         GameObject visEventPrefab = VisManager.instance.GetVisLogicPrefab(allVREvents[0]);
 
@@ -59,8 +57,7 @@ public class EventPopulation : MonoBehaviour
 
         currentVisEvent.Setup(currentVREvent);
 
-        VRDebug.Log("OldVREVENT: " + oldVisEvent.vrEvent.ToString());
-        VRDebug.Log("CurrentVREVENT: " + currentVisEvent.vrEvent.ToString());
+        oldVisEvent.isDeleteAble = true;
 
         // override old visEvent
         visEvents[index] = currentVisEvent;
@@ -72,6 +69,7 @@ public class EventPopulation : MonoBehaviour
         VisEvent visEvent = objLogicElement.GetComponent<VisEvent>();
         visEvent.GetRootCanvas().transform.SetParent(content.transform);
         visEvent.GetRootCanvas().transform.SetSiblingIndex(index);
+        visEvent.isDeleteAble = false;
         return visEvent;
     }
 }

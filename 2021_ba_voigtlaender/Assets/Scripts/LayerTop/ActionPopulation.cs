@@ -58,6 +58,8 @@ public class ActionPopulation : MonoBehaviour
 
         currentVisAction.Setup(currentVRAction);
 
+        oldVisAction.isDeleteAble = true;
+
         // override old visAction
         visActions[index] = currentVisAction;
     }
@@ -68,6 +70,7 @@ public class ActionPopulation : MonoBehaviour
         VisAction visAction = objLogicElement.GetComponent<VisAction>();
         visAction.GetRootCanvas().transform.SetParent(content.transform);
         visAction.GetRootCanvas().transform.SetSiblingIndex(index);
+        visAction.isDeleteAble = false;
         return visAction;
     }
 }

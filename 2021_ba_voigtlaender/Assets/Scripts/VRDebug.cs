@@ -32,10 +32,11 @@ public class VRDebug : MonoBehaviour
     {
         if (!instance)
             return;
-
-        instance.logText += logCount + ": " + message + "\n";
+        string conMessage = logCount + ": " + message + "\n";
+        instance.logText += conMessage;
         logCount++;
         instance.logText = CutLines(instance.logText, 15);
+        Debug.Log(conMessage);
     }
 
     public static string CutLines(string message, int lineCount)

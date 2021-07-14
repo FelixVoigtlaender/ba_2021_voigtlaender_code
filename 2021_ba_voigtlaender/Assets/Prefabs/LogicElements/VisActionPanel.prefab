@@ -139,6 +139,7 @@ MonoBehaviour:
   visInPorts: []
   visOutPorts: []
   visVariables: []
+  isDeleteAble: 1
   actionName: 
 --- !u!1 &386227793406815814
 GameObject:

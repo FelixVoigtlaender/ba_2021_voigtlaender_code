@@ -24,8 +24,6 @@ public class OnHoverTilt : UIOnHoverEvent
         base.OnPointerEnter(eventData);
 
         rectTransform.DOLocalRotate(rotation, easeTime);
-        VRDebug.Log("E N T E R");
-
         CancelInvoke();
     }
     public override void OnPointerExit(PointerEventData eventData)

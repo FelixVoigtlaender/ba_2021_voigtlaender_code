@@ -117,9 +117,12 @@ public class VisConnection : MonoBehaviour
     }
     public void OnDelete()
     {
+        VRDebug.Log("Deleting VisConnection");
+
         bezierCurve?.Delete();
         if (gameObject!=null)
             Destroy(gameObject);
+
 
         if (vrConnection != null)
             vrConnection.OnDelete -= OnDelete;

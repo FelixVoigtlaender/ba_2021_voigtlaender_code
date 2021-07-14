@@ -16,6 +16,8 @@ public class VisLogicElement : MonoBehaviour
     public List<VisPort> visOutPorts;
     public List<VisVariable> visVariables;
 
+    public bool isDeleteAble = true;
+
     public virtual void Setup(VRLogicElement element)
     {
         this.element = element;
@@ -95,11 +97,30 @@ public class VisLogicElement : MonoBehaviour
 
     public virtual void OnDelete()
     {
+        VRDebug.Log("VisDeleting: " + gameObject.name);
         if (rootCanvas.gameObject)
             Destroy(rootCanvas.gameObject);
     }
     public void Delete()
     {
-        element.Delete();
+        if (!isDeleteAble)
+            return;
+
+        VisLogicElement[] parentVisElements = GetComponentsInParent<VisLogicElement>();
+        if (parentVisElements.Length == 1)
+        {
+            element.Delete();
+            return;
+        }
+
+        foreach(VisLogicElement visElement in parentVisElements)
+        {
+            if(visElement!= this)
+            {
+                visElement.Delete();
+                return;
+            }
+
+        }
     }
 }

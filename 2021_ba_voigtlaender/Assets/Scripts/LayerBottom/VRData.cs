@@ -54,6 +54,8 @@ public class DatString : VRData
 
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatString)data).Value;
     }
 }
@@ -90,6 +92,8 @@ public class DatFloat : VRData
     }
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatFloat)data).Value;
     }
 }
@@ -122,6 +126,8 @@ public class DatInt : VRData
     }
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatInt)data).Value;
     }
 }
@@ -155,6 +161,8 @@ public class DatVector3 : VRData
     }
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatVector3)data).Value;
     }
 }
@@ -187,6 +195,8 @@ public class DatEvent : VRData
     }
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatEvent)data).Value;
     }
 }
@@ -219,6 +229,8 @@ public class DatBool : VRData
     }
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatBool)data).Value;
     }
 }
@@ -255,6 +267,8 @@ public class DatObj : VRData
     }
     public override void SetData(VRData data)
     {
+        if (data == null)
+            return;
         Value = ((DatObj)data).Value;
     }
 }
