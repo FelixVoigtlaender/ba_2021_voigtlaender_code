@@ -9,6 +9,7 @@ public class VisLogicElement : MonoBehaviour
     public Transform inputHolder;
     public Transform outputHolder;
     public Transform variableHolder;
+    public Transform panelHolder;
     public Text textName;
     Canvas rootCanvas;
 
@@ -42,6 +43,32 @@ public class VisLogicElement : MonoBehaviour
         return rootCanvas;
     }
 
+    List<VisTab> PopulateVisPanels(VRLogicElement element, Transform holder)
+    {
+        if (!holder || element == null)
+            return new List<VisTab>();
+
+        List<VisTab> visTabs = new List<VisTab>();
+
+        //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
+
+        foreach (VRTab vrTab in element.vrTabs)
+        {
+            GameObject prefabVisTab = VisManager.instance.GetVisLogicPrefab(vrTab);
+            if (!prefabVisTab)
+            {
+
+                VRDebug.Log("Couldn't find tab Prefab");
+                continue;
+            }
+
+            GameObject objVisTab = Instantiate(prefabVisTab, holder);
+            VisTab visTab = objVisTab.GetComponent<VisTab>();
+            visTab.Setup(vrTab);
+            visTabs.Add(visTab);
+        }
+        return visTabs;
+    }
 
     List<VisVariable> PopulateVisVariables(VRLogicElement element, Transform holder)
     {

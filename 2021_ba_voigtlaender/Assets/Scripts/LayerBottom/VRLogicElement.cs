@@ -9,6 +9,7 @@ public abstract class VRLogicElement
     public List<VRPort> vrInputs = new List<VRPort>();
     public List<VRPort> vrOutputs = new List<VRPort>();
     public List<VRVariable> vrVariables = new List<VRVariable>();
+    public List<VRTab> vrTabs = new List<VRTab>();
 
     public event Action OnDelete; 
     public abstract string Name();
@@ -18,6 +19,7 @@ public abstract class VRLogicElement
         OnDelete = null;
         SetupPorts();
         SetupVariables();
+        SetupTabs();
     }
     public virtual void SetupPorts()
     {
@@ -38,6 +40,26 @@ public abstract class VRLogicElement
     public virtual void SetupVariables()
     {
         vrVariables = new List<VRVariable>();
+    }
+    public virtual void SetupTabs()
+    {
+        vrTabs = new List<VRTab>();
+    }
+    public virtual void SetTabActive(int index)
+    {
+        for (int i = 0; i < vrTabs.Count; i++)
+        {
+            vrTabs[i].IsActive = index == i;
+        }
+    }
+    public virtual VRTab GetActiveTab()
+    {
+        foreach(VRTab vrTab in vrTabs)
+        {
+            if (vrTab.IsActive)
+                return vrTab;
+        }
+        return null;
     }
 
     public virtual bool VariablesCheck()

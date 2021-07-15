@@ -135,6 +135,7 @@ MonoBehaviour:
   inputHolder: {fileID: 4051609707849888243}
   outputHolder: {fileID: 2563401726321071069}
   variableHolder: {fileID: 5383676845751756254}
+  panelHolder: {fileID: 0}
   textName: {fileID: 3108828457029027144}
   visInPorts: []
   visOutPorts: []

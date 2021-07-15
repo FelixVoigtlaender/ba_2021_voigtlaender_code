@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public abstract class VRProperty : VRLogicElement
 {
@@ -130,6 +131,7 @@ public class PropObj : VRProperty
 
 }
 
+
 public class PropPosition : VRProperty
 {
     VRVariable positionVariable;
@@ -174,6 +176,72 @@ public class PropPosition : VRProperty
         vrObject.gameObject.transform.position = vrVector3.Value;
     }
 
+}
+
+
+public class PropTransform : VRProperty
+{
+    // Teleport
+    VRTab tabTeleport;
+    VRTab tabMove;
+
+    // Variables
+    VRVariable varPosition;
+    VRVariable varDuration;
+    public override string Name()
+    {
+        return "Movement";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        // Gameobject always has a transform
+        return true;
+    }
+
+    public override void SetupTabs()
+    {
+        base.SetupTabs();
+
+        // Variables
+        varPosition = new VRVariable(new DatVector3(vrObject.gameObject.transform.position), "Position");
+        varDuration = new VRVariable(new DatFloat(1), "Duration");
+        varDuration.allowDatName = true;
+
+        // Tabs
+        tabTeleport = new VRTab("Teleport");
+        tabTeleport.vrVariables.Add(varPosition);
+        vrTabs.Add(tabTeleport);
+
+        tabMove = new VRTab("Move");
+        tabMove.vrVariables.Add(varPosition);
+        tabMove.vrVariables.Add(varDuration);
+        vrTabs.Add(tabMove);
+    }
+
+    public override void Trigger()
+    {
+        VRTab activeTab = GetActiveTab();
+        if (activeTab == null)
+            return;
+
+        if(activeTab == tabTeleport)
+        {
+            DatVector3 vrVector3 = (DatVector3)varPosition.vrData;
+            vrObject.gameObject.transform.position = vrVector3.Value;
+            return;
+        }
+        if (activeTab == tabMove)
+        {
+            DatVector3 datPosition = (DatVector3)varPosition.vrData;
+            DatFloat datDuration = (DatFloat)varDuration.vrData;
+            vrObject.gameObject.transform.DOMove(datPosition.Value, datDuration.Value);
+            return;
+        }
+    }
+    public override VRData GetData()
+    {
+        return null;
+    }
 }
 
 public class PropScale : VRProperty

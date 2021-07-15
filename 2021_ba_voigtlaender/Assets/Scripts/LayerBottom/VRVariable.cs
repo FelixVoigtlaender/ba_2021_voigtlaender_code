@@ -23,13 +23,22 @@ public class VRVariable : VRLogicElement
         }
         return vrData.GetName();
     }
-
+    public VRVariable() { }
+    public VRVariable(VRData vrData, string name = "")
+    {
+        Setup(vrData, name);
+    }
     public void Setup(VRData vrData)
     {
         this.vrData = vrData;
         base.Setup();
 
         OnVariableChanged?.Invoke(vrData);
+    }
+    public void Setup(VRData vrData, string name)
+    {
+        this.name = name;
+        Setup(vrData);
     }
     public override void SetupOutputs()
     {
