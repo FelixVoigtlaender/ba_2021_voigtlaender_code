@@ -45,6 +45,7 @@ public abstract class VREvent : VRLogicElement
 public class EventProximity : VREvent
 {
     VRPort outEvent;
+    VRPort inEvent;
 
 
     VRVariable varDistance;
@@ -55,7 +56,17 @@ public class EventProximity : VREvent
     {
         return "ProximityAlert";
     }
-
+    public override void Setup()
+    {
+        base.Setup();
+        VRManager.instance.OnFixedUpdate += Update;
+    }
+    public override void SetupInputs()
+    {
+        base.SetupInputs();
+        inEvent = new VRPort(SetData, new DatEvent(0f));
+        vrInputs.Add(inEvent);
+    }
     public override void SetupOutputs()
     {
         base.SetupOutputs();
@@ -79,17 +90,26 @@ public class EventProximity : VREvent
         vrVariables.Add(varObjB);
     }
 
-    public override void Update(DatEvent vREventDat)
+    public override void Update(DatEvent datEvent)
     {
+        if (inEvent.IsConnected())
+            return;
 
-        VRDebug.SetLog($"{Name()}: UPDATE {vREventDat.Value.ToString("0.0")}");
+        SetData(datEvent);
+    }
 
-        DatObj datObjA =(DatObj) varObjA.GetData();
-        DatObj datObjB = (DatObj) varObjB.GetData();
+    public void SetData(VRData vrData)
+    {
+        DatEvent datEvent = (DatEvent)vrData;
+
+        VRDebug.SetLog($"{Name()}: UPDATE {datEvent.Value.ToString("0.0")}");
+
+        DatObj datObjA = (DatObj)varObjA.GetData();
+        DatObj datObjB = (DatObj)varObjB.GetData();
         DatFloat datDistance = (DatFloat)varDistance.GetData();
 
 
-        VRDebug.SetLog($"{Name()}: {datObjA.Value!=null} {datObjB.Value != null} {datDistance.Value}");
+        VRDebug.SetLog($"{Name()}: {datObjA.Value != null} {datObjB.Value != null} {datDistance.Value}");
         if (datObjA.Value == null || datObjB.Value == null)
             return;
 
@@ -99,19 +119,24 @@ public class EventProximity : VREvent
 
         if (Vector3.Distance(posA, posB) < distance)
         {
-            outEvent.SetData(vREventDat);
+            outEvent.SetData(datEvent);
             VRDebug.SetLog($"{Name()}: TRIGGERED");
         }
         else
         {
             VRDebug.SetLog($"{Name()}: NOT-TRIGGERED");
         }
-
     }
-
     public VRData GetData()
     {
         return null;
+    }
+
+    public override void Delete()
+    {
+        VRManager.instance.OnFixedUpdate -= Update;
+
+        base.Delete();
     }
 }
 

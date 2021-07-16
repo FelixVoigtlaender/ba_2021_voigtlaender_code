@@ -108,11 +108,11 @@ public class VisLogicElement : MonoBehaviour
         float easeTime = 0.1f;
         if (value)
         {
-            rect.DOAnchorPos3DZ(-20, easeTime).OnComplete(() => tabHolder.DOScaleY(1, easeTime));          ;
+            tabHolder.DOAnchorPos3DZ(-20, easeTime).OnComplete(() => tabHolder.DOScaleY(1, easeTime));          ;
         }
         else
         {
-            tabHolder.DOScaleY(0, easeTime).OnComplete(() => rect.DOAnchorPos3DZ(0, easeTime));
+            tabHolder.DOScaleY(0, easeTime).OnComplete(() => tabHolder.DOAnchorPos3DZ(0, easeTime));
         }
     }
 

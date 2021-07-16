@@ -18,19 +18,44 @@ public class VRManager : MonoBehaviour
     public List<VRAction> vrActions = new List<VRAction>();
     public List<VREvent> vrEvents = new List<VREvent>();
 
+    public event Action<DatEvent> OnUpdate;
+    public event Action<DatEvent> OnFixedUpdate;
+    public event Action<DatEvent> OnSecond;
 
     private void Awake()
     {
         instance = this;
+    }
+    private void Start()
+    {
+        StartCoroutine(SecondUpdate());
     }
 
     private void Update()
     {
         tickIndex++;
         DatEvent datEvent = new DatEvent(Time.time);
+
+        OnUpdate?.Invoke(datEvent);
+
         foreach (VREvent vrEvent in vrEvents)
         {
             vrEvent.Update(datEvent);
+        }
+    }
+    private void FixedUpdate()
+    {
+        DatEvent datEvent = new DatEvent(Time.time);
+        OnFixedUpdate?.Invoke(datEvent);
+    }
+
+    private IEnumerator SecondUpdate()
+    {
+        while (true)
+        {
+            DatEvent datEvent = new DatEvent(Time.time);
+            OnSecond?.Invoke(datEvent);
+            yield return new WaitForSeconds(1);
         }
     }
 
