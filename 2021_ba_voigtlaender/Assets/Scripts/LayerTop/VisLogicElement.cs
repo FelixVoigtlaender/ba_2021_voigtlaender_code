@@ -2,20 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class VisLogicElement : MonoBehaviour
 {
     VRLogicElement element;
-    public Transform inputHolder;
-    public Transform outputHolder;
-    public Transform variableHolder;
-    public Transform panelHolder;
+    public Button myButton;
+    public RectTransform inputHolder;
+    public RectTransform outputHolder;
+    public RectTransform variableHolder;
+    public RectTransform tabHolder;
+    public RectTransform tabToggleHolder;
     public Text textName;
     Canvas rootCanvas;
+    RectTransform rect;
 
     public List<VisPort> visInPorts;
     public List<VisPort> visOutPorts;
     public List<VisVariable> visVariables;
+    public List<VisTab> visTab;
 
     public bool isDeleteAble = true;
 
@@ -27,7 +32,9 @@ public class VisLogicElement : MonoBehaviour
         PopulateVisPorts(element);
 
         visVariables = PopulateVisVariables(element, variableHolder);
+        visTab = PopulateVisTabs(element, tabHolder);
         rootCanvas = GetRootCanvas();
+        rect = GetComponent<RectTransform>();
     }
 
     public virtual void Init()
@@ -43,14 +50,21 @@ public class VisLogicElement : MonoBehaviour
         return rootCanvas;
     }
 
-    List<VisTab> PopulateVisPanels(VRLogicElement element, Transform holder)
+    List<VisTab> PopulateVisTabs(VRLogicElement element, Transform holder)
     {
         if (!holder || element == null)
             return new List<VisTab>();
+        if (element.vrTabs.Count == 0)
+            return new List<VisTab>();
+
+
+
 
         List<VisTab> visTabs = new List<VisTab>();
-
+        GameObject prefabTabToggle = VisManager.instance.prefabTabToggle;
         //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
+        ToggleGroup toggleGroup = tabToggleHolder.GetComponent<ToggleGroup>();
+
 
         foreach (VRTab vrTab in element.vrTabs)
         {
@@ -62,12 +76,44 @@ public class VisLogicElement : MonoBehaviour
                 continue;
             }
 
+            GameObject objTabToggle = Instantiate(prefabTabToggle, tabToggleHolder);
             GameObject objVisTab = Instantiate(prefabVisTab, holder);
             VisTab visTab = objVisTab.GetComponent<VisTab>();
             visTab.Setup(vrTab);
+
+            Toggle toggle = objTabToggle.GetComponent<Toggle>();
+            toggle.group = toggleGroup;
+            visTab.SetToggle(toggle);
+
             visTabs.Add(visTab);
         }
+        // Setup for visibility
+        myButton.onClick.AddListener(ToggleTabs);
+        SetTabs(false);
+
+
         return visTabs;
+    }
+
+    public void ToggleTabs()
+    {
+        bool invValue = !tabToggleHolder.gameObject.activeSelf;
+        SetTabs(invValue);
+    }
+
+    public void SetTabs(bool value)
+    {
+        //tabHolder.gameObject.SetActive(value);
+        tabToggleHolder.gameObject.SetActive(value);
+        float easeTime = 0.1f;
+        if (value)
+        {
+            rect.DOAnchorPos3DZ(-20, easeTime).OnComplete(() => tabHolder.DOScaleY(1, easeTime));          ;
+        }
+        else
+        {
+            tabHolder.DOScaleY(0, easeTime).OnComplete(() => rect.DOAnchorPos3DZ(0, easeTime));
+        }
     }
 
     List<VisVariable> PopulateVisVariables(VRLogicElement element, Transform holder)

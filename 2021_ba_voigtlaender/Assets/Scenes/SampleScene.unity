@@ -2998,6 +2998,7 @@ MonoBehaviour:
   prefabVisConnection: {fileID: 3621045141544130332, guid: e0b10d4a2097546479aea1deda3d90b6, type: 3}
   prefabVisObject: {fileID: 1135005589823400813, guid: 65e3fb7ef7f9db845b15204657e62f8d, type: 3}
   prefabVisVector: {fileID: 4724832187191713755, guid: 57523e5ec3bb1324d9888bdf99adadfc, type: 3}
+  prefabTabToggle: {fileID: 6451536377819164548, guid: 83b421cb1ea18224bb75852270b34f71, type: 3}
   prefabVisProperties:
   - {fileID: 4362529494445662840, guid: 7df94dd68c5e6eb41a4734d70d1fa2b4, type: 3}
   prefabVisEvents:
@@ -3006,6 +3007,7 @@ MonoBehaviour:
   - {fileID: 59255515662877851, guid: a7ce978120c2e80408aadae10a00c964, type: 3}
   - {fileID: 6594920457516108982, guid: 0fbb5aeaa36ec2a40969ab70646fc25d, type: 3}
   - {fileID: 59255515662877851, guid: 45e0c0b5bff4d3f439858a96ca84445d, type: 3}
+  - {fileID: 4362529494445662840, guid: a978d2c0be8f8e043a01a15d7cf85180, type: 3}
   prefabVisPort: {fileID: 7433788244925163418, guid: bf210f967713b9c4fb5e8b328df8051d, type: 3}
 --- !u!1 &1570855298
 GameObject:

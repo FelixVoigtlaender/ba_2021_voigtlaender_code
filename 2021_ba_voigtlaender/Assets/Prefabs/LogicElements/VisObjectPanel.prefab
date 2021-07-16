@@ -516,7 +516,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6669958711064549086}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
   m_Name: 
@@ -2139,6 +2139,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5383676845751756254}
     m_Modifications:
+    - target: {fileID: 107741316959439503, guid: 7df94dd68c5e6eb41a4734d70d1fa2b4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 107741316959439503, guid: 7df94dd68c5e6eb41a4734d70d1fa2b4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4362529494445662840, guid: 7df94dd68c5e6eb41a4734d70d1fa2b4, type: 3}
       propertyPath: m_Name
       value: VisPropertyPanel

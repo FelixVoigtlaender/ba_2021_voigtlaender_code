@@ -132,14 +132,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104b3a049836e4a41a6573688b4c7f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myButton: {fileID: 0}
   inputHolder: {fileID: 4051609707849888243}
   outputHolder: {fileID: 2563401726321071069}
   variableHolder: {fileID: 5383676845751756254}
-  panelHolder: {fileID: 0}
+  tabHolder: {fileID: 0}
+  tabToggleHolder: {fileID: 0}
   textName: {fileID: 3108828457029027144}
   visInPorts: []
   visOutPorts: []
   visVariables: []
+  visTab: []
   isDeleteAble: 1
   eventName: Distance
 --- !u!1 &386227793406815814

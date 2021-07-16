@@ -14,6 +14,7 @@ public class VisManager : MonoBehaviour
     [Header("Object")]
     public GameObject prefabVisObject;
     public GameObject prefabVisVector;
+    public GameObject prefabTabToggle;
     private VisVector visVector;
     private Transform visVectorTrans;
     [Header("Property")]
