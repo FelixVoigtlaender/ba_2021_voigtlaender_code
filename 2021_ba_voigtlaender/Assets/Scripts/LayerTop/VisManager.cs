@@ -11,17 +11,23 @@ public class VisManager : MonoBehaviour
 
     public GameObject prefabVisConnection;
 
-    [Header("Object")]
+    [Header("Prefabs")]
     public GameObject prefabVisObject;
     public GameObject prefabVisVector;
     public GameObject prefabTabToggle;
-    private VisVector visVector;
-    private Transform visVectorTrans;
+    public GameObject prefabGhostObject;
     [Header("Property")]
     public GameObject[] prefabVisProperties;
     public GameObject[] prefabVisEvents;
     public GameObject[] prefabLogicElements;
     public GameObject prefabVisPort;
+
+    [Header("Ghost")]
+    private VisVector visVector;
+    private Transform visVectorTrans;
+
+    private GhostObject ghostObject;
+
 
     private void Awake()
     {
@@ -47,6 +53,23 @@ public class VisManager : MonoBehaviour
         visVector.transform.gameObject.SetActive(true);
 
         return visVector;
+    }
+
+    public GhostObject DemandGhostObject( DatTransform datTransform)
+    {
+        if ( datTransform == null)
+            return null;
+
+        if (!ghostObject)
+        {
+            GameObject ghostObj = Instantiate(prefabGhostObject);
+            ghostObject = ghostObj.GetComponent<GhostObject>();
+        }
+
+        ghostObject.Setup(datTransform);
+        ghostObject.gameObject.SetActive(true);
+
+        return ghostObject;
     }
 
     public void OnInitVRObject(VRObject vrObject)

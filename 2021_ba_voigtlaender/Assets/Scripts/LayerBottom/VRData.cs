@@ -167,6 +167,41 @@ public class DatVector3 : VRData
     }
 }
 
+
+[System.Serializable]
+public class DatQuaternion : VRData
+{
+    private Quaternion value;
+    public Quaternion Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
+    public DatQuaternion(Quaternion value)
+    {
+        this.Value = value;
+    }
+    public override bool IsType(VRData data)
+    {
+        return data is DatQuaternion;
+    }
+    public override Color GetColor()
+    {
+        // Violett
+        return DecimalToColor(153, 50, 204);
+    }
+    public override string GetName()
+    {
+        return Value.ToString();
+    }
+    public override void SetData(VRData data)
+    {
+        if (data == null)
+            return;
+        Value = ((DatQuaternion)data).Value;
+    }
+}
+
 [System.Serializable]
 public class DatEvent : VRData
 {
@@ -270,6 +305,54 @@ public class DatObj : VRData
         if (data == null)
             return;
         Value = ((DatObj)data).Value;
+    }
+}
+
+public class DatTransform : VRData
+{
+    public DatObj datObj;
+    public DatVector3 datPosition;
+    public DatQuaternion datRotation;
+    public DatVector3 datLocalScale;
+    public DatTransform(DatObj datObj, DatVector3 datPosition, DatQuaternion datRotation, DatVector3 datLocalScale)
+    {
+        this.datPosition = datPosition;
+        this.datRotation = datRotation;
+        this.datLocalScale = datLocalScale;
+        this.datObj = datObj;
+
+        datPosition.OnDataChanged += (value) => DataChanged();
+        datRotation.OnDataChanged += (value) => DataChanged();
+        datLocalScale.OnDataChanged += (value) => DataChanged();
+        datObj.OnDataChanged += (value) => DataChanged();
+    }
+    public DatTransform(DatObj datObj, Vector3 position, Quaternion rotation, Vector3 localScale) :
+        this(datObj,new DatVector3(position), new DatQuaternion(rotation), new DatVector3(localScale)) {}
+    public DatTransform(DatObj datObj) :
+        this(datObj,datObj.Value.gameObject.transform.position, datObj.Value.gameObject.transform.rotation, datObj.Value.gameObject.transform.localScale)
+    { }
+
+    public override bool IsType(VRData data)
+    {
+        return data is DatTransform;
+    }
+    public override Color GetColor()
+    {
+        //deepskyblue
+        return DecimalToColor(0, 191, 255);
+    }
+    public override string GetName()
+    {
+        return "Transform";
+    }
+    public override void SetData(VRData data)
+    {
+        if (data == null)
+            return;
+        DatTransform datTransform = (DatTransform)data;
+        datPosition.SetData(datTransform.datPosition);
+        datRotation.SetData(datTransform.datRotation);
+        datLocalScale.SetData(datTransform.datLocalScale);
     }
 }
 

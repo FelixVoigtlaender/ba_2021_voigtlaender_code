@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using System;
 
+
+[Serializable]
+public class BoolEvent :  UnityEvent<bool>{ }
 public class BetterToggle : MonoBehaviour, IPointerDownHandler
 {
     [Header("Objects")]
@@ -12,8 +16,7 @@ public class BetterToggle : MonoBehaviour, IPointerDownHandler
     [SerializeField]
     private bool _isOn;
     [Header("Events")]
-    [HideInInspector]
-    public UnityEvent<bool> OnValueChanged;
+    public BoolEvent OnValueChanged;
     public UnityEvent OnValueTrue;
     public UnityEvent OnValueFalse;
 

@@ -8,7 +8,10 @@ public class VisVariable : VisLogicElement
     VRVariable vrVariable;
     public Slider slider;
     public Button button;
+    public BetterToggle toggle;
     VisVector visVector;
+    GhostObject ghostObject;
+
     public override void Setup(VRLogicElement element)
     {
         this.vrVariable = (VRVariable)element;
@@ -62,6 +65,34 @@ public class VisVariable : VisLogicElement
                     button.onClick.AddListener(() =>
                     {
                         vrVariable.SetData(new DatEvent(VRManager.tickIndex));
+                    });
+                }
+                break;
+            case DatTransform datTransform:
+                if (button)
+                {
+                    button.gameObject.SetActive(true);
+                    button.onClick.AddListener(() =>
+                    {
+                        if (ghostObject != null && ghostObject.datTransform == datTransform && ghostObject.gameObject.activeSelf)
+                        {
+                            ghostObject.gameObject.SetActive(false);
+                        }
+                        else
+                        {
+                            ghostObject = VisManager.instance.DemandGhostObject(datTransform);
+                        }
+                    });
+                }
+                break;
+            case DatBool datBool:
+                if (toggle)
+                {
+                    toggle.gameObject.SetActive(true);
+                    toggle.IsOn = datBool.Value;
+                    toggle.OnValueChanged.AddListener((value) =>
+                    {
+                        datBool.Value = value; textName.text = vrVariable.Name();
                     });
                 }
                 break;

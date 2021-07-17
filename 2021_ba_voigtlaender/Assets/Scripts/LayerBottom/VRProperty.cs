@@ -21,6 +21,11 @@ public abstract class VRProperty : VRLogicElement
         base.Setup();
     }
 
+
+    public virtual bool CanBeUsed()
+    {
+        return true;
+    }
     public static List<VRProperty> GetAllPorperties()
     {
         if (allProperties != null)
@@ -32,7 +37,8 @@ public abstract class VRProperty : VRLogicElement
         foreach(Type type in subClasses)
         {
             VRProperty vrProperty = (VRProperty) Activator.CreateInstance(type);
-            allProperties.Add(vrProperty);
+            if(vrProperty.CanBeUsed())
+                allProperties.Add(vrProperty);
         }
         return allProperties;
     }
@@ -94,6 +100,48 @@ public class PropTrigger : VRProperty
 
 }
 
+
+public class PropEnabled : VRProperty
+{
+    VRVariable varEnabled;
+    public override string Name()
+    {
+        return "Enabled";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        // Gameobject always can be enabled
+        return true;
+    }
+
+    public override void SetupVariables()
+    {
+        base.SetupVariables();
+        varEnabled = new VRVariable();
+        varEnabled.Setup(new DatBool(vrObject.gameObject.activeSelf));
+        varEnabled.name = "Enabled";
+        varEnabled.OnSetData += SetData;
+
+        vrVariables.Add(varEnabled);
+    }
+
+    public void SetData(VRData vrData)
+    {
+        Trigger();
+    }
+
+    public override void Trigger()
+    {
+        DatBool datEnabled = (DatBool)varEnabled.GetData();
+        vrObject.gameObject.SetActive(datEnabled.Value);
+    }
+
+    public override VRData GetData()
+    {
+        return varEnabled.GetData();
+    }
+}
+
 public class PropObj : VRProperty
 {
     public override string Name()
@@ -135,6 +183,11 @@ public class PropObj : VRProperty
 public class PropPosition : VRProperty
 {
     VRVariable positionVariable;
+
+    public override bool CanBeUsed()
+    {
+        return false;
+    }
 
     public override string Name()
     {
@@ -179,7 +232,7 @@ public class PropPosition : VRProperty
 }
 
 
-public class PropTransform : VRProperty
+public class PropMovement : VRProperty
 {
     // Teleport
     VRTab tabTeleport;
@@ -198,6 +251,10 @@ public class PropTransform : VRProperty
         return true;
     }
 
+    public override bool CanBeUsed()
+    {
+        return false;
+    }
     public override void SetupTabs()
     {
         base.SetupTabs();
@@ -257,6 +314,10 @@ public class PropScale : VRProperty
         return true;
     }
 
+    public override bool CanBeUsed()
+    {
+        return false;
+    }
     public override void SetupVariables()
     {
         base.SetupVariables();
@@ -290,5 +351,82 @@ public class PropScale : VRProperty
     {
         DatFloat vrFloat = (DatFloat)scaleVariable.vrData;
         vrObject.gameObject.transform.localScale = Vector3.one * vrFloat.Value;
+    }
+}
+
+
+public class PropTransform : VRProperty
+{
+    // Teleport
+    VRTab tabTeleport;
+    VRTab tabMove;
+
+    // Variables
+    VRVariable varTransform;
+    VRVariable varDuration;
+    public override string Name()
+    {
+        return "Transform";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        // Gameobject always has a transform
+        return true;
+    }
+
+    public override void SetupTabs()
+    {
+        base.SetupTabs();
+
+        // Variables
+        varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Transform");
+        varDuration = new VRVariable(new DatFloat(1), "Duration");
+        varDuration.allowDatName = true;
+
+        // Tabs
+        tabTeleport = new VRTab("Teleport");
+        tabTeleport.vrVariables.Add(varTransform);
+        vrTabs.Add(tabTeleport);
+
+        tabMove = new VRTab("Move");
+        tabMove.vrVariables.Add(varTransform);
+        tabMove.vrVariables.Add(varDuration);
+        vrTabs.Add(tabMove);
+    }
+
+    public override void Trigger()
+    {
+        VRTab activeTab = GetActiveTab();
+        if (activeTab == null)
+            return;
+
+        Transform transform = vrObject.gameObject.transform;
+        DatTransform datTransform = (DatTransform)varTransform.vrData;
+        Vector3 position = datTransform.datPosition.Value;
+        Quaternion rotation = datTransform.datRotation.Value;
+        Vector3 localScale = datTransform.datLocalScale.Value;
+
+        if (activeTab == tabTeleport)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
+            transform.localScale = localScale;
+
+            return;
+        }
+        if (activeTab == tabMove)
+        {
+            DatFloat datDuration = (DatFloat)varDuration.vrData;
+
+            transform.DOMove(position, datDuration.Value);
+            transform.DOScale(localScale, datDuration.Value);
+            transform.DORotateQuaternion(rotation, datDuration.Value);
+
+            return;
+        }
+    }
+    public override VRData GetData()
+    {
+        return null;
     }
 }

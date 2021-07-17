@@ -22,6 +22,10 @@ public class BezierCurve : MonoBehaviour
     {
 		line.endColor = line.startColor = color;
     }
+	public void SetWidth(float width)
+    {
+		line.startWidth = line.endWidth = width;
+	}
 
 	public void Update()
     {

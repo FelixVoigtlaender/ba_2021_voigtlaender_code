@@ -11,6 +11,8 @@ public class VisConnection : MonoBehaviour
     public Color activeColor = Color.white;
     public Color inactiveColor = Color.gray;
     public Color errorColor = Color.red;
+    public float activeWidth = 0.02f;
+    public float inactiveWidth = 0.01f;
     Color normalColor;
 
     VisPort startVisPort;
@@ -27,25 +29,40 @@ public class VisConnection : MonoBehaviour
         startVisPort = start;
         normalColor = start.vrPort.dataType.GetColor();
         bezierCurve.SetColor(normalColor);
+        bezierCurve.SetWidth(inactiveWidth);
 
         lastPosition = start.transform.position;
         vrConnection.OnActive += OnActive;
 
 
         ResetColor();
+
+        StartCoroutine(ResetActive(0.3f));
     }
 
     public void OnActive(VRData vrData)
     {
+
+        bezierCurve.SetWidth(activeWidth);
         if (vrData == null)
+        {
             bezierCurve.SetColor(normalColor * errorColor);
+        }
         else
+        {
             bezierCurve.SetColor(normalColor * activeColor);
+        }
     }
 
-    private void FixedUpdate()
+    private IEnumerator ResetActive(float waitTime)
     {
-        ResetColor();
+        while (true)
+        {
+            yield return new WaitForSeconds(waitTime);
+
+            ResetColor();
+            bezierCurve.SetWidth(inactiveWidth);
+        }
     }
     public void ResetColor()
     {
