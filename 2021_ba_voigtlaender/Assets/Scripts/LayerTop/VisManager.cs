@@ -72,6 +72,24 @@ public class VisManager : MonoBehaviour
         return ghostObject;
     }
 
+
+    public GhostObject DemandGhostObject(DatRecording datRecording)
+    {
+        if (datRecording == null)
+            return null;
+
+        if (!ghostObject)
+        {
+            GameObject ghostObj = Instantiate(prefabGhostObject);
+            ghostObject = ghostObj.GetComponent<GhostObject>();
+        }
+
+        ghostObject.Setup(datRecording);
+        ghostObject.gameObject.SetActive(true);
+
+        return ghostObject;
+    }
+
     public void OnInitVRObject(VRObject vrObject)
     {
         GameObject visObjectObj = Instantiate(prefabVisObject);

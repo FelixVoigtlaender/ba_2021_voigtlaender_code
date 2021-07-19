@@ -360,10 +360,14 @@ public class PropTransform : VRProperty
     // Teleport
     VRTab tabTeleport;
     VRTab tabMove;
-
+    VRTab tabRecording;
     // Variables
     VRVariable varTransform;
     VRVariable varDuration;
+    VRVariable varRecording;
+    VRVariable varLoop;
+
+    bool playing = false;
     public override string Name()
     {
         return "Transform";
@@ -382,6 +386,9 @@ public class PropTransform : VRProperty
         varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Transform");
         varDuration = new VRVariable(new DatFloat(1), "Duration");
         varDuration.allowDatName = true;
+        varRecording = new VRVariable(new DatRecording(new DatTransform(new DatObj(vrObject))), "Recording");
+        varLoop = new VRVariable(new DatBool(false), "Loop");
+
 
         // Tabs
         tabTeleport = new VRTab("Teleport");
@@ -392,6 +399,13 @@ public class PropTransform : VRProperty
         tabMove.vrVariables.Add(varTransform);
         tabMove.vrVariables.Add(varDuration);
         vrTabs.Add(tabMove);
+
+
+        tabRecording = new VRTab("Record");
+        tabRecording.vrVariables.Add(varRecording);
+        tabRecording.vrVariables.Add(varDuration);
+        tabRecording.vrVariables.Add(varLoop);
+        vrTabs.Add(tabRecording);
     }
 
     public override void Trigger()
@@ -406,6 +420,11 @@ public class PropTransform : VRProperty
         Quaternion rotation = datTransform.datRotation.Value;
         Vector3 localScale = datTransform.datLocalScale.Value;
 
+        DatFloat datDuration = (DatFloat)varDuration.vrData;
+
+        DatRecording datRecording = (DatRecording)varRecording.vrData;
+        DatBool datLoop =(DatBool) varLoop.vrData;
+
         if (activeTab == tabTeleport)
         {
             transform.position = position;
@@ -416,14 +435,50 @@ public class PropTransform : VRProperty
         }
         if (activeTab == tabMove)
         {
-            DatFloat datDuration = (DatFloat)varDuration.vrData;
 
             transform.DOMove(position, datDuration.Value);
             transform.DOScale(localScale, datDuration.Value);
             transform.DORotateQuaternion(rotation, datDuration.Value);
-
             return;
         }
+        if(activeTab == tabRecording)
+        {
+            if (!playing)
+            {
+                VRManager.instance.StartCoroutine(Play(datDuration.Value, datRecording, () =>
+                {
+                    if (datLoop.Value)
+                        Trigger();
+                }));
+            }
+        }
+    }
+    private IEnumerator Play(float duration, DatRecording datRecording, Action OnComplete)
+    {
+        playing = true;
+
+        List<DatTransform> recording = datRecording.Value;
+        float fps = (float)recording.Count / duration;
+
+        Transform transform = datRecording.datTransform.datObj.Value.gameObject.transform;
+        Rigidbody rigid = datRecording.datTransform.datObj.Value.rigid;
+        for (int i = 0; i < recording.Count; i++)
+        {
+            DatVector3 datPosition = recording[i].datPosition;
+            DatQuaternion datRotation = recording[i].datRotation;
+            DatVector3 datLocalScale = recording[i].datLocalScale;
+
+            float stepTime = 1f / fps;
+            transform.DOMove(datPosition.Value, stepTime);
+            transform.DORotateQuaternion(datRotation.Value, stepTime);
+            transform.DOScale(datLocalScale.Value, stepTime);
+            if (rigid)
+                rigid.velocity = Vector3.zero;
+
+            yield return new WaitForSeconds(stepTime);
+        }
+        playing = false;
+        OnComplete?.Invoke();
     }
     public override VRData GetData()
     {

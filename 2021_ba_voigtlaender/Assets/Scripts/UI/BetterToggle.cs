@@ -51,6 +51,14 @@ public class BetterToggle : MonoBehaviour, IPointerDownHandler
 
     }
 
+    public void SetWithoutNotify(bool value)
+    {
+        _isOn = value;
+        if (on)
+            on.SetActive(value);
+        if (off)
+            off.SetActive(!value);
+    }
 
 
 

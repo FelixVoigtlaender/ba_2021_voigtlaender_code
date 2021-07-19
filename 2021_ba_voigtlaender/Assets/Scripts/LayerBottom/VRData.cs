@@ -356,3 +356,47 @@ public class DatTransform : VRData
     }
 }
 
+
+public class DatRecording : VRData
+{
+    public DatTransform datTransform;
+    List<DatTransform> value;
+    public List<DatTransform> Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
+    public DatRecording(DatTransform datTransform, List<DatTransform> value)
+    {
+        this.datTransform = datTransform;
+        Value = value;
+    }
+    public DatRecording(DatTransform datTransform) : this(datTransform, new List<DatTransform>()) { }
+
+    public override bool IsType(VRData data)
+    {
+        return data is DatRecording;
+    }
+    public override Color GetColor()
+    {
+        //Apple Barrel Bright Blue
+        return DecimalToColor(0, 153, 204);
+    }
+    public override string GetName()
+    {
+        return "Recording";
+    }
+    public override void SetData(VRData data)
+    {
+        if (data == null)
+            return;
+        DatRecording other = (DatRecording)data;
+        Value = other.Value;
+        datTransform = other.datTransform;
+    }
+    public void AddDatTransform(DatTransform datTransform)
+    {
+        value.Add(datTransform);
+        DataChanged();
+    }
+}

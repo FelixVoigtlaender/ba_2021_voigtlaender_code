@@ -12,6 +12,10 @@ public class VisVariable : VisLogicElement
     VisVector visVector;
     GhostObject ghostObject;
 
+
+    public BetterToggle betterTogglePlay;
+    public BetterToggle betterToggleRecord;
+
     public override void Setup(VRLogicElement element)
     {
         this.vrVariable = (VRVariable)element;
@@ -95,6 +99,53 @@ public class VisVariable : VisLogicElement
                         datBool.Value = value; textName.text = vrVariable.Name();
                     });
                 }
+                break;
+            case DatRecording datRecording:
+                if (!button || !betterTogglePlay || !betterToggleRecord)
+                    return;
+
+                // Setup recording button
+                betterToggleRecord.OnValueChanged.AddListener((value) =>
+                {
+                    if (!ghostObject)
+                        return;
+                    ghostObject.Record(value,()=> 
+                    {
+                        betterToggleRecord.SetWithoutNotify(false);
+                    });
+                });
+
+                // Setup play button
+                betterTogglePlay.OnValueChanged.AddListener((value) =>
+                {
+                    if (!ghostObject)
+                        return;
+
+                    ghostObject.Play(value,()=> 
+                    {
+                        betterTogglePlay.SetWithoutNotify(false);
+                    });
+                });
+
+
+                // Show hide object
+                button.gameObject.SetActive(true);
+                button.onClick.AddListener(() =>
+                {
+                    if (ghostObject != null && ghostObject.datRecording == datRecording && ghostObject.gameObject.activeSelf)
+                    {
+                        ghostObject.gameObject.SetActive(false);
+                        betterToggleRecord.gameObject.SetActive(false);
+                        betterTogglePlay.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        betterToggleRecord.gameObject.SetActive(true);
+                        betterTogglePlay.gameObject.SetActive(true);
+                        ghostObject = VisManager.instance.DemandGhostObject(datRecording);
+                    }
+                });
+
                 break;
             default:
                 break;

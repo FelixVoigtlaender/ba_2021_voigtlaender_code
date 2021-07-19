@@ -140,6 +140,69 @@ public class EventProximity : VREvent
     }
 }
 
+
+
+[System.Serializable]
+public class WaitEvent : VREvent
+{
+    VRPort outEvent;
+    VRPort inEvent;
+
+    VRVariable varDuration;
+
+    public override string Name()
+    {
+        return "Wait";
+    }
+    public override void Setup()
+    {
+        base.Setup();
+        VRManager.instance.OnFixedUpdate += Update;
+    }
+    public override void SetupInputs()
+    {
+        base.SetupInputs();
+        inEvent = new VRPort(SetData, new DatEvent(0f));
+        vrInputs.Add(inEvent);
+    }
+    public override void SetupOutputs()
+    {
+        base.SetupOutputs();
+        outEvent = new VRPort(GetData, new DatEvent(0f));
+        vrOutputs.Add(outEvent);
+    }
+    public override void SetupVariables()
+    {
+        base.SetupVariables();
+        varDuration = new VRVariable(new DatFloat(1), "Duration");
+        vrVariables.Add(varDuration);
+    }
+
+    public override void Update(DatEvent datEvent)
+    {
+        if (inEvent.IsConnected())
+            return;
+
+        SetData(datEvent);
+    }
+
+    public void SetData(VRData vrData)
+    {
+    }
+    public VRData GetData()
+    {
+        return null;
+    }
+
+    public override void Delete()
+    {
+        VRManager.instance.OnFixedUpdate -= Update;
+
+        base.Delete();
+    }
+}
+
+
 [System.Serializable]
 public class EventRandom : VREvent
 {

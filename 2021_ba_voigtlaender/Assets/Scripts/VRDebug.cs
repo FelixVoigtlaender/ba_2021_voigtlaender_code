@@ -36,7 +36,6 @@ public class VRDebug : MonoBehaviour
         instance.logText += conMessage;
         logCount++;
         instance.logText = CutLines(instance.logText, 15);
-        Debug.Log(conMessage);
     }
 
     public static string CutLines(string message, int lineCount)
