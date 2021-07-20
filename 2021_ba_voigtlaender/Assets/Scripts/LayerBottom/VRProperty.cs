@@ -65,7 +65,8 @@ public class PropTrigger : VRProperty
         eventVariable = new VRVariable();
         eventVariable.Setup(new DatEvent(-1));
         eventVariable.name = "Apply Changes";
-        eventVariable.OnVariableChanged+= SetData;
+        eventVariable.OnSetData += SetData;
+        //eventVariable.OnVariableChanged+= SetData;
 
         vrVariables.Add(eventVariable);
     }

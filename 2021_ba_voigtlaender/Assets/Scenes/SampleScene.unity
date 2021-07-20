@@ -1215,6 +1215,7 @@ GameObject:
   - component: {fileID: 713671182}
   - component: {fileID: 713671181}
   - component: {fileID: 713671180}
+  - component: {fileID: 713671179}
   m_Layer: 5
   m_Name: VRDebug
   m_TagString: Untagged
@@ -1222,6 +1223,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &713671179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713671178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa6fd8cfaa7b074bbe33f77d17fa76d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &713671180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2473,10 +2486,14 @@ MonoBehaviour:
     transform: {fileID: 0}
     rectTransform: {fileID: 0}
     rigid: {fileID: 0}
+    wasKinematic: 0
     initialDistance: 0
     initialPoint: {x: 0, y: 0, z: 0}
     initialRotation: {x: 0, y: 0, z: 0, w: 0}
     initialHandPosition: {x: 0, y: 0, z: 0}
+    blockCode: {fileID: 0}
+    blockDrag: {fileID: 0}
+    blockRotate: {fileID: 0}
     currentSmoothing: {x: 0, y: 0, z: 0}
     smoothedPoint: {x: 0, y: 0, z: 0}
     currentPoint: {x: 0, y: 0, z: 0}
@@ -4439,10 +4456,14 @@ MonoBehaviour:
     transform: {fileID: 0}
     rectTransform: {fileID: 0}
     rigid: {fileID: 0}
+    wasKinematic: 0
     initialDistance: 0
     initialPoint: {x: 0, y: 0, z: 0}
     initialRotation: {x: 0, y: 0, z: 0, w: 0}
     initialHandPosition: {x: 0, y: 0, z: 0}
+    blockCode: {fileID: 0}
+    blockDrag: {fileID: 0}
+    blockRotate: {fileID: 0}
     currentSmoothing: {x: 0, y: 0, z: 0}
     smoothedPoint: {x: 0, y: 0, z: 0}
     currentPoint: {x: 0, y: 0, z: 0}

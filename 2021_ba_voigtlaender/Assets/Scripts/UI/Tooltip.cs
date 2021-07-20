@@ -24,6 +24,8 @@ public class Tooltip : MonoBehaviour
     {
         if (content == activeContent)
             return;
+        if (content.description == "")
+            return;
 
         background.transform.localScale = Vector3.zero;
         background.DOAnchorPos3DZ(-20, 0.1f);
@@ -40,6 +42,8 @@ public class Tooltip : MonoBehaviour
     public void Exit(TooltipContent content)
     {
         if (content != activeContent)
+            return;
+        if (content.description == "")
             return;
 
         background.DOAnchorPos3DZ(0, 0.1f);

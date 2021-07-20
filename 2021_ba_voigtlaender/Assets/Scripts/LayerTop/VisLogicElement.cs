@@ -82,6 +82,8 @@ public class VisLogicElement : MonoBehaviour
             visTab.Setup(vrTab);
 
             Toggle toggle = objTabToggle.GetComponent<Toggle>();
+            if (toggle.TryGetComponent(out TooltipContent tooltipContent))
+                tooltipContent.description = vrTab.Name();
             toggle.group = toggleGroup;
             visTab.SetToggle(toggle);
 

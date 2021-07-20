@@ -150,6 +150,9 @@ public class WaitEvent : VREvent
 
     VRVariable varDuration;
 
+    Coroutine myWaitCoroutine;
+    bool isWaiting = false;
+
     public override string Name()
     {
         return "Wait";
@@ -157,7 +160,6 @@ public class WaitEvent : VREvent
     public override void Setup()
     {
         base.Setup();
-        VRManager.instance.OnFixedUpdate += Update;
     }
     public override void SetupInputs()
     {
@@ -175,30 +177,28 @@ public class WaitEvent : VREvent
     {
         base.SetupVariables();
         varDuration = new VRVariable(new DatFloat(1), "Duration");
+        varDuration.allowDatName = true;
         vrVariables.Add(varDuration);
     }
-
-    public override void Update(DatEvent datEvent)
-    {
-        if (inEvent.IsConnected())
-            return;
-
-        SetData(datEvent);
-    }
-
     public void SetData(VRData vrData)
     {
+        if (isWaiting)
+            return;
+
+        DatFloat datDuration =(DatFloat)varDuration.vrData;
+        VRManager.instance.StartCoroutine(Wait(datDuration.Value, vrData));
+    }
+
+    IEnumerator Wait(float duration, VRData vrData)
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(duration);
+        outEvent.SetData(vrData);
+        isWaiting = false;
     }
     public VRData GetData()
     {
         return null;
-    }
-
-    public override void Delete()
-    {
-        VRManager.instance.OnFixedUpdate -= Update;
-
-        base.Delete();
     }
 }
 
