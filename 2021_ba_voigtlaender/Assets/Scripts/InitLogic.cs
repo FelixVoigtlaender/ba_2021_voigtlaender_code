@@ -26,14 +26,28 @@ public class InitLogic : MonoBehaviour
         handler.OnButtonUp += OnButtonUp;
     }
 
+    private void Start()
+    {
+        
+    }
     public void OnButtonDown(InputAction.CallbackContext context)
     {
+        if (!this.enabled)
+            return;
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
 
+        if (inputManager.currentUIElement)
+        {
+            if (inputManager.currentUIElement.GetComponentInParent<BlockCode>())
+                return;
+            VRManager.instance.InitVRObject(inputManager.currentUIElement);
+            return;
+        }
+
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
         {
-            if (hit.collider.GetComponent<BlockCode>())
+            if (hit.collider.GetComponentInParent<BlockCode>())
                 return;
             VRManager.instance.InitVRObject(hit.collider.gameObject);
         }

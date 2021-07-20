@@ -43,13 +43,18 @@ public class BezierCurve : MonoBehaviour
 			return;
 
 		float distance = (start.transform.position - end.transform.position).magnitude;
-		float dirMagnitude = 1f;
-		if (distance < 2.2f)
-			dirMagnitude = (distance / 2) * 0.8f;
+		float dirMagnitude = distance;
+
+
+
 		Vector3 p0 = start.transform.position + start.offset;
-		Vector3 p1 = p0 + start.transform.TransformVector(start.normals).normalized * dirMagnitude;
 		Vector3 p3 = end.transform.position + end.offset;
-		Vector3 p2 = p3 + end.transform.TransformVector(end.normals).normalized * dirMagnitude;
+
+		Vector3 p1 = p0 + start.transform.TransformDirection(start.normals).normalized * dirMagnitude;
+		Vector3 p2 = p3 + end.transform.TransformDirection(end.normals).normalized * dirMagnitude;
+
+		Debug.DrawLine(p0, p1, Color.green);
+		Debug.DrawLine(p2, p3, Color.red);
 
 		line.positionCount = pointCount;
 		for(int i = 0; i < pointCount; i++)
@@ -88,25 +93,6 @@ public class BezierCurve : MonoBehaviour
 		if(end.dynamicNormals)
 			end.normals = GetLocalNormals(end.transform.position, start.transform.position, up, right);
 
-	}
-
-	private void OnDrawGizmos()
-    {
-		if (start == null || !start.transform)
-			return;
-		if (end == null || !end.transform)
-			return;
-
-
-		Vector3 p0 = start.transform.position + start.offset;
-		Vector3 p1 = p0 + start.transform.TransformVector(start.normals);
-		Vector3 p2 = end.transform.position + end.offset;
-		Vector3 p3 = p2 + start.transform.TransformVector(end.normals);
-
-		Gizmos.color = Color.green;
-		Gizmos.DrawLine(p0, p1);
-		Gizmos.color = Color.red;
-		Gizmos.DrawLine(p2, p3);
 	}
 
 

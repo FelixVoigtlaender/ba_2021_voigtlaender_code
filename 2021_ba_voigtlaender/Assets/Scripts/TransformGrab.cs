@@ -51,6 +51,9 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
+        if (!this.enabled)
+            return;
+
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;
 
@@ -83,7 +86,9 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
-        if(grabbedObject!=null)
+        if (!this.enabled)
+            return;
+        if (grabbedObject!=null)
             grabbedObject.Release();
         grabbedObject = null;
     }
@@ -91,6 +96,8 @@ public class TransformGrab : MonoBehaviour
 
     public void Update()
     {
+        if (!this.enabled)
+            return;
         HandleDrag();
         HandlePull();
         HandleScale();

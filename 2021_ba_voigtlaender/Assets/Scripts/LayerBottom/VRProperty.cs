@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-
+using UnityEngine.UI;
 public abstract class VRProperty : VRLogicElement
 {
     protected VRObject vrObject;
@@ -196,7 +196,16 @@ public class PropPosition : VRProperty
     }
     public override bool IsType(VRObject vrObject)
     {
-        // Gameobject always has a transform
+        // Only world objects should be moved
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        RectTransform canvas = vrObject.gameObject.GetComponent<RectTransform>();
+
+        if (canvas)
+            return true;
+        if (rect)
+            return false;
+
+
         return true;
     }
 
@@ -248,7 +257,15 @@ public class PropMovement : VRProperty
     }
     public override bool IsType(VRObject vrObject)
     {
-        // Gameobject always has a transform
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        RectTransform canvas = vrObject.gameObject.GetComponent<RectTransform>();
+
+        if (canvas)
+            return true;
+        if (rect)
+            return false;
+
+
         return true;
     }
 
@@ -312,6 +329,12 @@ public class PropScale : VRProperty
     public override bool IsType(VRObject vrObject)
     {
         // Gameobject always has a transform
+
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
+
+
         return true;
     }
 
@@ -376,6 +399,12 @@ public class PropTransform : VRProperty
     public override bool IsType(VRObject vrObject)
     {
         // Gameobject always has a transform
+
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
+
+
         return true;
     }
 
@@ -492,6 +521,53 @@ public class PropTransform : VRProperty
 
         OnComplete?.Invoke();
     }
+    public override VRData GetData()
+    {
+        return null;
+    }
+}
+
+
+public class PropButton : VRProperty
+{
+    VRVariable varTrigger;
+
+    Button button;
+    public override string Name()
+    {
+        return "Button Pressed";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        // Gameobject always has a transform
+        Button button = vrObject.gameObject.GetComponentInParent<Button>();
+
+        if (button)
+            return true;
+        else
+            return false;
+    }
+
+    public override bool CanBeUsed()
+    {
+        return true;
+    }
+    public override void SetupVariables()
+    {
+        base.SetupVariables();
+
+        button = vrObject.gameObject.GetComponentInParent<Button>();
+        varTrigger = new VRVariable(new DatEvent(-1), "OnPressed");
+
+        button.onClick.AddListener(() => 
+        {
+            varTrigger.SetData(new DatEvent(VRManager.tickIndex++));
+        });
+
+        vrVariables.Add(varTrigger);
+
+    }
+
     public override VRData GetData()
     {
         return null;
