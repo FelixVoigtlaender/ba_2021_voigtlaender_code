@@ -98,6 +98,43 @@ public class DatFloat : VRData
     }
 }
 
+
+[System.Serializable]
+public class DatColor : VRData
+{
+    private Color value;
+    public Color Value
+    {
+        get { return value; }
+        set { this.value = value; DataChanged(); }
+    }
+
+    public DatColor(Color value)
+    {
+        this.Value = value;
+    }
+    public override bool IsType(VRData data)
+    {
+        return data is DatColor;
+    }
+    public override Color GetColor()
+    {
+        //purple
+        return DecimalToColor(128, 0, 128);
+    }
+    public override string GetName()
+    {
+        return "Color";
+    }
+    public override void SetData(VRData data)
+    {
+        if (data == null)
+            return;
+        Value = ((DatColor)data).Value;
+    }
+}
+
+
 [System.Serializable]
 public class DatInt : VRData
 {
@@ -298,7 +335,7 @@ public class DatObj : VRData
             return "NULL";
         if (Value.gameObject == null)
             return "NULL-OBJ";
-        return Value.gameObject.ToString();
+        return Value.gameObject.name;
     }
     public override void SetData(VRData data)
     {
@@ -392,7 +429,7 @@ public class DatRecording : VRData
             return;
         DatRecording other = (DatRecording)data;
         Value = other.Value;
-        datTransform = other.datTransform;
+        //datTransform = other.datTransform;
     }
     public void AddDatTransform(DatTransform datTransform)
     {

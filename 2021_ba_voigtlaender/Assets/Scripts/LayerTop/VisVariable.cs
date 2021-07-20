@@ -16,6 +16,8 @@ public class VisVariable : VisLogicElement
     public BetterToggle betterTogglePlay;
     public BetterToggle betterToggleRecord;
 
+    public BetterColorPicker colorPicker;
+
     public override void Setup(VRLogicElement element)
     {
         this.vrVariable = (VRVariable)element;
@@ -145,7 +147,21 @@ public class VisVariable : VisLogicElement
                         ghostObject = VisManager.instance.DemandGhostObject(datRecording);
                     }
                 });
-
+                break;
+            case DatColor datColor:
+                if (colorPicker)
+                {
+                    colorPicker.gameObject.SetActive(true);
+                    colorPicker.SetColor(datColor.Value);
+                    colorPicker.OnValueChanged.AddListener((value) =>
+                    {
+                        datColor.Value = value;
+                    });
+                    datColor.OnDataChanged += (value) =>
+                    {
+                        colorPicker.SetColor(datColor.Value);
+                    };
+                }
                 break;
             default:
                 break;

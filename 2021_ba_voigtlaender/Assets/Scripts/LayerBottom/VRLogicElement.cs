@@ -91,6 +91,10 @@ public abstract class VRLogicElement
         {
             variable?.Delete();
         }
+        foreach(VRTab tab in vrTabs)
+        {
+            tab?.Delete();
+        }
 
         OnDelete?.Invoke();
     }

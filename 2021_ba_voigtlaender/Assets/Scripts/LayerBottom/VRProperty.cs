@@ -573,3 +573,97 @@ public class PropButton : VRProperty
         return null;
     }
 }
+public class PropColor : VRProperty
+{
+    VRVariable varColor;
+
+
+    Renderer renderer;
+    Image image;
+    RawImage rawImage;
+    Text text;
+
+    public override string Name()
+    {
+        return "";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        return SetupColorComponent(vrObject);
+    }
+
+    public override bool CanBeUsed()
+    {
+        return true;
+    }
+    public override void SetupVariables()
+    {
+        base.SetupVariables();
+
+        SetupColorComponent(vrObject);
+        Color color = GetColor();
+
+        varColor = new VRVariable(new DatColor(color), "Color");
+        varColor.OnSetData += SetData;
+
+        vrVariables.Add(varColor);
+
+    }
+
+    bool SetupColorComponent(VRObject vrObject)
+    {
+        GameObject gameObject = vrObject.gameObject;
+        if (gameObject.TryGetComponent(out renderer))
+            return true;
+        if (gameObject.TryGetComponent(out image))
+            return true;
+        if (gameObject.TryGetComponent(out rawImage))
+            return true;
+        if (gameObject.TryGetComponent(out text))
+            return true;
+
+        //Couldn't find component with color
+        return false;
+    }
+
+    Color GetColor()
+    {
+        Color color = Color.cyan;
+        if (renderer)
+            color = renderer.material.color;
+        if (image)
+            color = image.color;
+        if (rawImage)
+            color = rawImage.color;
+        if (text)
+            color = text.color;
+        return color;
+    }
+
+    void SetColor(Color color)
+    {
+        if (renderer)
+            renderer.material.color = color;
+        if (image)
+            image.color = color;
+        if (rawImage)
+            rawImage.color = color;
+        if (text)
+            text.color = color;
+    }
+
+    public override void Trigger()
+    {
+        base.Trigger();
+        SetData(varColor.GetData());
+    }
+    public void SetData(VRData vrData)
+    {
+        DatColor datColor = (DatColor)vrData;
+        SetColor(datColor.Value);
+    }
+    public override VRData GetData()
+    {
+        return null;
+    }
+}
