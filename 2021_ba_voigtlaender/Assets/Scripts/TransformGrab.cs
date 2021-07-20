@@ -83,6 +83,8 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
+        if(grabbedObject!=null)
+            grabbedObject.Release();
         grabbedObject = null;
     }
 
@@ -100,6 +102,8 @@ public class TransformGrab : MonoBehaviour
         if (!handler.isPressed)
             grabbedObject = null;
         if (grabbedObject == null ||!grabbedObject.transform)
+            return;
+        if (grabbedObject.blockDrag)
             return;
 
 
@@ -143,10 +147,14 @@ public class TransformGrab : MonoBehaviour
 
 
         // Set Rotation
-        grabbedObject.transform.rotation = transform.rotation * grabbedObject.initialRotation;
+        if (!grabbedObject.blockRotate)
+        {
+            grabbedObject.transform.rotation = transform.rotation * grabbedObject.initialRotation;
+        }
 
         // Set position
-        grabbedObject.transform.position += grabbedObject.transform.TransformVector(grabbedObject.smoothedPoint - grabbedObject.initialPoint);
+        if (!grabbedObject.blockDrag)
+            grabbedObject.transform.position += grabbedObject.transform.TransformVector(grabbedObject.smoothedPoint - grabbedObject.initialPoint);
     }
 
     public void HandleDualWeild()
@@ -175,11 +183,9 @@ public class TransformGrab : MonoBehaviour
         //Rotation
         Vector3 axis = Vector3.Cross(initialVector.normalized, currentVector.normalized);
 
-        if (!grabbedObject.rectTransform)
+        if (!grabbedObject.rectTransform && !grabbedObject.blockRotate)
         {
             //grabbedTransform.Rotate(axis, Vector3.Angle(initialVector, currentVector));
-
-
             grabbedObject.initialRotation = Quaternion.Inverse(transform.rotation) * grabbedTransform.rotation;
             o_grabbedObject.initialRotation = Quaternion.Inverse(otherHand.transform.rotation) * grabbedTransform.rotation;
         }
@@ -252,6 +258,7 @@ public class TransformGrab : MonoBehaviour
         public Transform transform;
         public RectTransform rectTransform;
         public Rigidbody rigid;
+        public bool wasKinematic;
 
         // Initial State
         public float initialDistance;
@@ -259,6 +266,11 @@ public class TransformGrab : MonoBehaviour
         public Quaternion initialRotation;
         public Vector3 initialHandPosition;
 
+        //Blocker
+        public BlockCode blockCode;
+        public BlockDrag blockDrag;
+        public BlockRotate blockRotate;
+        
 
         // Smoothed State
         public Vector3 currentSmoothing;
@@ -283,7 +295,13 @@ public class TransformGrab : MonoBehaviour
 
             initialRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
 
-            rigid = hit.transform.GetComponent<Rigidbody>();
+            if (hit.transform.TryGetComponent(out rigid))
+            {
+                wasKinematic = rigid.isKinematic;
+                rigid.isKinematic = true;
+            }
+
+            GetBlocker();
         }
         // For Transforms with UI
         public GrabbedObject(Transform transform, Transform handTransform, Vector3 worldHitPosition)
@@ -295,6 +313,21 @@ public class TransformGrab : MonoBehaviour
             rectTransform = transform.GetComponent<RectTransform>();
 
             initialRotation = Quaternion.Inverse(handTransform.rotation) * transform.rotation;
+
+            GetBlocker();
+        }
+
+        void GetBlocker()
+        {
+            blockCode = transform.GetComponent<BlockCode>();
+            blockDrag = transform.GetComponent<BlockDrag>();
+            blockRotate = transform.GetComponent<BlockRotate>();
+        }
+
+        public void Release()
+        {
+            if (rigid)
+                rigid.isKinematic = wasKinematic;
         }
     }
 }

@@ -1718,6 +1718,10 @@ PrefabInstance:
       propertyPath: _isOn
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6380524233625505169, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
+      propertyPath: description
+      value: Play
+      objectReference: {fileID: 0}
     - target: {fileID: 8645591018879648642, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_Name
       value: BetterTogglePlay

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1135005589823400815}
   - component: {fileID: 1135005589823400806}
   - component: {fileID: 1052151072312290042}
+  - component: {fileID: 254559994376980574}
   m_Layer: 5
   m_Name: VisObject
   m_TagString: Untagged
@@ -86,7 +87,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1135005589823400801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +171,18 @@ MonoBehaviour:
   scaleRatio: 0.001
   minScaleRatio: 0.001
   centerType: 1
+--- !u!114 &254559994376980574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135005589823400813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1e16ea2bd0e0f43a5e893fd926e2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &399363057486281408
 PrefabInstance:
   m_ObjectHideFlags: 0

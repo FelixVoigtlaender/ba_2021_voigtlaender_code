@@ -462,6 +462,12 @@ public class PropTransform : VRProperty
 
         Transform transform = datRecording.datTransform.datObj.Value.gameObject.transform;
         Rigidbody rigid = datRecording.datTransform.datObj.Value.rigid;
+        bool wasKinematic = false;
+        if (rigid)
+        {
+            wasKinematic = rigid.isKinematic;
+            rigid.isKinematic = false;
+        }
         for (int i = 0; i < recording.Count; i++)
         {
             DatVector3 datPosition = recording[i].datPosition;
@@ -478,6 +484,11 @@ public class PropTransform : VRProperty
             yield return new WaitForSeconds(stepTime);
         }
         playing = false;
+        if (rigid)
+        {
+            rigid.isKinematic = wasKinematic;
+        }
+
         OnComplete?.Invoke();
     }
     public override VRData GetData()
