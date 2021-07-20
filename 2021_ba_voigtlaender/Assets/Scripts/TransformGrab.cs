@@ -123,6 +123,7 @@ public class TransformGrab : MonoBehaviour
 
         if (otherHand.grabbedObject!=null && otherHand.grabbedObject.transform == grabbedObject.transform)
         {
+            grabbedObject.wasKinematic = otherHand.grabbedObject.wasKinematic = grabbedObject.wasKinematic && otherHand.grabbedObject.wasKinematic;
             // Dual Weild
             HandleDualWeild();
         }

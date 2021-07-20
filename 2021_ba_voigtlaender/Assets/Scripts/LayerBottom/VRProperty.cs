@@ -603,7 +603,7 @@ public class PropColor : VRProperty
         SetupColorComponent(vrObject);
         Color color = GetColor();
 
-        varColor = new VRVariable(new DatColor(color), "Color");
+        varColor = new VRVariable(new DatColor(color), "");
         varColor.OnSetData += SetData;
 
         vrVariables.Add(varColor);

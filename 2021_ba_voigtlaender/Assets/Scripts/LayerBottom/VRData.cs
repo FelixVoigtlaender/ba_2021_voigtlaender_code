@@ -124,7 +124,7 @@ public class DatColor : VRData
     }
     public override string GetName()
     {
-        return "Color";
+        return "";
     }
     public override void SetData(VRData data)
     {
