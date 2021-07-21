@@ -32,7 +32,14 @@ public class VisObject : MonoBehaviour
         miniature.CopyMesh(vrObject.gameObject);
 
         lineToObject.start.Connect(vrObject.gameObject.transform);
+        lineToObject.start.useLocalSpace = false;
+        lineToObject.start.dynamicNormals = false;
+        lineToObject.start.normal = Vector3.up;
+
         lineToObject.end.Connect(canvas.transform);
+        lineToObject.end.useLocalSpace = false;
+        lineToObject.end.dynamicNormals = false;
+        lineToObject.end.normal = Vector3.down;
 
         PopulateProperties();
     }

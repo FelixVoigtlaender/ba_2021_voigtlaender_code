@@ -119,11 +119,11 @@ public class VisConnection : MonoBehaviour
 
         bezierCurve.start.Connect(startVisPort.transform);
         bezierCurve.start.dynamicNormals = false;
-        bezierCurve.start.normals = Vector3.right;
+        bezierCurve.start.normal = Vector3.right;
 
         bezierCurve.end.Connect(endVisPort.transform);
         bezierCurve.end.dynamicNormals = false;
-        bezierCurve.end.normals = Vector3.left;
+        bezierCurve.end.normal = Vector3.left;
 
         VRDebug.Log($"Connected {isConnected}");
     }

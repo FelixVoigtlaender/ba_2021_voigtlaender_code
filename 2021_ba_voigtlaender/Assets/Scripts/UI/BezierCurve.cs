@@ -43,15 +43,20 @@ public class BezierCurve : MonoBehaviour
 			return;
 
 		float distance = (start.transform.position - end.transform.position).magnitude;
-		float dirMagnitude = distance;
+		float dirMagnitude = distance / 2;
 
 
 
 		Vector3 p0 = start.transform.position + start.offset;
 		Vector3 p3 = end.transform.position + end.offset;
 
-		Vector3 p1 = p0 + start.transform.TransformDirection(start.normals).normalized * dirMagnitude;
-		Vector3 p2 = p3 + end.transform.TransformDirection(end.normals).normalized * dirMagnitude;
+		Vector3 p0Direction = start.normal.normalized * dirMagnitude;
+		p0Direction = start.useLocalSpace ? start.transform.TransformDirection(start.normal).normalized * dirMagnitude : p0Direction;
+		Vector3 p3Direction = end.normal.normalized * dirMagnitude;
+		p3Direction = end.useLocalSpace ? end.transform.TransformDirection(end.normal).normalized * dirMagnitude : p3Direction;
+
+		Vector3 p1 = p0 + p0Direction;
+		Vector3 p2 = p3 + p3Direction;
 
 		Debug.DrawLine(p0, p1, Color.green);
 		Debug.DrawLine(p2, p3, Color.red);
@@ -89,9 +94,9 @@ public class BezierCurve : MonoBehaviour
 		Vector3 right = Vector3.Cross(up, deltaMid).normalized;
 
 		if(start.dynamicNormals)
-			start.normals = GetLocalNormals(start.transform.position, end.transform.position, up, right);
+			start.normal = GetLocalNormals(start.transform.position, end.transform.position, up, right);
 		if(end.dynamicNormals)
-			end.normals = GetLocalNormals(end.transform.position, start.transform.position, up, right);
+			end.normal = GetLocalNormals(end.transform.position, start.transform.position, up, right);
 
 	}
 
@@ -144,8 +149,9 @@ public class BezierCurve : MonoBehaviour
     {
 		public Transform transform;
 		public Vector3 offset;
-		public Vector3 normals;
+		public Vector3 normal;
 		public bool dynamicNormals = true;
+		public bool useLocalSpace = true;
 
 		public void Connect(Transform parent)
 		{

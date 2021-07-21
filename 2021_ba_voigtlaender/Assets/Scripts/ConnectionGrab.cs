@@ -92,8 +92,8 @@ public class ConnectionGrab : MonoBehaviour
         Vector3 up = Vector3.up;
         Vector3 right = Vector3.Cross(up, deltaMid).normalized;
 
-        currentConnection.start.normals = GetLocalNormals(currentConnection.start.transform.position, currentConnection.end.transform.position, up, right);
-        currentConnection.end.normals = GetLocalNormals(currentConnection.end.transform.position, currentConnection.start.transform.position, up, right);
+        currentConnection.start.normal = GetLocalNormals(currentConnection.start.transform.position, currentConnection.end.transform.position, up, right);
+        currentConnection.end.normal = GetLocalNormals(currentConnection.end.transform.position, currentConnection.start.transform.position, up, right);
 
     }
 
