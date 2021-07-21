@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 
 [RequireComponent(typeof(fvInputManager))]
 public class InitLogic : MonoBehaviour
 {
+    public Toggle toggle;
     [Header("Input")]
     public InputActionReference button;
     fvInputManager inputManager;
@@ -32,7 +34,7 @@ public class InitLogic : MonoBehaviour
     }
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!this.enabled)
+        if (!toggle.isOn)
             return;
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward;

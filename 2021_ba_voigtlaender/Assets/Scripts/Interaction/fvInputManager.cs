@@ -75,6 +75,7 @@ public class fvInputManager : MonoBehaviour
     private void HandleJoystick()
     {
         joystickDir = joystick.action.ReadValue<Vector2>();
+        relativeJoystickDir = transform.TransformDirection(new Vector3(joystickDir.x, 0, joystickDir.y)).normalized * joystickDir.magnitude;
     }
 
     public ButtonHandler FindButtonHandler(InputActionReference button)

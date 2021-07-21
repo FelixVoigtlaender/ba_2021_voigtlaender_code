@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class ConnectionGrab : MonoBehaviour
 {
+    public Toggle toggle;
     [Header("Input")]
     public InputActionReference button;
     fvInputManager inputManager;
@@ -31,12 +33,16 @@ public class ConnectionGrab : MonoBehaviour
     }
     public void Update()
     {
+        if (!toggle.isOn)
+            return;
         HandleDrag();
         //HandleNormals();
     }
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
+        if (!toggle.isOn)
+            return;
         GameObject startObj = inputManager.currentUIElement;
         if (!startObj)
             return;
@@ -52,6 +58,8 @@ public class ConnectionGrab : MonoBehaviour
 
     public void HandleDrag()
     {
+        if (!toggle.isOn)
+            return;
         if (!handler.isPressed)
             return;
         if (currentVisConnection == null)

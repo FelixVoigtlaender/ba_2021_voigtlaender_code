@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 [RequireComponent(typeof(fvInputManager))]
 public class TransformGrab : MonoBehaviour
 {
+    public Toggle toggle;
     [Header("Input")]
     public InputActionReference button;
     fvInputManager inputManager;
@@ -51,7 +53,7 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!this.enabled)
+        if (!toggle.isOn)
             return;
 
         Vector3 origin = transform.position;
@@ -86,7 +88,7 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
-        if (!this.enabled)
+        if (!toggle.isOn)
             return;
         if (grabbedObject!=null)
             grabbedObject.Release();
@@ -96,7 +98,7 @@ public class TransformGrab : MonoBehaviour
 
     public void Update()
     {
-        if (!this.enabled)
+        if (!toggle.isOn)
             return;
         HandleDrag();
         HandlePull();
