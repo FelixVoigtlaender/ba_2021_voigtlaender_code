@@ -99,6 +99,26 @@ public abstract class VRLogicElement
         OnDelete?.Invoke();
     }
 
+    public VRVariable FindVariable(string name)
+    {
+        foreach (VRVariable variable in vrVariables)
+        {
+            if (variable.Name() == name)
+                return variable;
+        }
+        return null;
+    }
+
+    public VRVariable FindVariable(VRData dataType)
+    {
+        foreach (VRVariable variable in vrVariables)
+        {
+            if (variable.vrData.IsType(dataType))
+                return variable;
+        }
+        return null;
+    }
+
     public VRLogicElement ShallowCopy()
     {
         return (VRLogicElement) this.MemberwiseClone();

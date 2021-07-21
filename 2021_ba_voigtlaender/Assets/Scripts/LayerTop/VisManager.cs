@@ -21,6 +21,8 @@ public class VisManager : MonoBehaviour
     public GameObject[] prefabVisEvents;
     public GameObject[] prefabLogicElements;
     public GameObject prefabVisPort;
+    [Header("Debug")]
+    public GameObject prefabDebugSphere;
 
     [Header("Ghost")]
     private VisVector visVector;

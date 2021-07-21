@@ -5653,6 +5653,7 @@ MonoBehaviour:
   - {fileID: 59255515662877851, guid: 45e0c0b5bff4d3f439858a96ca84445d, type: 3}
   - {fileID: 4362529494445662840, guid: a978d2c0be8f8e043a01a15d7cf85180, type: 3}
   prefabVisPort: {fileID: 7433788244925163418, guid: bf210f967713b9c4fb5e8b328df8051d, type: 3}
+  prefabDebugSphere: {fileID: 4230535170072701032, guid: 0a0c76a0c4dfa5041a39958a891ab997, type: 3}
 --- !u!1 &1557476383
 GameObject:
   m_ObjectHideFlags: 0
