@@ -436,6 +436,8 @@ public class PropTransform : VRProperty
         tabRecording.vrVariables.Add(varDuration);
         tabRecording.vrVariables.Add(varLoop);
         vrTabs.Add(tabRecording);
+
+        vrTabs.Add(new VRTab("InActive"));
     }
 
     public override void Trigger()
@@ -577,6 +579,7 @@ public class PropColor : VRProperty
 {
     VRVariable varColor;
 
+    VRTab tabColor;
 
     Renderer renderer;
     Image image;
@@ -585,7 +588,7 @@ public class PropColor : VRProperty
 
     public override string Name()
     {
-        return "";
+        return "Color";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -596,18 +599,23 @@ public class PropColor : VRProperty
     {
         return true;
     }
-    public override void SetupVariables()
+    public override void SetupTabs()
     {
-        base.SetupVariables();
+        base.SetupTabs();
+
+
 
         SetupColorComponent(vrObject);
         Color color = GetColor();
-
         varColor = new VRVariable(new DatColor(color), "");
         varColor.OnSetData += SetData;
 
-        vrVariables.Add(varColor);
+        tabColor = new VRTab("Color");
+        tabColor.vrVariables.Add(varColor);
+        vrTabs.Add(tabColor);
 
+
+        vrTabs.Add(new VRTab("InActive"));
     }
 
     bool SetupColorComponent(VRObject vrObject)
@@ -659,8 +667,13 @@ public class PropColor : VRProperty
     }
     public void SetData(VRData vrData)
     {
-        DatColor datColor = (DatColor)vrData;
-        SetColor(datColor.Value);
+        VRTab activeTab = GetActiveTab();
+        if(activeTab == tabColor)
+        {
+            DatColor datColor = (DatColor)vrData;
+            SetColor(datColor.Value);
+        }
+
     }
     public override VRData GetData()
     {
