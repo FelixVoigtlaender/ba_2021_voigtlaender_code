@@ -145,6 +145,10 @@ public class PropEnabled : VRProperty
 
 public class PropObj : VRProperty
 {
+    public override bool CanBeUsed()
+    {
+        return false;
+    }
     public override string Name()
     {
         return "Object";

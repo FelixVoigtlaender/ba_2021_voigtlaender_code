@@ -7,7 +7,8 @@ using System;
 public class VRObject
 {
     public List<VRProperty> properties = new List<VRProperty>();
-    public List<VREvent> vrEvents = new List<VREvent>();
+    public List<VRPort> vrInputs = new List<VRPort>();
+    public List<VRPort> vrOutputs = new List<VRPort>();
     public GameObject gameObject;
     public event Action OnDelete;
     public Rigidbody rigid;
@@ -18,6 +19,7 @@ public class VRObject
         this.gameObject = gameObject;
         rigid = gameObject.GetComponent<Rigidbody>();
         SetupProperties();
+        SetupPorts();
     }
 
     public void SetupProperties()
@@ -35,6 +37,27 @@ public class VRObject
             properties.Add(vrPropertyClone);
         }
     }
+    public virtual void SetupPorts()
+    {
+        SetupInputs();
+        SetupOutputs();
+    }
+
+    public virtual void SetupInputs()
+    {
+        vrInputs = new List<VRPort>();
+    }
+
+    public virtual void SetupOutputs()
+    {
+        vrOutputs = new List<VRPort>();
+        vrOutputs.Add(new VRPort(GetData,new DatObj(this)));
+    }
+
+    public VRData GetData()
+    {
+        return new DatObj(this);
+    }
 
     public void Trigger()
     {
@@ -50,9 +73,13 @@ public class VRObject
         {
             prop?.Delete();
         }
-        foreach (VREvent vrEvent in vrEvents)
+        foreach (VRPort input in vrInputs)
         {
-            vrEvent?.Delete();
+            input?.Delete();
+        }
+        foreach (VRPort output in vrOutputs)
+        {
+            output?.Delete();
         }
         OnDelete?.Invoke();
     }

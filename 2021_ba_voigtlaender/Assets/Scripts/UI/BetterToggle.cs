@@ -8,7 +8,7 @@ using System;
 
 [Serializable]
 public class BoolEvent :  UnityEvent<bool>{ }
-public class BetterToggle : MonoBehaviour, IPointerDownHandler
+public class BetterToggle : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
     [Header("Objects")]
     public GameObject on;
@@ -19,6 +19,8 @@ public class BetterToggle : MonoBehaviour, IPointerDownHandler
     public BoolEvent OnValueChanged;
     public UnityEvent OnValueTrue;
     public UnityEvent OnValueFalse;
+
+    bool abort = false;
 
     public bool IsOn
     {
@@ -42,7 +44,20 @@ public class BetterToggle : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Toggle();
+        abort = false;
+    }
+
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        abort = true;
+    }
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(!abort)
+            Toggle();
+
+        abort = false;
     }
 
     public void Toggle()
@@ -70,5 +85,6 @@ public class BetterToggle : MonoBehaviour, IPointerDownHandler
         if (off)
             off.SetActive(!_isOn);
     }
+
 #endif
 }
