@@ -48,8 +48,8 @@ MonoBehaviour:
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   errorColor: {r: 1, g: 0, b: 0, a: 1}
-  activeWidth: 0.02
-  inactiveWidth: 0.01
+  activeWidth: 0.01
+  inactiveWidth: 0.005
 --- !u!1001 &3621045142047284722
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -59,7 +59,7 @@ public class BezierCurve : MonoBehaviour
 		line.positionCount = pointCount;
 		for(int i = 0; i < pointCount; i++)
         {
-			Vector3 point = BezierPathCalculation(p0, p1, p2, p3, (float)i / (float)pointCount);
+			Vector3 point = BezierPathCalculation(p0, p1, p2, p3, (float)i / (float)(pointCount-1));
 			line.SetPosition(i, point);
 
 		}

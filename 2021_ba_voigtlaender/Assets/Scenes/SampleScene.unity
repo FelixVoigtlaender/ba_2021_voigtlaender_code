@@ -1737,23 +1737,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387309026}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &460356655 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1913667468, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-  m_PrefabInstance: {fileID: 7360078462985164206}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &460356664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460356655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa6fd8cfaa7b074bbe33f77d17fa76d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &465589973
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,17 +2710,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727364790}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.329}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_Children:
   - {fileID: 1557476384}
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.03139638, y: 1.3432}
+  m_AnchoredPosition: {x: -1.5, y: 1.5}
   m_SizeDelta: {x: 1000, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &731694084
@@ -3468,23 +3451,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852922616}
   m_CullTransparentMesh: 1
---- !u!1 &884215400 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7283498248170342730, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-  m_PrefabInstance: {fileID: 7360078462985164206}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &884215409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884215400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa6fd8cfaa7b074bbe33f77d17fa76d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &946016658
 GameObject:
   m_ObjectHideFlags: 0
@@ -5628,23 +5594,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496023535}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1544465843 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7360078462474747999, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-  m_PrefabInstance: {fileID: 7360078462985164206}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1544465849
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1544465843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa6fd8cfaa7b074bbe33f77d17fa76d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1544840674
 GameObject:
   m_ObjectHideFlags: 0
@@ -9154,10 +9103,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 450
       objectReference: {fileID: 0}
-    - target: {fileID: 3912456594521113175, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5225195756837089052, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -9265,10 +9210,6 @@ PrefabInstance:
     - target: {fileID: 8541338646874065005, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 8541338646874065005, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8634018619673510827, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_AnchorMax.y
