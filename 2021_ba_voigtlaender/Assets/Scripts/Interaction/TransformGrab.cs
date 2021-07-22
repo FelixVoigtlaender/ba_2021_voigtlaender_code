@@ -195,7 +195,7 @@ public class TransformGrab : MonoBehaviour
 
         if (!grabbedObject.rectTransform && !grabbedObject.blockRotate)
         {
-            //grabbedTransform.Rotate(axis, Vector3.Angle(initialVector, currentVector));
+            grabbedTransform.Rotate(axis, Vector3.Angle(initialVector, currentVector));
             grabbedObject.initialRotation = Quaternion.Inverse(transform.rotation) * grabbedTransform.rotation;
             o_grabbedObject.initialRotation = Quaternion.Inverse(otherHand.transform.rotation) * grabbedTransform.rotation;
         }

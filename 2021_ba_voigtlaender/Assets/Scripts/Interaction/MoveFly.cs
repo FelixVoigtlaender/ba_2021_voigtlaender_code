@@ -28,7 +28,7 @@ public class MoveFly : MonoBehaviour
             return;
 
 
-
+        return;
 
         Vector3 difference = inputManager.relativeJoystickDir * speed;
 
