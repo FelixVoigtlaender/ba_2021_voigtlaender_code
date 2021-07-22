@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class fvInputManager : MonoBehaviour
 {
     public List<ButtonHandler> allButtonHandlers = new List<ButtonHandler>();
-    private XRRayInteractor rayInteractor;
+    public XRRayInteractor rayInteractor;
 
     public Vector2 joystickDir;
     public Vector3 relativeJoystickDir;
