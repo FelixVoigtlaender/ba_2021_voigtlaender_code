@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(fvInputManager))]
 public class TransformGrab : MonoBehaviour
 {
-    public Toggle toggle;
+    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
     fvInputManager inputManager;

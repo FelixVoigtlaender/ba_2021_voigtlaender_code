@@ -54,8 +54,13 @@ public class VisLogicElement : MonoBehaviour
     {
         if (!holder || element == null)
             return new List<VisTab>();
+        
         if (element.vrTabs.Count == 0)
+        {
+            if(tabToggleHolder)
+                tabToggleHolder.gameObject.SetActive(false);
             return new List<VisTab>();
+        }
 
 
 
@@ -84,8 +89,13 @@ public class VisLogicElement : MonoBehaviour
             Toggle toggle = objTabToggle.GetComponent<Toggle>();
             if (toggle.TryGetComponent(out TooltipContent tooltipContent))
                 tooltipContent.description = vrTab.Name();
-            toggle.group = toggleGroup;
+            toggle.onValueChanged.AddListener((value) => 
+            {
+                if (value)
+                    SetTabs(true);
+            });
             visTab.SetToggle(toggle);
+            toggle.group = toggleGroup;
 
             visTabs.Add(visTab);
         }
@@ -99,14 +109,14 @@ public class VisLogicElement : MonoBehaviour
 
     public void ToggleTabs()
     {
-        bool invValue = !tabToggleHolder.gameObject.activeSelf;
+        bool invValue = !tabHolder.gameObject.activeSelf;
         SetTabs(invValue);
     }
 
     public void SetTabs(bool value)
     {
-        //tabHolder.gameObject.SetActive(value);
-        tabToggleHolder.gameObject.SetActive(value);
+        tabHolder.gameObject.SetActive(value);
+        //tabToggleHolder.gameObject.SetActive(value);
         float easeTime = 0.1f;
         if (value)
         {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ConnectionGrab : MonoBehaviour
 {
-    public Toggle toggle;
+    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
     fvInputManager inputManager;

@@ -308,7 +308,7 @@
                 {
                     "name": "",
                     "id": "8e383b1a-270f-4c20-819b-89a59cffb498",
-                    "path": "<XRController>{LeftHand}/Primary2DAxis",
+                    "path": "<XRController>{LeftHand}/primary2DAxis",
                     "interactions": "",
                     "processors": "StickDeadzone",
                     "groups": "Continuous Move",
@@ -576,6 +576,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Mode",
+                    "type": "Button",
+                    "id": "a456008c-ddcd-4d5e-9481-b398266fa91d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -840,6 +848,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08e86791-6463-4f86-8bd6-4695007cf04f",
+                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "interactions": "",
+                    "processors": "StickDeadzone",
+                    "groups": "Continuous Move",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ff9b9c4-2f47-4d31-bf8f-37556c232fda",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

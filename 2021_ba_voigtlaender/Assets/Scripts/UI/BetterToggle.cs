@@ -22,7 +22,7 @@ public class BetterToggle : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoi
 
     bool abort = false;
 
-    public bool IsOn
+    public bool isOn
     {
         get { return _isOn; }
         set 
@@ -40,6 +40,10 @@ public class BetterToggle : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoi
                 OnValueFalse?.Invoke();
 
         }
+    }
+    private void Start()
+    {
+        isOn = isOn;
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -62,7 +66,7 @@ public class BetterToggle : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoi
 
     public void Toggle()
     {
-        IsOn = !IsOn;
+        isOn = !isOn;
 
     }
 

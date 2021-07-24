@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(fvInputManager))]
 public class MoveGrab : MonoBehaviour
 {
-    public Toggle toggle;
+    public BetterToggle toggle;
 
     [Header("Input")]
     public InputActionReference button;
@@ -51,7 +51,7 @@ public class MoveGrab : MonoBehaviour
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
+        if (toggle.isOn)
             return;
         isGrabbing = true;
 
@@ -62,7 +62,7 @@ public class MoveGrab : MonoBehaviour
 
     public void Update()
     {
-        if (!toggle.isOn)
+        if (toggle.isOn)
             return;
         if (!isGrabbing)
             return;
@@ -167,7 +167,7 @@ public class MoveGrab : MonoBehaviour
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
+        if (toggle.isOn)
             return;
         isGrabbing = false;
     }

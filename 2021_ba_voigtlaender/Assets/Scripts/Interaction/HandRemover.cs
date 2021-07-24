@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class HandRemover : MonoBehaviour
 {
-    public Toggle toggle;
+    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
     fvInputManager inputManager;
@@ -20,6 +20,7 @@ public class HandRemover : MonoBehaviour
     {
         inputManager = GetComponent<fvInputManager>();
 
+        lineRenderer.enabled = false;
         handler = inputManager.FindButtonHandler(button);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;

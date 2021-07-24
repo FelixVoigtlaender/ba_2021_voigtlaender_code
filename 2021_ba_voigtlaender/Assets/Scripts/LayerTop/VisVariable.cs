@@ -95,7 +95,7 @@ public class VisVariable : VisLogicElement
                 if (toggle)
                 {
                     toggle.gameObject.SetActive(true);
-                    toggle.IsOn = datBool.Value;
+                    toggle.isOn = datBool.Value;
                     toggle.OnValueChanged.AddListener((value) =>
                     {
                         datBool.Value = value; textName.text = vrVariable.Name();

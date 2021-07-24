@@ -441,7 +441,6 @@ public class PropTransform : VRProperty
         tabRecording.vrVariables.Add(varLoop);
         vrTabs.Add(tabRecording);
 
-        vrTabs.Add(new VRTab("InActive"));
     }
 
     public override void Trigger()
@@ -592,7 +591,7 @@ public class PropColor : VRProperty
 
     public override string Name()
     {
-        return "Color";
+        return "Change Color";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -619,7 +618,6 @@ public class PropColor : VRProperty
         vrTabs.Add(tabColor);
 
 
-        vrTabs.Add(new VRTab("InActive"));
     }
 
     bool SetupColorComponent(VRObject vrObject)

@@ -32,6 +32,6 @@ public class VisTab : VisLogicElement
     {
         this.toggle = toggle;
         toggle.onValueChanged.AddListener(OnIsActiveChanged);
-        OnIsActiveChanged(toggle.isOn);
+        OnIsActiveChanged(vrTab.IsActive);
     }
 }
