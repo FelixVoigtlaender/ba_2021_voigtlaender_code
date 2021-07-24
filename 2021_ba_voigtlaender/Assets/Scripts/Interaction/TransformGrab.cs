@@ -57,26 +57,33 @@ public class TransformGrab : MonoBehaviour
             return;
 
         Vector3 origin = transform.position;
-        Vector3 direction = transform.forward;
+        Vector3 direction = transform.forward * inputManager.relativeRayLength;
 
 
-        if (inputManager.currentUIElement)
+
+
+        if (inputManager.isUIHitClosest)
         {
-            Canvas canvas = inputManager.currentUIElement.GetComponentInParent<Canvas>();
+            if (!inputManager.uiRaycastHit.HasValue)
+                return;
+
+            UnityEngine.EventSystems.RaycastResult result = inputManager.uiRaycastHit.Value;
+
+            Canvas canvas = result.gameObject.GetComponentInParent<Canvas>();
             if (canvas.GetComponent<BlockDrag>())
                 return;
 
             if (canvas)
             {
-                grabbedObject = new GrabbedObject(canvas.transform, transform, inputManager.currentUIHitPosition);
+                grabbedObject = new GrabbedObject(canvas.transform, transform, result.worldPosition);
                 Vector3 worldPosition = canvas.transform.position;
                 canvas.transform.SetParent(null, false);
                 canvas.transform.position = worldPosition;
             }
         }
-        else if(Physics.Raycast(origin,direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
+        else if(inputManager.worldRaycastHit.HasValue)
         {
-            grabbedObject = new GrabbedObject(hit, transform);
+            grabbedObject = new GrabbedObject(inputManager.worldRaycastHit.Value, transform);
         }
 
         if(grabbedObject!=null && grabbedObject.transform && grabbedObject.transform.GetComponent<BlockDrag>())

@@ -1023,7 +1023,7 @@ MeshCollider:
   m_GameObject: {fileID: 254299991}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
@@ -5254,7 +5254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LineWidth: 0.02
-  m_OverrideInteractorLineLength: 1
+  m_OverrideInteractorLineLength: 0
   m_LineLength: 1
   m_WidthCurve:
     serializedVersion: 2
@@ -5710,11 +5710,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allButtonHandlers: []
   rayInteractor: {fileID: 0}
+  localRayLength: 1
+  relativeRayLength: 1
+  isUIHitClosest: 0
+  joystick: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   joystickDir: {x: 0, y: 0}
   relativeJoystickDir: {x: 0, y: 0, z: 0}
-  joystick: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  currentUIElement: {fileID: 0}
-  currentUIHitPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1297964748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8402,7 +8403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LineWidth: 0.02
-  m_OverrideInteractorLineLength: 1
+  m_OverrideInteractorLineLength: 0
   m_LineLength: 1
   m_WidthCurve:
     serializedVersion: 2
@@ -8876,11 +8877,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allButtonHandlers: []
   rayInteractor: {fileID: 0}
+  localRayLength: 1
+  relativeRayLength: 1
+  isUIHitClosest: 0
+  joystick: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   joystickDir: {x: 0, y: 0}
   relativeJoystickDir: {x: 0, y: 0, z: 0}
-  joystick: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f, type: 3}
-  currentUIElement: {fileID: 0}
-  currentUIHitPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1925271397
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,17 +9,29 @@ using UnityEngine.InputSystem;
 public class fvInputManager : MonoBehaviour
 {
     public List<ButtonHandler> allButtonHandlers = new List<ButtonHandler>();
-    public XRRayInteractor rayInteractor;
 
+    XRRig xrRig;
+
+    [Header("Raycasting")]
+    public XRRayInteractor rayInteractor;
+    public float localRayLength = 1;
+    public float relativeRayLength = 1;
+
+    public UnityEngine.EventSystems.RaycastResult? uiRaycastHit;
+    public RaycastHit? worldRaycastHit;
+    public bool isUIHitClosest;
+
+
+    [Header("Joystick")]
+    public InputActionReference joystick;
     public Vector2 joystickDir;
     public Vector3 relativeJoystickDir;
 
-    public InputActionReference joystick;
 
-    public GameObject currentUIElement;
-    public Vector3 currentUIHitPosition;
     private void Awake()
     {
+        xrRig = FindObjectOfType<XRRig>();
+
         rayInteractor = GetComponent<XRRayInteractor>();
 
         rayInteractor.hoverEntered.AddListener(HoverEntered);
@@ -37,6 +49,9 @@ public class fvInputManager : MonoBehaviour
 
     public void HandleRayInteractor()
     {
+        rayInteractor.maxRaycastDistance = xrRig.transform.localScale.x * localRayLength;
+        /*
+        // UI
         UnityEngine.EventSystems.RaycastResult result;
         if(rayInteractor.TryGetCurrentUIRaycastResult(out result))
         {
@@ -48,7 +63,14 @@ public class fvInputManager : MonoBehaviour
         {
             VRDebug.SetLog("NONE");
             currentUIElement = null;
+        }*/
+
+        int raycastHitIndex;
+        int uiRaycastHitIndex;
+        if(rayInteractor.TryGetCurrentRaycast(out worldRaycastHit,out raycastHitIndex,out uiRaycastHit,out uiRaycastHitIndex,out isUIHitClosest))
+        {
         }
+        
     }
 
     public void HoverEntered(HoverEnterEventArgs eventArgs)

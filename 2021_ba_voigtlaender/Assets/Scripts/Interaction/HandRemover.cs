@@ -48,16 +48,17 @@ public class HandRemover : MonoBehaviour
             return;
 
         // VisObject Deletion
-        if (inputManager.currentUIElement)
+        if (inputManager.uiRaycastHit.HasValue)
         {
-            VisObject visObject = inputManager.currentUIElement.GetComponentInParent<VisObject>();
+
+            VisObject visObject = inputManager.uiRaycastHit.Value.gameObject.GetComponentInParent<VisObject>();
             if (visObject)
             {
                 visObject.Delete();
             }
             else
             {
-                VisLogicElement logicElement = inputManager.currentUIElement.GetComponentInParent<VisLogicElement>();
+                VisLogicElement logicElement = inputManager.uiRaycastHit.Value.gameObject.GetComponentInParent<VisLogicElement>();
                 if (logicElement)
                 {
                     logicElement.Delete();
@@ -67,7 +68,7 @@ public class HandRemover : MonoBehaviour
 
         // Line Deletion
         Vector3 mid = transform.position;
-        Vector3 b = mid + transform.forward * inputManager.rayInteractor.maxRaycastDistance;
+        Vector3 b = mid + transform.forward * inputManager.relativeRayLength;
         Vector3 c = previousB;
         previousB = b;
 

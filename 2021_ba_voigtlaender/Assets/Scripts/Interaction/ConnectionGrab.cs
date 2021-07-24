@@ -43,9 +43,10 @@ public class ConnectionGrab : MonoBehaviour
     {
         if (!toggle.isOn)
             return;
-        GameObject startObj = inputManager.currentUIElement;
-        if (!startObj)
+        if (!inputManager.isUIHitClosest || !inputManager.uiRaycastHit.HasValue)
             return;
+
+        GameObject startObj = inputManager.uiRaycastHit.Value.gameObject;
         if (!startObj.TryGetComponent(out VisPort visPort))
             return;
 
@@ -65,7 +66,7 @@ public class ConnectionGrab : MonoBehaviour
         if (currentVisConnection == null)
             return;
 
-        GameObject endObj = inputManager.currentUIElement;
+        GameObject endObj = !inputManager.uiRaycastHit.HasValue ? null : inputManager.uiRaycastHit.Value.gameObject;
         Vector3 position = transform.position + transform.forward * distance;
         currentVisConnection.Drag(position, endObj);
     }

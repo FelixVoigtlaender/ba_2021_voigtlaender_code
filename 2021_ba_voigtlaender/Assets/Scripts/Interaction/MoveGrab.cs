@@ -128,7 +128,7 @@ public class MoveGrab : MonoBehaviour
         {
             Vector3 localScale = xrRig.transform.localScale;
             localScale *= initialVector.magnitude / currentVector.magnitude;
-            localScale = Mathf.Clamp(localScale.x, 0.1f, 100) * Vector3.one;
+            localScale = Mathf.Clamp(localScale.x, 1f, 100) * Vector3.one;
             xrRig.transform.localScale = localScale;
             VRDebug.SetLog(xrRig.transform.localScale.ToString());
         }

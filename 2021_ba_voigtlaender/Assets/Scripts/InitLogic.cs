@@ -36,23 +36,27 @@ public class InitLogic : MonoBehaviour
     {
         if (!toggle.isOn)
             return;
-        Vector3 origin = transform.position;
-        Vector3 direction = transform.forward;
 
-        if (inputManager.currentUIElement)
+        GameObject logicObject = null;
+
+        if (inputManager.isUIHitClosest)
         {
-            if (inputManager.currentUIElement.GetComponentInParent<BlockCode>())
-                return;
-            VRManager.instance.InitVRObject(inputManager.currentUIElement);
+            if (inputManager.uiRaycastHit.HasValue)
+                logicObject = inputManager.uiRaycastHit.Value.gameObject;
+        }
+        else
+        {
+            if (inputManager.worldRaycastHit.HasValue)
+                logicObject = inputManager.worldRaycastHit.Value.collider.gameObject;
+        }
+
+        if (logicObject == null)
             return;
-        }
+        if (logicObject.GetComponentInParent<BlockCode>())
+            return;
 
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance, layerMask, QueryTriggerInteraction.Collide))
-        {
-            if (hit.collider.GetComponentInParent<BlockCode>())
-                return;
-            VRManager.instance.InitVRObject(hit.collider.gameObject);
-        }
+
+        VRManager.instance.InitVRObject(logicObject);
     }
     public void OnButtonUp(InputAction.CallbackContext context)
     {
