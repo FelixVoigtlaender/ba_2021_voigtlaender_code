@@ -260,7 +260,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleRatio: 0.001
   minScaleRatio: 0.001
+  useDistance: 0
   centerType: 1
+  useXRRigScale: 1
 --- !u!222 &2519630159420553249
 CanvasRenderer:
   m_ObjectHideFlags: 0

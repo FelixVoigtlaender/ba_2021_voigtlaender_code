@@ -1,15 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class VRCanvasScaler : MonoBehaviour
 {
     RectTransform rect;
     public float scaleRatio = 0.0005f;
     public float minScaleRatio = 0.001f;
+
+    public bool useDistance = true;
     public CenterType centerType = CenterType.UICenter;
+
+    public bool useXRRigScale = false;
+    XRRig xrRig;
     private void Awake()
     {
+        xrRig = FindObjectOfType<XRRig>();
         if (TryGetComponent(out Canvas canvas))
         {
             if (!canvas.worldCamera)
@@ -25,7 +32,12 @@ public class VRCanvasScaler : MonoBehaviour
     public void Update()
     {
         float distance = GetDistance();
-        float scale = Mathf.Max(minScaleRatio, scaleRatio * distance);
+
+        float scale = minScaleRatio;
+        if(useDistance)
+            scale = Mathf.Max(minScaleRatio, scaleRatio * distance);
+        if (useXRRigScale && !transform.parent)
+            scale *= xrRig.transform.localScale.x;
         rect.localScale = Vector3.one * (scale);
     }
     public float GetDistance()

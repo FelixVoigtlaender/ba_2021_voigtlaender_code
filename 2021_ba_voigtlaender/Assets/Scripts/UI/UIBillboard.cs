@@ -13,7 +13,8 @@ public class UIBillboard : MonoBehaviour
 
         //transform.forward = forward;
 
-        float angle = Vector3.SignedAngle(Vector3.forward, forward, Vector3.up);
+        Vector3 parentForward = transform.parent ? transform.parent.forward : Vector3.forward;
+        float angle = Vector3.SignedAngle(parentForward, forward, Vector3.up);
         transform.localEulerAngles = new Vector3(0, angle, 0);
 
     }
@@ -27,6 +28,7 @@ public class UIBillboard : MonoBehaviour
         {
             case CenterType.UICenter:
                 forward = (transform.position - UICenter.Instance.transform.position);
+                Debug.DrawRay(transform.position, forward);
                 break;
             case CenterType.Camera:
                 forward = (transform.position - Camera.main.transform.position);
@@ -36,6 +38,7 @@ public class UIBillboard : MonoBehaviour
         // Look at camera
         if (clampUpDown)
             forward.y = 0;
+
 
         return forward;
     }
