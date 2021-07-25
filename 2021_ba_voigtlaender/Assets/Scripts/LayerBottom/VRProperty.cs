@@ -284,7 +284,6 @@ public class PropMovement : VRProperty
         // Variables
         varPosition = new VRVariable(new DatVector3(vrObject.gameObject.transform.position), "Position");
         varDuration = new VRVariable(new DatFloat(1), "Duration");
-        varDuration.allowDatName = true;
 
         // Tabs
         tabTeleport = new VRTab("Teleport");
@@ -357,7 +356,6 @@ public class PropScale : VRProperty
 
         scaleVariable.Setup(datFloat);
         scaleVariable.name = "Scale";
-        scaleVariable.allowDatName = true;
         scaleVariable.OnSetData += SetData;
         scaleVariable.OnGetData += GetData;
 
@@ -419,7 +417,6 @@ public class PropTransform : VRProperty
         // Variables
         varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Transform");
         varDuration = new VRVariable(new DatFloat(1), "Duration");
-        varDuration.allowDatName = true;
         varRecording = new VRVariable(new DatRecording(new DatTransform(new DatObj(vrObject))), "Recording");
         varLoop = new VRVariable(new DatBool(false), "Loop");
 

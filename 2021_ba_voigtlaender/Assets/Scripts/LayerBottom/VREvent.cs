@@ -177,7 +177,6 @@ public class WaitEvent : VREvent
     {
         base.SetupVariables();
         varDuration = new VRVariable(new DatFloat(1), "Duration");
-        varDuration.allowDatName = true;
         vrVariables.Add(varDuration);
     }
     public void SetData(VRData vrData)

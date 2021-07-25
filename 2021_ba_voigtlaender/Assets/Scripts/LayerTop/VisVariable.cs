@@ -9,6 +9,9 @@ public class VisVariable : VisLogicElement
     public Slider slider;
     public Button button;
     public BetterToggle toggle;
+    public Dropdown dropdownInt;
+    public Dropdown dropdownFloat;
+
     VisVector visVector;
     GhostObject ghostObject;
 
@@ -34,6 +37,55 @@ public class VisVariable : VisLogicElement
         switch (data)
         {
             case DatFloat datFloat:
+                dropdownInt.gameObject.SetActive(true);
+                dropdownFloat.gameObject.SetActive(true);
+
+                dropdownInt.ClearOptions();
+                List<Dropdown.OptionData> optionsInt = new List<Dropdown.OptionData>();
+                for (int i = 0; i < 10; i++)
+                    optionsInt.Add(new Dropdown.OptionData("" + i));
+                dropdownInt.AddOptions(optionsInt);
+
+
+                dropdownFloat.ClearOptions();
+                List<Dropdown.OptionData> optionsFloat = new List<Dropdown.OptionData>();
+                for (int i = 0; i < 10; i++)
+                    optionsFloat.Add(new Dropdown.OptionData("." + i));
+                dropdownFloat.AddOptions(optionsFloat);
+
+
+                int wholeNumber = Mathf.FloorToInt(datFloat.Value);
+                wholeNumber = Mathf.Clamp(wholeNumber, 0, 9);
+                int pointNumber = Mathf.FloorToInt((datFloat.Value - wholeNumber) * 10f);
+                pointNumber = Mathf.Clamp(pointNumber, 0, 9);
+                dropdownInt.value = wholeNumber;
+                dropdownFloat.value = pointNumber;
+
+                dropdownFloat.onValueChanged.RemoveAllListeners();
+                dropdownInt.onValueChanged.RemoveAllListeners();
+
+                dropdownFloat.onValueChanged.AddListener((value) => 
+                {
+                    datFloat.Value = dropdownInt.value + dropdownFloat.value / 10f;
+                });
+                dropdownInt.onValueChanged.AddListener((value) => 
+                {
+                    datFloat.Value = dropdownInt.value + dropdownFloat.value / 10f;
+                });
+                datFloat.OnDataChanged += (value) =>
+                {
+                    int wholeNumber = Mathf.FloorToInt(datFloat.Value);
+                    wholeNumber = Mathf.Clamp(wholeNumber, 0, 9);
+                    dropdownInt.SetValueWithoutNotify(wholeNumber);
+
+                    int pointNumber = Mathf.FloorToInt((datFloat.Value - wholeNumber) * 10f);
+                    pointNumber = Mathf.Clamp(pointNumber, 0, 9);
+                    dropdownFloat.SetValueWithoutNotify(pointNumber);
+
+
+                };
+
+                break;
                 slider.gameObject.SetActive(true);
                 if (datFloat.useMinMax)
                 {
