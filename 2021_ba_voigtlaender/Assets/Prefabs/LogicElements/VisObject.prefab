@@ -88,7 +88,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1135005589823400801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +331,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3659748869730920876, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3659748869730920876, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3659748869730920876, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3659748869730920876, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4086160873825483564, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -357,10 +373,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5383676845751756254, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 175
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5383676845751756254, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550396825750448884, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550396825750448884, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7180982892760601278, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
@@ -1578,6 +1602,14 @@ PrefabInstance:
     - target: {fileID: 8527981899649056498, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
       propertyPath: m_Positions.Array.data[99].z
       value: 1.257
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606920927766171538, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606920927766171538, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4dd7a20216b7e6541a80468702353ea8, type: 3}

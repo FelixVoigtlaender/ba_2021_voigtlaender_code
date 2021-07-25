@@ -56,7 +56,7 @@ public class VisVariable : VisLogicElement
 
                 int wholeNumber = Mathf.FloorToInt(datFloat.Value);
                 wholeNumber = Mathf.Clamp(wholeNumber, 0, 9);
-                int pointNumber = Mathf.FloorToInt((datFloat.Value - wholeNumber) * 10f);
+                int pointNumber = Mathf.RoundToInt((datFloat.Value - wholeNumber) * 10f);
                 pointNumber = Mathf.Clamp(pointNumber, 0, 9);
                 dropdownInt.value = wholeNumber;
                 dropdownFloat.value = pointNumber;
@@ -78,11 +78,9 @@ public class VisVariable : VisLogicElement
                     wholeNumber = Mathf.Clamp(wholeNumber, 0, 9);
                     dropdownInt.SetValueWithoutNotify(wholeNumber);
 
-                    int pointNumber = Mathf.FloorToInt((datFloat.Value - wholeNumber) * 10f);
+                    int pointNumber = Mathf.RoundToInt((datFloat.Value - wholeNumber) * 10f);
                     pointNumber = Mathf.Clamp(pointNumber, 0, 9);
                     dropdownFloat.SetValueWithoutNotify(pointNumber);
-
-
                 };
 
                 break;
