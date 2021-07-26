@@ -62,8 +62,7 @@ public class PropTrigger : VRProperty
     public override void SetupVariables()
     {
         base.SetupVariables();
-        eventVariable = new VRVariable();
-        eventVariable.Setup(new DatEvent(-1), "Apply Changes");
+        eventVariable = new VRVariable(new DatEvent(-1), "Apply Changes",false,false,true);
         eventVariable.OnSetData += SetData;
         //eventVariable.OnVariableChanged+= SetData;
 
@@ -117,9 +116,7 @@ public class PropEnabled : VRProperty
     public override void SetupVariables()
     {
         base.SetupVariables();
-        varEnabled = new VRVariable();
-        varEnabled.Setup(new DatBool(vrObject.gameObject.activeSelf));
-        varEnabled.name = "Enabled";
+        varEnabled = new VRVariable(new DatBool(vrObject.gameObject.activeSelf),"Is Active", true);
         varEnabled.OnSetData += SetData;
 
         vrVariables.Add(varEnabled);

@@ -11,6 +11,10 @@ public class VRVariable : VRLogicElement
     protected VRPort output;
     protected VRPort input;
 
+    public bool blockPorts = false;
+    public bool blockInputs = false;
+    public bool blockOutputs = false;
+
     public event Action<VRData> OnVariableChanged;
     public event Action<VRData> OnSetData;
     public event Func<VRData> OnGetData;
@@ -24,8 +28,12 @@ public class VRVariable : VRLogicElement
         return vrData.GetName();
     }
     public VRVariable() { }
-    public VRVariable(VRData vrData, string name = "")
+    public VRVariable(VRData vrData, string name = "", bool blockPorts = false, bool blockInputs = false, bool blockOutputs = false)
     {
+        this.blockPorts = blockPorts;
+        this.blockInputs = blockInputs;
+        this.blockOutputs = blockOutputs;
+
         Setup(vrData, name);
     }
     public void Setup(VRData vrData)
@@ -43,6 +51,10 @@ public class VRVariable : VRLogicElement
     public override void SetupOutputs()
     {
         base.SetupOutputs();
+        if (blockPorts || blockOutputs)
+            return;
+
+
         output = new VRPort(GetData, vrData);
         if(name.Length != 0)
             output.toolTip = "Get " + name;
@@ -51,6 +63,10 @@ public class VRVariable : VRLogicElement
     public override void SetupInputs()
     {
         base.SetupInputs();
+
+        if (blockPorts || blockInputs)
+            return;
+
         input = new VRPort(SetData, vrData);
         input.OnConnect += () => GetData();
         if (name.Length != 0)
