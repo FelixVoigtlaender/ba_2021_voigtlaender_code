@@ -55,6 +55,9 @@ public class PropTrigger : VRProperty
     }
     public override bool IsType(VRObject vrObject)
     {
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
         // Gameobject always can be triggered
         return true;
     }
@@ -109,6 +112,10 @@ public class PropEnabled : VRProperty
     }
     public override bool IsType(VRObject vrObject)
     {
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
+
         // Gameobject always can be enabled
         return true;
     }
@@ -380,8 +387,10 @@ public class PropScale : VRProperty
 public class PropTransform : VRProperty
 {
     // Teleport
-    VRTab tabTeleport;
     VRTab tabMove;
+    VRTab tabRotate;
+    VRTab tabScale;
+    VRTab tabTransform;
     VRTab tabRecording;
     // Variables
     VRVariable varTransform;
@@ -405,6 +414,14 @@ public class PropTransform : VRProperty
 
         return true;
     }
+    public override void SetupOutputs()
+    {
+        base.SetupOutputs();
+        VRPort outTransform = new VRPort(GetData,new DatTransform(new DatObj(vrObject)));
+        outTransform.toolTip = "Get current Transform";
+
+        vrOutputs.Add(outTransform);
+    }
 
     public override void SetupTabs()
     {
@@ -418,14 +435,26 @@ public class PropTransform : VRProperty
 
 
         // Tabs
-        tabTeleport = new VRTab("Teleport");
-        tabTeleport.vrVariables.Add(varTransform);
-        vrTabs.Add(tabTeleport);
-
         tabMove = new VRTab("Move");
         tabMove.vrVariables.Add(varTransform);
         tabMove.vrVariables.Add(varDuration);
         vrTabs.Add(tabMove);
+
+        tabRotate = new VRTab("Rotate");
+        tabRotate.vrVariables.Add(varTransform);
+        tabRotate.vrVariables.Add(varDuration);
+        vrTabs.Add(tabRotate);
+
+        tabScale = new VRTab("Scale");
+        tabScale.vrVariables.Add(varTransform);
+        tabScale.vrVariables.Add(varDuration);
+        vrTabs.Add(tabScale);
+
+
+        tabTransform = new VRTab("Transform");
+        tabTransform.vrVariables.Add(varTransform);
+        tabTransform.vrVariables.Add(varDuration);
+        vrTabs.Add(tabTransform);
 
 
         tabRecording = new VRTab("Record");
@@ -443,25 +472,37 @@ public class PropTransform : VRProperty
             return;
 
         Transform transform = vrObject.gameObject.transform;
-        DatTransform datTransform = (DatTransform)varTransform.vrData;
+        DatTransform datTransform = (DatTransform)varTransform.GetData();
         Vector3 position = datTransform.datPosition.Value;
         Quaternion rotation = datTransform.datRotation.Value;
         Vector3 localScale = datTransform.datLocalScale.Value;
 
-        DatFloat datDuration = (DatFloat)varDuration.vrData;
+        DatFloat datDuration = (DatFloat)varDuration.GetData();
 
-        DatRecording datRecording = (DatRecording)varRecording.vrData;
-        DatBool datLoop =(DatBool) varLoop.vrData;
+        DatRecording datRecording = (DatRecording)varRecording.GetData();
+        DatBool datLoop =(DatBool) varLoop.GetData();
 
-        if (activeTab == tabTeleport)
+
+        if (activeTab == tabMove)
         {
-            transform.position = position;
-            transform.rotation = rotation;
-            transform.localScale = localScale;
-
+            transform.DOMove(position, datDuration.Value);
             return;
         }
-        if (activeTab == tabMove)
+
+        if (activeTab == tabRotate)
+        {
+            transform.DORotateQuaternion(rotation, datDuration.Value);
+            return;
+        }
+
+        if (activeTab == tabScale)
+        {
+            transform.DOScale(localScale, datDuration.Value);
+            return;
+        }
+
+
+        if (activeTab == tabTransform)
         {
 
             transform.DOMove(position, datDuration.Value);
@@ -521,7 +562,7 @@ public class PropTransform : VRProperty
     }
     public override VRData GetData()
     {
-        return null;
+        return new DatTransform(new DatObj(vrObject));
     }
 }
 
@@ -588,12 +629,24 @@ public class PropColor : VRProperty
     }
     public override bool IsType(VRObject vrObject)
     {
+
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
+
         return SetupColorComponent(vrObject);
     }
 
     public override bool CanBeUsed()
     {
         return true;
+    }
+    public override void SetupOutputs()
+    {
+        base.SetupOutputs();
+        VRPort outColor = new VRPort(GetData, new DatColor(Color.white));
+        outColor.toolTip = "Get current Color";
+        vrOutputs.Add(outColor);
     }
     public override void SetupTabs()
     {
@@ -672,6 +725,6 @@ public class PropColor : VRProperty
     }
     public override VRData GetData()
     {
-        return null;
+        return new DatColor(GetColor());
     }
 }

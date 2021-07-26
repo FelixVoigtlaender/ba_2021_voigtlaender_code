@@ -65,6 +65,7 @@ public class EventProximity : VREvent
     {
         base.SetupInputs();
         inEvent = new VRPort(SetData, new DatEvent(0f));
+        inEvent.toolTip = "Require Event";
         vrInputs.Add(inEvent);
     }
     public override void SetupOutputs()
@@ -77,16 +78,13 @@ public class EventProximity : VREvent
     {
         base.SetupVariables();
 
-        varDistance = new VRVariable();
-        varDistance.Setup(new DatFloat(0));
+        varDistance = new VRVariable(new DatFloat(0.1f),"Distance",true);
         vrVariables.Add(varDistance);
 
-        varObjA = new VRVariable();
-        varObjA.Setup(new DatObj(null));
+        varObjA = new VRVariable(new DatObj(null), "Object A",false,false,true);
         vrVariables.Add(varObjA);
 
-        varObjB = new VRVariable();
-        varObjB.Setup(new DatObj(null));
+        varObjB = new VRVariable(new DatObj(null), "Object B", false, false, true);
         vrVariables.Add(varObjB);
     }
 
@@ -101,6 +99,12 @@ public class EventProximity : VREvent
     public void SetData(VRData vrData)
     {
         DatEvent datEvent = (DatEvent)vrData;
+
+        if (!varObjA.IsInputConnected())
+            varObjA.SetData(new DatObj(null));
+        if (!varObjB.IsInputConnected())
+            varObjB.SetData(new DatObj(null));
+
 
         VRDebug.SetLog($"{Name()}: UPDATE {datEvent.Value.ToString("0.0")}");
 

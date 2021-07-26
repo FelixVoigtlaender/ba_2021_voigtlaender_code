@@ -131,6 +131,17 @@ public abstract class VRLogicElement
         return null;
     }
 
+
+    public List<VRVariable> FindVariables(VRData dataType)
+    {
+        List<VRVariable> variables = new List<VRVariable>();
+        foreach (VRVariable variable in vrVariables)
+        {
+            if (variable.vrData.IsType(dataType))
+                variables.Add(variable);
+        }
+        return variables;
+    }
     public VRVariable FindVariable(VRData dataType)
     {
         foreach (VRVariable variable in vrVariables)

@@ -95,8 +95,6 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
-            return;
         if (grabbedObject!=null)
             grabbedObject.Release();
         grabbedObject = null;

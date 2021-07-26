@@ -23,6 +23,7 @@ public class VisManager : MonoBehaviour
     public GameObject prefabVisPort;
     [Header("Debug")]
     public GameObject prefabDebugSphere;
+    public GameObject prefabDebugLine;
 
     [Header("Ghost")]
     private VisVector visVector;

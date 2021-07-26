@@ -51,27 +51,31 @@ public class VRVariable : VRLogicElement
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        if (blockPorts || blockOutputs)
-            return;
 
 
         output = new VRPort(GetData, vrData);
         if(name.Length != 0)
             output.toolTip = "Get " + name;
         vrOutputs.Add(output);
+
+
+        if (blockPorts || blockOutputs)
+            vrOutputs.Clear();
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
 
-        if (blockPorts || blockInputs)
-            return;
 
         input = new VRPort(SetData, vrData);
         input.OnConnect += () => GetData();
         if (name.Length != 0)
             input.toolTip = "Set " + name;
         vrInputs.Add(input);
+
+
+        if (blockPorts || blockInputs)
+            vrInputs.Clear();
     }
 
     public VRData GetData()
@@ -87,6 +91,16 @@ public class VRVariable : VRLogicElement
         }
 
         return vrData;
+    }
+
+    public bool IsInputConnected()
+    {
+        return input.IsConnected();
+    }
+
+    public bool IsOutputConnected()
+    {
+        return output.IsConnected();
     }
     public void SetData(VRData vrData)
     {
