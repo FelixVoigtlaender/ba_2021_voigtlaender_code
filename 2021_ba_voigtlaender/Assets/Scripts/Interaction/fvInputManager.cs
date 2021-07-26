@@ -49,21 +49,8 @@ public class fvInputManager : MonoBehaviour
 
     public void HandleRayInteractor()
     {
-        rayInteractor.maxRaycastDistance = xrRig.transform.localScale.x * localRayLength;
-        /*
-        // UI
-        UnityEngine.EventSystems.RaycastResult result;
-        if(rayInteractor.TryGetCurrentUIRaycastResult(out result))
-        {
-            currentUIElement = result.gameObject;
-            currentUIHitPosition = result.worldPosition;
-            VRDebug.SetLog(result.gameObject.name);
-        }
-        else
-        {
-            VRDebug.SetLog("NONE");
-            currentUIElement = null;
-        }*/
+        relativeRayLength = xrRig.transform.localScale.x * localRayLength;
+        rayInteractor.maxRaycastDistance = relativeRayLength;
 
         int raycastHitIndex;
         int uiRaycastHitIndex;

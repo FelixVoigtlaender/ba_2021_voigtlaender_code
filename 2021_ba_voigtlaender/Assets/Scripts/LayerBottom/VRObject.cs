@@ -51,7 +51,10 @@ public class VRObject
     public virtual void SetupOutputs()
     {
         vrOutputs = new List<VRPort>();
-        vrOutputs.Add(new VRPort(GetData,new DatObj(this)));
+        VRPort outObj = new VRPort(GetData, new DatObj(this));
+        outObj.toolTip = "Get Object";
+        vrOutputs.Add(outObj);
+
     }
 
     public VRData GetData()

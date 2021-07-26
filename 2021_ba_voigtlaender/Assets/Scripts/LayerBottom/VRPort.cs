@@ -9,6 +9,7 @@ public class VRPort
     public VRData dataType;
     //public VRConnection connection;
     public List<VRConnection> connections = new List<VRConnection>();
+    public string toolTip = "";
 
     public event Func<VRData> GetElementData;
     public event Action<VRData> SetElementData;
@@ -96,8 +97,9 @@ public class VRPort
         return dataType.IsType(data);
     }
 
-    public void Delete()
+    public void Detach()
     {
+
         List<VRConnection> oldConnections = new List<VRConnection>(connections);
         connections.Clear();
         foreach (VRConnection connection in oldConnections)
@@ -105,6 +107,10 @@ public class VRPort
             connection?.Delete();
         }
 
+    }
+    public void Delete()
+    {
+        Detach();
         OnDelete?.Invoke();
     }
     public void RemoveConnection(VRConnection connection)

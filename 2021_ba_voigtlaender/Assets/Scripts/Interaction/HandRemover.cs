@@ -49,9 +49,8 @@ public class HandRemover : MonoBehaviour
             return;
 
         // VisObject Deletion
-        if (inputManager.uiRaycastHit.HasValue)
+        if (inputManager.uiRaycastHit.HasValue && inputManager.uiRaycastHit.Value.gameObject)
         {
-
             VisObject visObject = inputManager.uiRaycastHit.Value.gameObject.GetComponentInParent<VisObject>();
             if (visObject)
             {
@@ -69,7 +68,7 @@ public class HandRemover : MonoBehaviour
 
         // Line Deletion
         Vector3 mid = transform.position;
-        Vector3 b = mid + transform.forward * inputManager.relativeRayLength;
+        Vector3 b = mid + transform.forward.normalized * inputManager.relativeRayLength;
         Vector3 c = previousB;
         previousB = b;
 
@@ -100,9 +99,10 @@ public class HandRemover : MonoBehaviour
             Vector3 nextPoint = positions[i];
 
             if (polygon.Intersect(lastPoint, nextPoint))
+            {
+                Debug.DrawLine(lastPoint, nextPoint, Color.red, 0.5f);
                 return true;
-
-            Debug.DrawLine(lastPoint, nextPoint);
+            }
 
             lastPoint = nextPoint;
         }
@@ -137,12 +137,13 @@ public class HandRemover : MonoBehaviour
         public bool Intersect(Vector3 start, Vector3 end)
         {
             Ray ray = new Ray(start, end - start);
-            return Intersect(ray);
+            return Intersect(ray, (end - start).magnitude);
         }
 
-        public bool Intersect(Ray ray)
+        public bool Intersect(Ray ray,float rayLength)
         {
-            return Intersect(mid, b, c, ray);
+            return Intersect(mid, b, c, ray, rayLength);
+
         }
         /// <summary>
         /// Checks if the specified ray hits the triagnlge descibed by p1, p2 and p3.
@@ -153,7 +154,7 @@ public class HandRemover : MonoBehaviour
         /// <param name="p3">Vertex 3 of the triangle.</param>
         /// <param name="ray">The ray to test hit for.</param>
         /// <returns><c>true</c> when the ray hits the triangle, otherwise <c>false</c></returns>
-        public static bool Intersect(Vector3 p1, Vector3 p2, Vector3 p3, Ray ray)
+        public static bool Intersect(Vector3 p1, Vector3 p2, Vector3 p3, Ray ray, float rayLength)
         {
             // Vectors from p1 to p2/p3 (edges)
             Vector3 e1, e2;
@@ -166,6 +167,15 @@ public class HandRemover : MonoBehaviour
             e1 = p2 - p1;
             e2 = p3 - p1;
 
+            // Check if origin and direction are on both sides of polygon
+            Vector3 normal = Vector3.Cross(e1, e2);
+            Vector3 difp1Origin = p1 - ray.origin;
+            Vector3 difp1Direction = p1 - (ray.origin + ray.direction*rayLength);
+
+            if (Mathf.Sign(Vector3.Dot(normal, difp1Origin)) == Mathf.Sign(Vector3.Dot(normal, difp1Direction)))
+            {
+                return false;
+            }
             // calculating determinant 
             p = Vector3.Cross(ray.direction, e2);
 

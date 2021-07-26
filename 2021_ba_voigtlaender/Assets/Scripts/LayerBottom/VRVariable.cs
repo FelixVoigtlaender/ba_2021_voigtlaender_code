@@ -44,6 +44,8 @@ public class VRVariable : VRLogicElement
     {
         base.SetupOutputs();
         output = new VRPort(GetData, vrData);
+        if(name.Length != 0)
+            output.toolTip = "Get " + name;
         vrOutputs.Add(output);
     }
     public override void SetupInputs()
@@ -51,6 +53,8 @@ public class VRVariable : VRLogicElement
         base.SetupInputs();
         input = new VRPort(SetData, vrData);
         input.OnConnect += () => GetData();
+        if (name.Length != 0)
+            input.toolTip = "Set " + name;
         vrInputs.Add(input);
     }
 

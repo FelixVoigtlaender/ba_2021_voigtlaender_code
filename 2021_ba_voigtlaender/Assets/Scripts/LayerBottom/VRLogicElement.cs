@@ -99,6 +99,28 @@ public abstract class VRLogicElement
         OnDelete?.Invoke();
     }
 
+    public virtual void Detach()
+    {
+
+        VRDebug.Log("Detaching: " + this.ToString());
+        foreach (VRPort input in vrInputs)
+        {
+            input?.Detach();
+        }
+        foreach (VRPort output in vrOutputs)
+        {
+            output?.Detach();
+        }
+        foreach (VRVariable variable in vrVariables)
+        {
+            variable?.Detach();
+        }
+        foreach (VRTab tab in vrTabs)
+        {
+            tab?.Detach();
+        }
+    }
+
     public VRVariable FindVariable(string name)
     {
         foreach (VRVariable variable in vrVariables)

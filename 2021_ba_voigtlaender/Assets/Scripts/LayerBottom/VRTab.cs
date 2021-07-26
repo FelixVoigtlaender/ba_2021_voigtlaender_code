@@ -17,6 +17,8 @@ public class VRTab : VRLogicElement
         {
             isActive = value;
             OnIsActiveChanged?.Invoke(value);
+            if(!isActive)
+                Detach();
         }
     }
     public string name = "UNASSIGNED";
