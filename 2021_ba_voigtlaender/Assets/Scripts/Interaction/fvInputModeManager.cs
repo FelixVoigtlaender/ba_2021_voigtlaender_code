@@ -7,15 +7,19 @@ using UnityEngine.XR;
 using UnityEngine.InputSystem;
 public class fvInputModeManager : MonoBehaviour
 {
+    public static fvInputModeManager instance;
     List<DisplayButton> displayButtons;
     public List<Mode> modes = new List<Mode>();
 
 
     public Stack<Mode> modeStack = new Stack<Mode>();
 
+    public event Action<Mode> OnModeChanged;
+
 
     public void Awake()
     {
+        instance = this;
         DisplayButton[] displayButtons = GetComponentsInChildren<DisplayButton>();
         this.displayButtons = new List<DisplayButton>(displayButtons);
     }
@@ -40,8 +44,16 @@ public class fvInputModeManager : MonoBehaviour
             mode.isActive = false;
         }
         Mode newMode = FindMode(modeName);
+        StartCoroutine(ActivateMode(newMode));
+    }
+    IEnumerator ActivateMode(Mode newMode)
+    {
+        yield return new WaitForEndOfFrame();
         if (newMode != null)
             newMode.isActive = true;
+
+        OnModeChanged?.Invoke(newMode);
+
     }
 
     public ButtonModeHandler AddButtonMode(InputActionReference button, string buttonText, string modeName)

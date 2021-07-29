@@ -11,6 +11,9 @@ public class VisVariable : VisLogicElement
     public BetterToggle toggle;
     public Dropdown dropdownInt;
     public Dropdown dropdownFloat;
+    List<SelectObject> selectObjects;
+
+
 
     VisVector visVector;
     GhostObject ghostObject;
@@ -20,6 +23,11 @@ public class VisVariable : VisLogicElement
     public BetterToggle betterToggleRecord;
 
     public BetterColorPicker colorPicker;
+
+    private void Start()
+    {
+        selectObjects = new List<SelectObject>(FindObjectsOfType<SelectObject>());
+    }
 
     public override void Setup(VRLogicElement element)
     {
@@ -74,11 +82,11 @@ public class VisVariable : VisLogicElement
                 });
                 datFloat.OnDataChanged += (value) =>
                 {
-                    int wholeNumber = Mathf.FloorToInt(datFloat.Value);
+                    wholeNumber = Mathf.FloorToInt(datFloat.Value);
                     wholeNumber = Mathf.Clamp(wholeNumber, 0, 9);
                     dropdownInt.SetValueWithoutNotify(wholeNumber);
 
-                    int pointNumber = Mathf.RoundToInt((datFloat.Value - wholeNumber) * 10f);
+                    pointNumber = Mathf.RoundToInt((datFloat.Value - wholeNumber) * 10f);
                     pointNumber = Mathf.Clamp(pointNumber, 0, 9);
                     dropdownFloat.SetValueWithoutNotify(pointNumber);
                 };
@@ -213,9 +221,69 @@ public class VisVariable : VisLogicElement
                     };
                 }
                 break;
+            case DatObj datObj:
+                if (!button)
+                    return;
+                List<fvInputManager> inputManagers = new List<fvInputManager>(FindObjectsOfType<fvInputManager>());
+
+                button.gameObject.SetActive(true);
+                button.onClick.AddListener(() => 
+                {
+                    foreach(fvInputManager inputManager in inputManagers)
+                    {
+                        if (inputManager.uiRaycastHit.HasValue && inputManager.uiRaycastHit.Value.gameObject == button.gameObject)
+                        {
+                            if (textName)
+                                textName.text = "Select Object";
+                            fvInputModeManager.instance.SwitchMode("SELECT");
+                            fvInputModeManager.instance.OnModeChanged += OnModeChanged;
+                            foreach (SelectObject selectObject in selectObjects)
+                            {
+                                selectObject.OnSelectedObject += OnObjectSelected;
+                            }
+
+
+                            return;
+                        }
+                    }
+                });
+
+                break;
             default:
                 break;
         }
+    }
+    public void OnModeChanged(fvInputModeManager.Mode mode)
+    {
+        if (mode != null && mode.name == "SELECT")
+            return;
+        OnObjectSelected(null);
+    }
+         
+    public void OnObjectSelected(GameObject go)
+    {
+
+        fvInputModeManager.instance.OnModeChanged -= OnModeChanged;
+        fvInputModeManager.instance.SwitchMode("EDIT");
+        foreach (SelectObject selectObject in selectObjects)
+        {
+            selectObject.OnSelectedObject -= OnObjectSelected;
+        }
+        if (!go)
+        {
+            if (textName)
+                textName.text = vrVariable.Name();
+            return;
+        }
+        VRObject vrObject = VRManager.instance.FindVRObject(go);
+        if(vrObject == null)
+            vrObject = VRManager.instance.InitVRObject(go,false);
+        
+
+        DatObj datObj = new DatObj(vrObject);
+        
+        vrVariable.vrData.SetData(datObj);
+        print(vrVariable.Name());
     }
 
     public void OnDataChanged(VRData vrData)
