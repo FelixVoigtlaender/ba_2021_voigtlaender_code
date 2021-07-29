@@ -27,7 +27,7 @@ public class TransformGrab : MonoBehaviour
     public bool isDominant = true;
     TransformGrab otherHand;
 
-    private void Awake()
+    private void Start()
     {
         grabbedObject = null;
 

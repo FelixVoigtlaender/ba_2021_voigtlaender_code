@@ -19,7 +19,7 @@ public class HandRemover : MonoBehaviour
     public LineRenderer lineRenderer;
     Vector3 previousB;
     VisConnection[] visConnections;
-    private void Awake()
+    private void Start()
     {
         lineRenderer.enabled = false;
 

@@ -22,7 +22,7 @@ public class InitLogic : MonoBehaviour
     public LayerMask layerMask;
     public float maxDistance;
 
-    private void Awake()
+    private void Start()
     {
         inputManager = GetComponentInParent<fvInputManager>();
         inputModeManager = GetComponentInParent<fvInputModeManager>();
@@ -30,11 +30,6 @@ public class InitLogic : MonoBehaviour
         handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
-    }
-
-    private void Start()
-    {
-        
     }
     public void OnButtonDown(InputAction.CallbackContext context)
     {

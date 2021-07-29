@@ -27,7 +27,7 @@ public class ConnectionGrab : MonoBehaviour
     VisConnection currentVisConnection;
     
 
-    private void Awake()
+    private void Start()
     {
         inputManager = GetComponentInParent<fvInputManager>();
         inputModeManager = GetComponentInParent<fvInputModeManager>();

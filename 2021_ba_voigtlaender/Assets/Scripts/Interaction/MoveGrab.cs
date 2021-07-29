@@ -25,7 +25,7 @@ public class MoveGrab : MonoBehaviour
     MoveGrab otherHand;
 
     GameObject helperObject;
-    private void Awake()
+    private void Start()
     {
         inputManager = GetComponentInParent<fvInputManager>();
         inputModeManager = GetComponentInParent<fvInputModeManager>();
