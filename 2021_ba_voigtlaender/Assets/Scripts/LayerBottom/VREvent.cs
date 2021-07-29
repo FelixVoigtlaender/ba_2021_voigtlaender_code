@@ -81,10 +81,10 @@ public class EventProximity : VREvent
         varDistance = new VRVariable(new DatFloat(0.1f),"Distance",true);
         vrVariables.Add(varDistance);
 
-        varObjA = new VRVariable(new DatObj(null), "Object A",false,false,true);
+        varObjA = new VRVariable(new DatObj(null), "Object: ",false,false,true);
         vrVariables.Add(varObjA);
 
-        varObjB = new VRVariable(new DatObj(null), "Object B", false, false, true);
+        varObjB = new VRVariable(new DatObj(null), "Object: ", false, false, true);
         vrVariables.Add(varObjB);
     }
 

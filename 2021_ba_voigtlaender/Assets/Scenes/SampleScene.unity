@@ -2261,7 +2261,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_Pivot.y
@@ -2273,7 +2273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2281,7 +2281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMin.y
@@ -2325,7 +2325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2357,15 +2357,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueTrue.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueFalse.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueTrue.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -2386,7 +2386,7 @@ PrefabInstance:
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueTrue.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1121368811}
+      objectReference: {fileID: 2088527154}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueTrue.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -2418,15 +2418,15 @@ PrefabInstance:
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1398200135}
+      objectReference: {fileID: 28959995}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1026899436}
+      objectReference: {fileID: 28959995}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 659027064}
+      objectReference: {fileID: 28959995}
     - target: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: OnValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
@@ -2645,7 +2645,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -2695,7 +2695,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -3305,7 +3305,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   inputManager: {fileID: 1297964747}
-  betterToggle: {fileID: 551049006}
+  buttonToggle: {fileID: 551049006}
+  inactiveText: {fileID: 2088527154}
+  activeText: {fileID: 2088527153}
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []
@@ -3721,7 +3723,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   inputManager: {fileID: 1297964747}
-  betterToggle: {fileID: 586124350}
+  buttonToggle: {fileID: 586124350}
+  inactiveText: {fileID: 929462803}
+  activeText: {fileID: 929462802}
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []
@@ -4108,11 +4112,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 653546411}
   m_CullTransparentMesh: 1
---- !u!1 &659027064 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1512274677383607024, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
-  m_PrefabInstance: {fileID: 7360078462985164206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -5698,7 +5697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100038, guid: 45137ecb2b0f9ba45b80adefb16de509, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400038, guid: 45137ecb2b0f9ba45b80adefb16de509, type: 3}
       propertyPath: m_RootOrder
@@ -6575,7 +6574,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   inputManager: {fileID: 1297964747}
-  betterToggle: {fileID: 1004483474}
+  buttonToggle: {fileID: 1004483474}
+  inactiveText: {fileID: 1121368811}
+  activeText: {fileID: 1121368810}
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []
@@ -7992,7 +7993,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 1992076751983893777, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   inputManager: {fileID: 1297964747}
-  betterToggle: {fileID: 1126095684}
+  buttonToggle: {fileID: 1126095684}
+  inactiveText: {fileID: 1609279165}
+  activeText: {fileID: 1609279164}
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []
@@ -8113,7 +8116,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: -1603243664004287854, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   inputManager: {fileID: 1297964747}
-  betterToggle: {fileID: 1191317840}
+  buttonToggle: {fileID: 1191317840}
+  inactiveText: {fileID: 456897975}
+  activeText: {fileID: 456897978}
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []
@@ -8976,8 +8981,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f781e32c252edd545ad22328961e0dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Grab
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -9032,8 +9038,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0504b3b442b40346b5d7175e8b29807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Connect Connections
   objectLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -9050,8 +9057,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b00236b56ca894c906366168494eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Edit Properties
   layerMask:
     serializedVersion: 2
     m_Bits: 23
@@ -9068,8 +9076,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d4954716d969546b23a5ae0703f9c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: 1992076751983893777, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Delete
   lineRenderer: {fileID: 1009345033}
 --- !u!114 &1297964751
 MonoBehaviour:
@@ -9083,8 +9092,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c90a6d06a2855f4881b6d2b24017a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: MOVE
+  buttonText: Move
   xrRig: {fileID: 2133559333}
   worldGrabPos: {x: 0, y: 0, z: 0}
   localGrabPos: {x: 0, y: 0, z: 0}
@@ -9102,7 +9112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366a9100799e88b4489b8a3629936a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   xrRig: {fileID: 2133559333}
   speed: 0.01
 --- !u!1 &1336863438
@@ -10262,7 +10271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_Pivot.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_Pivot.y
@@ -10274,7 +10283,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMax.y
@@ -10282,7 +10291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchorMin.y
@@ -10326,7 +10335,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -10434,7 +10443,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -10468,7 +10477,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 100
-    m_Alignment: 3
+    m_Alignment: 5
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -11043,7 +11052,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   inputManager: {fileID: 1297964747}
-  betterToggle: {fileID: 1670537583}
+  buttonToggle: {fileID: 1670537583}
+  inactiveText: {fileID: 879857893}
+  activeText: {fileID: 879857892}
   OnButtonDown:
     m_PersistentCalls:
       m_Calls: []
@@ -12151,7 +12162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100038, guid: eb8e07cd3e0ce494f81482c6835d2b10, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400038, guid: eb8e07cd3e0ce494f81482c6835d2b10, type: 3}
       propertyPath: m_RootOrder
@@ -12875,8 +12886,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0504b3b442b40346b5d7175e8b29807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Connect
   objectLayer:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12893,8 +12905,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f781e32c252edd545ad22328961e0dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Grab
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12949,8 +12962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3b00236b56ca894c906366168494eb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: EDIT
+  buttonText: Edit
   layerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -12967,8 +12981,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c90a6d06a2855f4881b6d2b24017a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   button: {fileID: -6131295136447488360, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  modeName: MOVE
+  buttonText: Move
   xrRig: {fileID: 2133559333}
   worldGrabPos: {x: 0, y: 0, z: 0}
   localGrabPos: {x: 0, y: 0, z: 0}
@@ -12986,7 +13001,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366a9100799e88b4489b8a3629936a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggle: {fileID: 456897977}
   xrRig: {fileID: 2133559333}
   speed: 0.01
 --- !u!1 &1936603184
@@ -14617,6 +14631,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2133559333}
   - component: {fileID: 2133559332}
+  - component: {fileID: 2133559334}
+  - component: {fileID: 2133559335}
   m_Layer: 0
   m_Name: XR Rig (1)
   m_TagString: Untagged
@@ -14659,6 +14675,40 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2133559334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133559331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d9b01529060a8e46b5ac3174a719bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modes: []
+--- !u!114 &2133559335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133559331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86645219cf9c9fa4489e3e5cfc48afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modeButtons:
+  - fromMode: EDIT
+    toMode: MOVE
+    button: {fileID: -1603243664004287854, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    isInitial: 1
+  - fromMode: MOVE
+    toMode: EDIT
+    button: {fileID: -1603243664004287854, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    isInitial: 0
 --- !u!1001 &7360078462985164206
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15041,6 +15091,10 @@ PrefabInstance:
     - target: {fileID: 7360078462474747996, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360078462474747996, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.0205
       objectReference: {fileID: 0}
     - target: {fileID: 7360078462474747996, guid: 5ea3ff9532829f345b1c44f71a107056, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

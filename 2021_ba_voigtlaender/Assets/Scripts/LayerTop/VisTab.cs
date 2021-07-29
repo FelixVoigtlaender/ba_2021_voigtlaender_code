@@ -7,6 +7,7 @@ public class VisTab : VisLogicElement
 {
     VRTab vrTab;
     Toggle toggle;
+    VisLogicElement otherVisLogicElement;
     public override bool IsType(VRLogicElement vrLogicElement)
     {
         return vrLogicElement is VRTab;
@@ -33,5 +34,16 @@ public class VisTab : VisLogicElement
         this.toggle = toggle;
         toggle.onValueChanged.AddListener(OnIsActiveChanged);
         OnIsActiveChanged(vrTab.IsActive);
+    }
+
+    public void SetOtherVisElement(VisLogicElement visProperty)
+    {
+        this.otherVisLogicElement = visProperty;
+    }
+
+    public void Trigger()
+    {
+        if (otherVisLogicElement)
+            otherVisLogicElement.Trigger();
     }
 }

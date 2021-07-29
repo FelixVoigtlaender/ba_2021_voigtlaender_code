@@ -8,11 +8,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(fvInputManager))]
 public class TransformGrab : MonoBehaviour
 {
-    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
+    public string modeName = "";
+    public string buttonText = "";
     fvInputManager inputManager;
-    fvInputManager.ButtonHandler handler;
+
+    fvInputModeManager inputModeManager;
+    fvInputModeManager.ButtonModeHandler handler;
 
     [Header("Dragging")]
     public LayerMask layerMask;
@@ -26,10 +29,12 @@ public class TransformGrab : MonoBehaviour
 
     private void Awake()
     {
-        inputManager = GetComponent<fvInputManager>();
         grabbedObject = null;
 
-        handler = inputManager.FindButtonHandler(button);
+        inputManager = GetComponentInParent<fvInputManager>();
+        inputModeManager = GetComponentInParent<fvInputModeManager>();
+
+        handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
 
@@ -53,8 +58,6 @@ public class TransformGrab : MonoBehaviour
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
-            return;
 
         Vector3 origin = transform.position;
         Vector3 direction = transform.forward * inputManager.relativeRayLength;
@@ -103,8 +106,6 @@ public class TransformGrab : MonoBehaviour
 
     public void Update()
     {
-        if (!toggle.isOn)
-            return;
         HandleDrag();
         HandlePull();
         HandleScale();

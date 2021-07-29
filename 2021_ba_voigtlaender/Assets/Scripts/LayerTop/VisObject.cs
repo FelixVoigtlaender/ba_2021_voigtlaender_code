@@ -33,7 +33,7 @@ public class VisObject : MonoBehaviour
         canvas.transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
 
         this.vrObject = vrObject;
-        textName.text = vrObject.gameObject.name;
+        textName.text ="Object: "+ vrObject.gameObject.name;
         vrObject.OnDelete += OnDelete;
 
         miniature.CopyMesh(vrObject.gameObject);

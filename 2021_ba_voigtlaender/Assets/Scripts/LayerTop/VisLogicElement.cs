@@ -6,13 +6,14 @@ using DG.Tweening;
 
 public class VisLogicElement : MonoBehaviour
 {
-    VRLogicElement element;
+    protected VRLogicElement element;
     public Button myButton;
     public RectTransform inputHolder;
     public RectTransform outputHolder;
     public RectTransform variableHolder;
     public RectTransform tabHolder;
     public RectTransform tabToggleHolder;
+    public Dropdown tabDropdown;
     public Text textName;
     Canvas rootCanvas;
     RectTransform rect;
@@ -49,8 +50,91 @@ public class VisLogicElement : MonoBehaviour
         rootCanvas = GetComponentInParent<Canvas>();
         return rootCanvas;
     }
-
     List<VisTab> PopulateVisTabs(VRLogicElement element, Transform holder)
+    {
+        if (!holder || element == null)
+            return new List<VisTab>();
+
+        if (element.vrTabs.Count == 0)
+        {
+            if (tabToggleHolder)
+                tabToggleHolder.gameObject.SetActive(false);
+            return new List<VisTab>();
+        }
+
+        if (!tabDropdown)
+            return new List<VisTab>();
+
+
+        tabDropdown.gameObject.SetActive(true);
+        List<VisTab> visTabs = new List<VisTab>();
+        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+        options.Add(new Dropdown.OptionData(element.Name()));
+
+        //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
+
+        foreach (VRTab vrTab in element.vrTabs)
+        {
+            GameObject prefabVisTab = VisManager.instance.GetVisLogicPrefab(vrTab);
+            if (!prefabVisTab)
+            {
+
+                VRDebug.Log("Couldn't find tab Prefab");
+                continue;
+            }
+
+            // VisTab Setup
+            GameObject objVisTab = Instantiate(prefabVisTab, holder);
+            VisTab visTab = objVisTab.GetComponent<VisTab>();
+            visTab.Setup(vrTab);
+            visTab.SetOtherVisElement(this);
+            // Add Dropdownoption
+            Dropdown.OptionData option = new Dropdown.OptionData(vrTab.name);
+            options.Add(option);
+
+            visTabs.Add(visTab);
+        }
+        //Setup Dropdown
+        tabDropdown.ClearOptions();
+        tabDropdown.AddOptions(options);
+
+        
+        
+        // Setup for visibility
+        tabDropdown.onValueChanged.AddListener((value) => SetTabs(true));
+        tabDropdown.onValueChanged.AddListener((value) => 
+        {
+
+
+            if (value == 0)
+            {
+                SetTabs(false);
+            }
+            else
+            {
+
+                SetTabs(true);
+            }
+            for (int i = 0; i < visTabs.Count; i++)
+            {
+                if (i == value - 1)
+                {
+                    visTabs[i].OnIsActiveChanged(true);
+                }
+                else
+                {
+                    visTabs[i].OnIsActiveChanged(false);
+                }
+            }
+        });
+
+        tabHolder.gameObject.SetActive(false);
+        tabHolder.transform.localScale = new Vector3(0, 1, 1);
+
+
+        return visTabs;
+    }
+    List<VisTab> PopulateVisTabsA(VRLogicElement element, Transform holder)
     {
         if (!holder || element == null)
             return new List<VisTab>();
@@ -101,7 +185,9 @@ public class VisLogicElement : MonoBehaviour
         }
         // Setup for visibility
         myButton.onClick.AddListener(ToggleTabs);
-        SetTabs(false);
+
+        tabHolder.gameObject.SetActive(false);
+        tabHolder.transform.localScale = new Vector3(0, 1, 1);
 
 
         return visTabs;
@@ -115,16 +201,20 @@ public class VisLogicElement : MonoBehaviour
 
     public void SetTabs(bool value)
     {
-        tabHolder.gameObject.SetActive(value);
         //tabToggleHolder.gameObject.SetActive(value);
         float easeTime = 0.1f;
         if (value)
         {
-            tabHolder.DOAnchorPos3DZ(-20, easeTime).OnComplete(() => tabHolder.DOScaleY(1, easeTime));          ;
+            tabHolder.gameObject.SetActive(value);
+            tabHolder.transform.localScale = new Vector3(0, 1, 1);
+            tabHolder.DOAnchorPos3DZ(-20, easeTime).OnComplete(() => tabHolder.DOScaleX(1, easeTime)); 
         }
         else
         {
-            tabHolder.DOScaleY(0, easeTime).OnComplete(() => tabHolder.DOAnchorPos3DZ(0, easeTime));
+            tabHolder.DOScaleX(0, easeTime).OnComplete(() => 
+            {
+                tabHolder.DOAnchorPos3DZ(0, easeTime);
+            });
         }
     }
 
@@ -207,5 +297,10 @@ public class VisLogicElement : MonoBehaviour
             }
 
         }
+    }
+
+    public void Trigger()
+    {
+        element.Trigger();
     }
 }

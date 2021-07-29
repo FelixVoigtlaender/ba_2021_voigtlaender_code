@@ -9,11 +9,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(fvInputManager))]
 public class InitLogic : MonoBehaviour
 {
-    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
+    public string modeName = "";
+    public string buttonText = "";
     fvInputManager inputManager;
-    fvInputManager.ButtonHandler handler;
+
+    fvInputModeManager inputModeManager;
+    fvInputModeManager.ButtonModeHandler handler;
 
     [Header("Raycast")]
     public LayerMask layerMask;
@@ -21,9 +24,10 @@ public class InitLogic : MonoBehaviour
 
     private void Awake()
     {
-        inputManager = GetComponent<fvInputManager>();
+        inputManager = GetComponentInParent<fvInputManager>();
+        inputModeManager = GetComponentInParent<fvInputModeManager>();
 
-        handler = inputManager.FindButtonHandler(button);
+        handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
     }
@@ -34,8 +38,6 @@ public class InitLogic : MonoBehaviour
     }
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
-            return;
 
         GameObject logicObject = null;
 

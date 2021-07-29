@@ -6,29 +6,32 @@ using UnityEngine.UI;
 
 public class HandRemover : MonoBehaviour
 {
-    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
+    public string modeName = "";
+    public string buttonText = "";
     fvInputManager inputManager;
-    fvInputManager.ButtonHandler handler;
-    
+
+    fvInputModeManager inputModeManager;
+    fvInputModeManager.ButtonModeHandler handler;
+
     [Header("Sword")]
     public LineRenderer lineRenderer;
     Vector3 previousB;
     VisConnection[] visConnections;
     private void Awake()
     {
-        inputManager = GetComponent<fvInputManager>();
-
         lineRenderer.enabled = false;
-        handler = inputManager.FindButtonHandler(button);
+
+        inputManager = GetComponentInParent<fvInputManager>();
+        inputModeManager = GetComponentInParent<fvInputModeManager>();
+
+        handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
     }
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
-            return;
 
         visConnections = FindObjectsOfType<VisConnection>();
         lineRenderer.enabled = true;
@@ -43,8 +46,6 @@ public class HandRemover : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!toggle.isOn)
-            return;
         if (!handler.isPressed)
             return;
 

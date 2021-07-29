@@ -13,24 +13,33 @@ public class DisplayButton : MonoBehaviour
     fvInputManager.ButtonHandler handler;
 
     [Header("Output")]
-    public BetterToggle betterToggle;
+    public BetterToggle buttonToggle;
+    public Text inactiveText;
+    public Text activeText;
+
     public UnityEvent OnButtonDown;
     public UnityEvent OnButtonUp;
     private void Awake()
     {
-
         handler = inputManager.FindButtonHandler(button);
         handler.OnButtonDown += (value) => 
         {
             OnButtonDown?.Invoke();
-            betterToggle.isOn = true;
+            buttonToggle.isOn = true;
         };
         handler.OnButtonUp += (value) =>
         {
             OnButtonUp?.Invoke();
-            betterToggle.isOn = false;
+            buttonToggle.isOn = false;
         };
 
-        betterToggle.isOn = false;
+        buttonToggle.isOn = false;
+    }
+
+
+    public void SetButtonText(string buttonText)
+    {
+        this.inactiveText.text = buttonText;
+        this.activeText.text = buttonText;
     }
 }

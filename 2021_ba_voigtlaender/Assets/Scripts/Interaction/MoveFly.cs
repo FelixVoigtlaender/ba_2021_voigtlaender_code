@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class MoveFly : MonoBehaviour
 {
-
-    public BetterToggle toggle;
+    
     [Header("Input")]
     fvInputManager inputManager;
     fvInputManager.ButtonHandler handler;
@@ -23,9 +22,6 @@ public class MoveFly : MonoBehaviour
 
     public void Update()
     {
-
-        if (!toggle.isOn)
-            return;
 
 
         return;
