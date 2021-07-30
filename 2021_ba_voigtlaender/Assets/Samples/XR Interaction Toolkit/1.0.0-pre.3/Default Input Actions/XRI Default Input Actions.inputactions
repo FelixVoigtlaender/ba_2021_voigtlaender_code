@@ -170,6 +170,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Event",
+                    "type": "Button",
+                    "id": "93344ea8-9618-4efe-9b92-cc15c1e7b14b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -456,6 +464,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f349e9f9-3fe3-448c-9db2-ec1e11d8c9ed",
+                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Event",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

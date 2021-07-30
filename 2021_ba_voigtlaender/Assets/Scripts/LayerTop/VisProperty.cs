@@ -8,4 +8,5 @@ public class VisProperty : VisLogicElement
     {
         return vrLogicElement is VRProperty;
     }
+
 }

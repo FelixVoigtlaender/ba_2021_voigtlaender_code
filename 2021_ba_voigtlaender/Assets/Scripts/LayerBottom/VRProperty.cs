@@ -330,7 +330,7 @@ public class PropScale : VRProperty
     VRVariable scaleVariable;
     public override string Name()
     {
-        return "Scale";
+        return "Do Scale";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -358,7 +358,7 @@ public class PropScale : VRProperty
         scaleVariable = new VRVariable();
 
         scaleVariable.Setup(datFloat);
-        scaleVariable.name = "Scale";
+        scaleVariable.name = "End Scale";
         scaleVariable.OnSetData += SetData;
         scaleVariable.OnGetData += GetData;
 
@@ -420,7 +420,7 @@ public class PropTransform : VRProperty
         VRPort outTransform = new VRPort(GetData,new DatTransform(new DatObj(vrObject)));
         outTransform.toolTip = "Get current Transform";
 
-        vrOutputs.Add(outTransform);
+        //vrOutputs.Add(outTransform);
     }
 
     public override void SetupTabs()
@@ -428,14 +428,14 @@ public class PropTransform : VRProperty
         base.SetupTabs();
 
         // Variables
-        varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Transform");
-        varDuration = new VRVariable(new DatFloat(1), "Duration");
-        varRecording = new VRVariable(new DatRecording(new DatTransform(new DatObj(vrObject))), "Recording");
-        varLoop = new VRVariable(new DatBool(false), "Loop");
+        varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Transform",true);
+        varDuration = new VRVariable(new DatFloat(1), "Time", true);
+        varRecording = new VRVariable(new DatRecording(new DatTransform(new DatObj(vrObject))), "Recording", true);
+        varLoop = new VRVariable(new DatBool(false), "Loop", true);
 
 
         // Tabs
-        tabMove = new VRTab("Move");
+        tabMove = new VRTab("Move to point");
         tabMove.vrVariables.Add(varTransform);
         tabMove.vrVariables.Add(varDuration);
         vrTabs.Add(tabMove);
@@ -451,13 +451,13 @@ public class PropTransform : VRProperty
         vrTabs.Add(tabScale);
 
 
-        tabTransform = new VRTab("Transform");
+        tabTransform = new VRTab("Animate");
         tabTransform.vrVariables.Add(varTransform);
         tabTransform.vrVariables.Add(varDuration);
         vrTabs.Add(tabTransform);
 
 
-        tabRecording = new VRTab("Record");
+        tabRecording = new VRTab("Record Interactions");
         tabRecording.vrVariables.Add(varRecording);
         tabRecording.vrVariables.Add(varDuration);
         tabRecording.vrVariables.Add(varLoop);
@@ -516,7 +516,7 @@ public class PropTransform : VRProperty
             {
                 VRManager.instance.StartCoroutine(Play(datDuration.Value, datRecording, () =>
                 {
-                    if (datLoop.Value)
+                    if (datLoop.Value && GetActiveTab() == tabRecording)
                         Trigger();
                 }));
             }
@@ -625,7 +625,7 @@ public class PropColor : VRProperty
 
     public override string Name()
     {
-        return "Change Color";
+        return "Color";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -646,7 +646,7 @@ public class PropColor : VRProperty
         base.SetupOutputs();
         VRPort outColor = new VRPort(GetData, new DatColor(Color.white));
         outColor.toolTip = "Get current Color";
-        vrOutputs.Add(outColor);
+        //vrOutputs.Add(outColor);
     }
     public override void SetupTabs()
     {
@@ -656,10 +656,10 @@ public class PropColor : VRProperty
 
         SetupColorComponent(vrObject);
         Color color = GetColor();
-        varColor = new VRVariable(new DatColor(color), "");
+        varColor = new VRVariable(new DatColor(color), "",true);
         varColor.OnSetData += SetData;
 
-        tabColor = new VRTab("Color");
+        tabColor = new VRTab("Change Color");
         tabColor.vrVariables.Add(varColor);
         vrTabs.Add(tabColor);
 

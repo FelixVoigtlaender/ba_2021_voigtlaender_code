@@ -332,9 +332,9 @@ public class DatObj : VRData
     public override string GetName()
     {
         if (Value == null)
-            return "NULL";
+            return "_";
         if (Value.gameObject == null)
-            return "NULL-OBJ";
+            return "_.";
         return Value.gameObject.name;
     }
     public override void SetData(VRData data)

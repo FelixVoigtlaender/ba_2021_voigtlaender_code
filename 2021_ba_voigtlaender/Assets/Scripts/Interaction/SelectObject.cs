@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
+using System;
 
 
 [RequireComponent(typeof(fvInputManager))]
-public class InitLogic : MonoBehaviour
+
+public class SelectObject : MonoBehaviour
 {
+
     [Header("Input")]
     public InputActionReference button;
     public string modeName = "";
     public string buttonText = "";
     fvInputManager inputManager;
 
+    public event Action<GameObject> OnSelectedObject;
+
     fvInputModeManager inputModeManager;
     fvInputModeManager.ButtonModeHandler handler;
 
-    [Header("Raycast")]
-    public LayerMask layerMask;
-    public float maxDistance;
-
     private void Start()
     {
+
         inputManager = GetComponentInParent<fvInputManager>();
         inputModeManager = GetComponentInParent<fvInputModeManager>();
 
@@ -31,7 +32,17 @@ public class InitLogic : MonoBehaviour
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
     }
+
     public void OnButtonDown(InputAction.CallbackContext context)
+    {
+        GameObject selectedObject = Select();
+        OnSelectedObject?.Invoke(selectedObject);
+    }
+    public void OnButtonUp(InputAction.CallbackContext context)
+    {
+    }
+
+    public GameObject Select()
     {
 
         GameObject logicObject = null;
@@ -48,15 +59,10 @@ public class InitLogic : MonoBehaviour
         }
 
         if (logicObject == null)
-            return;
+            return null;
         if (logicObject.GetComponentInParent<BlockCode>())
-            return;
+            return null;
 
-
-        VRManager.instance.InitVRObject(logicObject);
+        return logicObject;
     }
-    public void OnButtonUp(InputAction.CallbackContext context)
-    {
-    }
-
 }

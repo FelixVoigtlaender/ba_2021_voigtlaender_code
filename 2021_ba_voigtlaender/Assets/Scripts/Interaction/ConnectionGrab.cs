@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class ConnectionGrab : MonoBehaviour
 {
-    public BetterToggle toggle;
     [Header("Input")]
     public InputActionReference button;
+    public string modeName = "";
+    public string buttonText = "";
     fvInputManager inputManager;
-    fvInputManager.ButtonHandler handler;
+
+    fvInputModeManager inputModeManager;
+    fvInputModeManager.ButtonModeHandler handler;
+
 
     [Header("Object")]
     public LayerMask objectLayer;
@@ -23,26 +27,23 @@ public class ConnectionGrab : MonoBehaviour
     VisConnection currentVisConnection;
     
 
-    private void Awake()
+    private void Start()
     {
-        inputManager = GetComponent<fvInputManager>();
+        inputManager = GetComponentInParent<fvInputManager>();
+        inputModeManager = GetComponentInParent<fvInputModeManager>();
 
-        handler = inputManager.FindButtonHandler(button);
+        handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
     }
     public void Update()
     {
-        if (!toggle.isOn)
-            return;
         HandleDrag();
         //HandleNormals();
     }
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (!toggle.isOn)
-            return;
         if (!inputManager.isUIHitClosest || !inputManager.uiRaycastHit.HasValue)
             return;
 
@@ -59,8 +60,6 @@ public class ConnectionGrab : MonoBehaviour
 
     public void HandleDrag()
     {
-        if (!toggle.isOn)
-            return;
         if (!handler.isPressed)
             return;
         if (currentVisConnection == null)

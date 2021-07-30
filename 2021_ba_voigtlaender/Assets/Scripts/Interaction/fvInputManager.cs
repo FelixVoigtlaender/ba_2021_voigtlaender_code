@@ -27,10 +27,13 @@ public class fvInputManager : MonoBehaviour
     public Vector2 joystickDir;
     public Vector3 relativeJoystickDir;
 
+    ActionBasedController controller;
+
 
     private void Awake()
     {
         xrRig = FindObjectOfType<XRRig>();
+        controller = GetComponent<ActionBasedController>();
 
         rayInteractor = GetComponent<XRRayInteractor>();
 
@@ -39,6 +42,16 @@ public class fvInputManager : MonoBehaviour
         rayInteractor.selectEntered.AddListener(SelectEntered);
         //rayInteractor.
         rayInteractor.selectExited.AddListener(SelectExited);
+
+
+
+    }
+    private void Start()
+    {
+        fvInputModeManager.instance.OnModeChanged += (value) => 
+        {
+            controller.SendHapticImpulse(1, 0.2f);
+        };
     }
 
     private void Update()

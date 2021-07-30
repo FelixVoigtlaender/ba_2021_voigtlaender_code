@@ -7,12 +7,14 @@ using UnityEngine.UI;
 [RequireComponent(typeof(fvInputManager))]
 public class MoveGrab : MonoBehaviour
 {
-    public BetterToggle toggle;
-
     [Header("Input")]
     public InputActionReference button;
+    public string modeName = "";
+    public string buttonText = "";
     fvInputManager inputManager;
-    fvInputManager.ButtonHandler handler;
+
+    fvInputModeManager inputModeManager;
+    fvInputModeManager.ButtonModeHandler handler;
 
     [Header("Grabbing")]
     public Transform xrRig;
@@ -23,11 +25,12 @@ public class MoveGrab : MonoBehaviour
     MoveGrab otherHand;
 
     GameObject helperObject;
-    private void Awake()
+    private void Start()
     {
-        inputManager = GetComponent<fvInputManager>();
+        inputManager = GetComponentInParent<fvInputManager>();
+        inputModeManager = GetComponentInParent<fvInputModeManager>();
 
-        handler = inputManager.FindButtonHandler(button);
+        handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
         handler.OnButtonUp += OnButtonUp;
 
@@ -51,8 +54,6 @@ public class MoveGrab : MonoBehaviour
 
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        if (toggle.isOn)
-            return;
         isGrabbing = true;
 
 
@@ -62,8 +63,6 @@ public class MoveGrab : MonoBehaviour
 
     public void Update()
     {
-        if (toggle.isOn)
-            return;
         if (!isGrabbing)
             return;
 
@@ -167,8 +166,6 @@ public class MoveGrab : MonoBehaviour
 
     public void OnButtonUp(InputAction.CallbackContext context)
     {
-        if (toggle.isOn)
-            return;
         isGrabbing = false;
     }
 }

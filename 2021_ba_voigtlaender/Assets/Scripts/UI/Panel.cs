@@ -54,4 +54,11 @@ public class Panel : MonoBehaviour
             canvasGroup.DOFade(0, easeTime).OnComplete(()=>gameObject.SetActive(false));
         //transform.DOScale(0, easeTime);
     }
+    public void Toggle()
+    {
+        if (isOpen)
+            Close();
+        else
+            Open();
+    }
 }
