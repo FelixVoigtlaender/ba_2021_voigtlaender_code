@@ -47,7 +47,7 @@ PlayerSettings:
   defaultScreenWidthWeb: 960
   defaultScreenHeightWeb: 600
   m_StereoRenderingPath: 0
-  m_ActiveColorSpace: 0
+  m_ActiveColorSpace: 1
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
@@ -129,6 +129,7 @@ PlayerSettings:
     Others: 1
   bundleVersion: 0.1
   preloadedAssets:
+  - {fileID: 7434419153990870034, guid: ef9aac9d4d5007e42bba5d0051a8ac35, type: 2}
   - {fileID: 11400000, guid: 2f83e262159e1c34db19fc0bbd5fdacf, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
