@@ -20,6 +20,7 @@ public class VisObject : MonoBehaviour
     public BezierCurve lineToObject;
     public float hoverDistance = 2;
     public MiniatureMaker miniature;
+    public GhostObject ghostObject;
 
     public Canvas canvas;
 
@@ -30,6 +31,8 @@ public class VisObject : MonoBehaviour
 
     public void Setup(VRObject vrObject)
     {
+        ghostObject = VisManager.instance.DemandGhostObject(new DatTransform(new DatObj(vrObject)));
+
         canvas.transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
 
         this.vrObject = vrObject;
@@ -50,6 +53,8 @@ public class VisObject : MonoBehaviour
 
         PopulateProperties();
         PopulateVisPorts(vrObject.vrInputs,vrObject.vrOutputs);
+
+
     }
 
     public void PopulateProperties()
@@ -101,5 +106,7 @@ public class VisObject : MonoBehaviour
         {
             Destroy(rootCanvas.gameObject);
         }
+
+        Destroy(ghostObject);
     }
 }

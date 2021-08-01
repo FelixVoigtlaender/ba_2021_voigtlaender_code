@@ -16,7 +16,7 @@ public class VisVariable : VisLogicElement
 
 
     VisVector visVector;
-    GhostObject ghostObject;
+    VisObject visObject;
 
 
     public BetterToggle betterTogglePlay;
@@ -27,10 +27,12 @@ public class VisVariable : VisLogicElement
     private void Start()
     {
         selectObjects = new List<SelectObject>(FindObjectsOfType<SelectObject>());
+
     }
 
     public override void Setup(VRLogicElement element)
     {
+        visObject = GetComponentInParent<VisObject>();
         this.vrVariable = (VRVariable)element;
         base.Setup(element);
 
@@ -136,16 +138,28 @@ public class VisVariable : VisLogicElement
                 if (button)
                 {
                     button.gameObject.SetActive(true);
+
+                    GhostObject ghostObjectTransform = null;
+                    if (!visObject)
+                    {
+                        ghostObjectTransform = VisManager.instance.DemandGhostObject(datTransform);
+                        element.OnDelete += () =>
+                        {
+                            Destroy(ghostObjectTransform);
+                        };
+                    }
+                    else
+                    {
+                        ghostObjectTransform = visObject.ghostObject;
+                    }
+
+
                     button.onClick.AddListener(() =>
                     {
-                        if (ghostObject != null && ghostObject.datTransform == datTransform && ghostObject.gameObject.activeSelf)
-                        {
-                            ghostObject.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            ghostObject = VisManager.instance.DemandGhostObject(datTransform);
-                        }
+                        ghostObjectTransform.Setup(datTransform);
+                        ghostObjectTransform.gameObject.SetActive(true);
+                        ghostObjectTransform.transform.position = transform.position;
+                        ghostObjectTransform.transform.DOMove(datTransform.datPosition.Value,0.3f);
                     });
                 }
                 break;
@@ -164,12 +178,28 @@ public class VisVariable : VisLogicElement
                 if (!button || !betterTogglePlay || !betterToggleRecord)
                     return;
 
+
+                GhostObject ghostObjectRec = null;
+                if (!visObject)
+                {
+                    ghostObjectRec = VisManager.instance.DemandGhostObject(datRecording);
+                    element.OnDelete += () =>
+                    {
+                        Destroy(ghostObjectRec);
+                    };
+                }
+                else
+                {
+                    ghostObjectRec = visObject.ghostObject;
+                }
+
+
                 // Setup recording button
                 betterToggleRecord.OnValueChanged.AddListener((value) =>
                 {
-                    if (!ghostObject)
+                    if (!ghostObjectRec)
                         return;
-                    ghostObject.Record(value,()=> 
+                    ghostObjectRec.Record(value,()=> 
                     {
                         betterToggleRecord.SetWithoutNotify(false);
                     });
@@ -178,10 +208,10 @@ public class VisVariable : VisLogicElement
                 // Setup play button
                 betterTogglePlay.OnValueChanged.AddListener((value) =>
                 {
-                    if (!ghostObject)
+                    if (!ghostObjectRec)
                         return;
 
-                    ghostObject.Play(value,()=> 
+                    ghostObjectRec.Play(value,()=> 
                     {
                         betterTogglePlay.SetWithoutNotify(false);
                     });
@@ -192,9 +222,9 @@ public class VisVariable : VisLogicElement
                 button.gameObject.SetActive(true);
                 button.onClick.AddListener(() =>
                 {
-                    if (ghostObject != null && ghostObject.datRecording == datRecording && ghostObject.gameObject.activeSelf)
+                    if (ghostObjectRec != null && ghostObjectRec.datRecording == datRecording && ghostObjectRec.gameObject.activeSelf)
                     {
-                        ghostObject.gameObject.SetActive(false);
+                        ghostObjectRec.gameObject.SetActive(false);
                         betterToggleRecord.gameObject.SetActive(false);
                         betterTogglePlay.gameObject.SetActive(false);
                     }
@@ -202,7 +232,12 @@ public class VisVariable : VisLogicElement
                     {
                         betterToggleRecord.gameObject.SetActive(true);
                         betterTogglePlay.gameObject.SetActive(true);
-                        ghostObject = VisManager.instance.DemandGhostObject(datRecording);
+
+
+                        ghostObjectRec.Setup(datRecording);
+                        ghostObjectRec.gameObject.SetActive(true);
+                        ghostObjectRec.transform.position = transform.position;
+                        ghostObjectRec.transform.DOMove(datRecording.datTransform.datPosition.Value, 0.3f);
                     }
                 });
                 break;

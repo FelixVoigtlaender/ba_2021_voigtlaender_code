@@ -63,11 +63,9 @@ public class VisManager : MonoBehaviour
         if ( datTransform == null)
             return null;
 
-        if (!ghostObject)
-        {
-            GameObject ghostObj = Instantiate(prefabGhostObject);
-            ghostObject = ghostObj.GetComponent<GhostObject>();
-        }
+
+        GameObject ghostObj = Instantiate(prefabGhostObject);
+        ghostObject = ghostObj.GetComponent<GhostObject>();
 
         ghostObject.Setup(datTransform);
         ghostObject.gameObject.SetActive(true);
