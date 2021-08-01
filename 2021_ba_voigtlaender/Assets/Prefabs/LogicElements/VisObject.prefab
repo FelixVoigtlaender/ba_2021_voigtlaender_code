@@ -162,6 +162,7 @@ MonoBehaviour:
   lineToObject: {fileID: 1175646771400027446}
   hoverDistance: 0.2
   miniature: {fileID: 8739639925493202778}
+  ghostObject: {fileID: 0}
   canvas: {fileID: 0}
 --- !u!114 &1052151072312290042
 MonoBehaviour:

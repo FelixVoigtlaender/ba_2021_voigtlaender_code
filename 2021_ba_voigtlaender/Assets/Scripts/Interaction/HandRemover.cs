@@ -67,6 +67,16 @@ public class HandRemover : MonoBehaviour
             }
         }
 
+        // Ghost Object deactivate
+        if (inputManager.worldRaycastHit.HasValue)
+        {
+            RaycastHit raycastHit = inputManager.worldRaycastHit.Value;
+            GhostObject ghostObject = raycastHit.collider.gameObject.GetComponent<GhostObject>();
+            if (ghostObject)
+                ghostObject.gameObject.SetActive(false);
+        }
+
+
         // Line Deletion
         Vector3 mid = transform.position;
         Vector3 b = mid + transform.forward.normalized * inputManager.relativeRayLength;
