@@ -123,7 +123,7 @@ public class PropEnabled : VRProperty
     public override void SetupVariables()
     {
         base.SetupVariables();
-        varEnabled = new VRVariable(new DatBool(vrObject.gameObject.activeSelf),"Is Active", true);
+        varEnabled = new VRVariable(new DatBool(vrObject.gameObject.activeSelf),"Visibility", true);
         varEnabled.OnSetData += SetData;
 
         vrVariables.Add(varEnabled);
@@ -428,8 +428,8 @@ public class PropTransform : VRProperty
         base.SetupTabs();
 
         // Variables
-        varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Transform",true);
-        varDuration = new VRVariable(new DatFloat(1), "Time", true);
+        varTransform = new VRVariable(new DatTransform(new DatObj(vrObject)), "Preview",true);
+        varDuration = new VRVariable(new DatFloat(1), "Seconds", true);
         varRecording = new VRVariable(new DatRecording(new DatTransform(new DatObj(vrObject))), "Recording", true);
         varLoop = new VRVariable(new DatBool(false), "Loop", true);
 
@@ -451,13 +451,13 @@ public class PropTransform : VRProperty
         vrTabs.Add(tabScale);
 
 
-        tabTransform = new VRTab("Animate");
+        tabTransform = new VRTab("Rotate, Scale, Move");
         tabTransform.vrVariables.Add(varTransform);
         tabTransform.vrVariables.Add(varDuration);
         vrTabs.Add(tabTransform);
 
 
-        tabRecording = new VRTab("Record Interactions");
+        tabRecording = new VRTab("Animate");
         tabRecording.vrVariables.Add(varRecording);
         tabRecording.vrVariables.Add(varDuration);
         tabRecording.vrVariables.Add(varLoop);
