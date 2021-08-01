@@ -74,7 +74,12 @@ public class TransformGrab : MonoBehaviour
 
             Canvas canvas = result.gameObject.GetComponentInParent<Canvas>();
             if (canvas.GetComponent<BlockDrag>())
-                return;
+            {
+                if (canvas.isRootCanvas)
+                    return;
+                else
+                    canvas = canvas.rootCanvas;
+            }
 
             if (canvas)
             {

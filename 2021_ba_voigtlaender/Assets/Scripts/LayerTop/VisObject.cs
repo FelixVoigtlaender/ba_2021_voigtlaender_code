@@ -16,11 +16,17 @@ public class VisObject : MonoBehaviour
     public RectTransform secondaryInputHolder;
     public RectTransform secondaryOutputHolder;
 
+    public RectTransform tabHolder;
+
+    public CanvasGroup blockProperties;
+
     public Text textName;
     public BezierCurve lineToObject;
     public float hoverDistance = 2;
     public MiniatureMaker miniature;
     public GhostObject ghostObject;
+
+
 
     public Canvas canvas;
 
@@ -107,6 +113,6 @@ public class VisObject : MonoBehaviour
             Destroy(rootCanvas.gameObject);
         }
 
-        Destroy(ghostObject);
+        Destroy(ghostObject.gameObject);
     }
 }

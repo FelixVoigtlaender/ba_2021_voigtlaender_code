@@ -11,6 +11,20 @@ public abstract class VRLogicElement
     public List<VRVariable> vrVariables = new List<VRVariable>();
     public List<VRTab> vrTabs = new List<VRTab>();
 
+    public event Action<bool> OnActiveChanged;
+    protected bool _isActive = true;
+    public bool isActive
+    {
+        get { return _isActive; }
+        set
+        {
+            if(_isActive != value)
+                OnActiveChanged?.Invoke(value);
+            _isActive = value;
+        }
+
+    }
+
     public event Action OnDelete; 
     public abstract string Name();
 

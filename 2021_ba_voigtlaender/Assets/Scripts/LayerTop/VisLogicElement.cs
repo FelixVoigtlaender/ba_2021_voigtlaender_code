@@ -8,15 +8,19 @@ public class VisLogicElement : MonoBehaviour
 {
     protected VRLogicElement element;
     public Button myButton;
+    public Button showButton;
     public RectTransform inputHolder;
     public RectTransform outputHolder;
     public RectTransform variableHolder;
     public RectTransform tabHolder;
     public RectTransform tabToggleHolder;
     public Dropdown tabDropdown;
+    public BetterToggle toggleIsActive;
     public Text textName;
     Canvas rootCanvas;
     RectTransform rect;
+
+    public CanvasGroup blockProperties;
 
     public List<VisPort> visInPorts;
     public List<VisPort> visOutPorts;
@@ -27,6 +31,21 @@ public class VisLogicElement : MonoBehaviour
 
     public virtual void Setup(VRLogicElement element)
     {
+        VisObject visObject = GetComponentInParent<VisObject>();
+        if (visObject)
+        {
+            //tabHolder = visObject.tabHolder;
+            blockProperties = visObject.blockProperties;
+            if (blockProperties)
+            {
+                blockProperties.alpha = 0;
+                blockProperties.interactable = false;
+                blockProperties.blocksRaycasts = false;
+
+            }
+        }
+
+
         this.element = element;
         textName.text = element.Name();
         element.OnDelete += OnDelete;
@@ -36,6 +55,34 @@ public class VisLogicElement : MonoBehaviour
         visTab = PopulateVisTabs(element, tabHolder);
         rootCanvas = GetRootCanvas();
         rect = GetComponent<RectTransform>();
+
+        
+        if (toggleIsActive)
+        {
+            if (element.vrInputs.Count > 0 || element.vrVariables.Count > 0)
+                toggleIsActive.gameObject.SetActive(false);
+            else
+                toggleIsActive.gameObject.SetActive(true);
+
+
+            TooltipContent tooltipContent = toggleIsActive.GetComponent<TooltipContent>();
+            toggleIsActive.isOn = element.isActive;
+            toggleIsActive.OnValueChanged.AddListener((value) =>
+            {
+                tooltipContent.description = value ? "On" : "Off";
+                if (element.isActive == value)
+                    return;
+                element.isActive = value;
+            });
+            element.OnActiveChanged += (value) =>
+            {
+                tooltipContent.description = value ? "On" : "Off";
+                if (toggleIsActive.isOn == value)
+                    return;
+                toggleIsActive.isOn = value;
+
+            };
+        }
     }
 
     public virtual void Init()
@@ -69,7 +116,7 @@ public class VisLogicElement : MonoBehaviour
         tabDropdown.gameObject.SetActive(true);
         List<VisTab> visTabs = new List<VisTab>();
         List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
-        options.Add(new Dropdown.OptionData(element.Name()));
+        //options.Add(new Dropdown.OptionData(element.Name()));
 
         //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
 
@@ -88,6 +135,12 @@ public class VisLogicElement : MonoBehaviour
             VisTab visTab = objVisTab.GetComponent<VisTab>();
             visTab.Setup(vrTab);
             visTab.SetOtherVisElement(this);
+            visTab.OnHide += () => SetTabs(false);
+            // Scaling
+            TweenScaler tweenScaler = visTab.GetComponentInChildren<TweenScaler>();
+            if (tweenScaler)
+                tweenScaler.target = tabHolder;
+
             // Add Dropdownoption
             Dropdown.OptionData option = new Dropdown.OptionData(vrTab.name);
             options.Add(option);
@@ -97,29 +150,21 @@ public class VisLogicElement : MonoBehaviour
         //Setup Dropdown
         tabDropdown.ClearOptions();
         tabDropdown.AddOptions(options);
+        textName.text = options[0].text;
 
-        
-        
+
+
         // Setup for visibility
         tabDropdown.onValueChanged.AddListener((value) => SetTabs(true));
         tabDropdown.onValueChanged.AddListener((value) => 
         {
-
-
-            if (value == 0)
-            {
-                SetTabs(false);
-            }
-            else
-            {
-
-                SetTabs(true);
-            }
+            SetTabs(true);
             for (int i = 0; i < visTabs.Count; i++)
             {
-                if (i == value - 1)
+                if (i == value)
                 {
                     visTabs[i].OnIsActiveChanged(true);
+                    textName.text = visTabs[i].textName.text;
                 }
                 else
                 {
@@ -127,10 +172,21 @@ public class VisLogicElement : MonoBehaviour
                 }
             }
         });
+        visTabs[0].OnIsActiveChanged(true);
+        tabDropdown.gameObject.SetActive(options.Count > 1);
 
         tabHolder.gameObject.SetActive(false);
         tabHolder.transform.localScale = new Vector3(0, 1, 1);
 
+
+        if (showButton)
+        {
+            showButton.gameObject.SetActive(true);
+            showButton.onClick.AddListener(() => 
+            {
+                SetTabs(true);
+            });
+        }
 
         return visTabs;
     }
@@ -205,12 +261,24 @@ public class VisLogicElement : MonoBehaviour
         float easeTime = 0.1f;
         if (value)
         {
+            if (blockProperties)
+            {
+                blockProperties.DOFade(0.8f, easeTime);
+                blockProperties.interactable = true;
+                blockProperties.blocksRaycasts = true;
+            }
             tabHolder.gameObject.SetActive(value);
             tabHolder.transform.localScale = new Vector3(0, 1, 1);
             tabHolder.DOAnchorPos3DZ(-20, easeTime).OnComplete(() => tabHolder.DOScaleX(1, easeTime)); 
         }
         else
         {
+            if (blockProperties)
+            {
+                blockProperties.DOFade(0, easeTime);
+                blockProperties.interactable = false;
+                blockProperties.blocksRaycasts = false;
+            }
             tabHolder.DOScaleX(0, easeTime).OnComplete(() => 
             {
                 tabHolder.DOAnchorPos3DZ(0, easeTime);

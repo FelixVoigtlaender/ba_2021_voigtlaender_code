@@ -145,7 +145,7 @@ public class VisVariable : VisLogicElement
                         ghostObjectTransform = VisManager.instance.DemandGhostObject(datTransform);
                         element.OnDelete += () =>
                         {
-                            Destroy(ghostObjectTransform);
+                            Destroy(ghostObjectTransform.gameObject);
                         };
                     }
                     else
@@ -185,7 +185,7 @@ public class VisVariable : VisLogicElement
                     ghostObjectRec = VisManager.instance.DemandGhostObject(datRecording);
                     element.OnDelete += () =>
                     {
-                        Destroy(ghostObjectRec);
+                        Destroy(ghostObjectRec.gameObject);
                     };
                 }
                 else

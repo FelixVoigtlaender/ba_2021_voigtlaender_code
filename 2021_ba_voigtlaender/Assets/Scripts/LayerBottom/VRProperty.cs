@@ -372,12 +372,17 @@ public class PropScale : VRProperty
 
     public void SetData(VRData vrData)
     {
+        if (!isActive)
+            return;
         DatFloat datFloat = (DatFloat)vrData;
         vrObject.gameObject.transform.localScale = Vector3.one * datFloat.Value;
     }
 
     public override void Trigger()
     {
+
+        if (!isActive)
+            return;
         DatFloat vrFloat = (DatFloat)scaleVariable.vrData;
         vrObject.gameObject.transform.localScale = Vector3.one * vrFloat.Value;
     }
@@ -387,9 +392,6 @@ public class PropScale : VRProperty
 public class PropTransform : VRProperty
 {
     // Teleport
-    VRTab tabMove;
-    VRTab tabRotate;
-    VRTab tabScale;
     VRTab tabTransform;
     VRTab tabRecording;
     // Variables
@@ -397,6 +399,11 @@ public class PropTransform : VRProperty
     VRVariable varDuration;
     VRVariable varRecording;
     VRVariable varLoop;
+
+    VRVariable varLockPosition;
+    VRVariable varLockRotation;
+    VRVariable varLockScale;
+
 
     bool playing = false;
     public override string Name()
@@ -433,27 +440,18 @@ public class PropTransform : VRProperty
         varRecording = new VRVariable(new DatRecording(new DatTransform(new DatObj(vrObject))), "Recording", true);
         varLoop = new VRVariable(new DatBool(false), "Loop", true);
 
+        varLockPosition = new VRVariable(new DatBool(false), "Lock Position", true);
+        varLockRotation = new VRVariable(new DatBool(false), "Lock Rotation", true);
+        varLockScale = new VRVariable(new DatBool(false), "Lock Scale", true);
 
         // Tabs
-        tabMove = new VRTab("Move to point");
-        tabMove.vrVariables.Add(varTransform);
-        tabMove.vrVariables.Add(varDuration);
-        vrTabs.Add(tabMove);
-
-        tabRotate = new VRTab("Rotate");
-        tabRotate.vrVariables.Add(varTransform);
-        tabRotate.vrVariables.Add(varDuration);
-        vrTabs.Add(tabRotate);
-
-        tabScale = new VRTab("Scale");
-        tabScale.vrVariables.Add(varTransform);
-        tabScale.vrVariables.Add(varDuration);
-        vrTabs.Add(tabScale);
-
 
         tabTransform = new VRTab("Rotate, Scale, Move");
         tabTransform.vrVariables.Add(varTransform);
         tabTransform.vrVariables.Add(varDuration);
+        tabTransform.vrVariables.Add(varLockPosition);
+        tabTransform.vrVariables.Add(varLockRotation);
+        tabTransform.vrVariables.Add(varLockScale);
         vrTabs.Add(tabTransform);
 
 
@@ -467,6 +465,9 @@ public class PropTransform : VRProperty
 
     public override void Trigger()
     {
+        if (!isActive)
+            return;
+
         VRTab activeTab = GetActiveTab();
         if (activeTab == null)
             return;
@@ -481,33 +482,20 @@ public class PropTransform : VRProperty
 
         DatRecording datRecording = (DatRecording)varRecording.GetData();
         DatBool datLoop =(DatBool) varLoop.GetData();
+        DatBool datLockPosition =(DatBool) varLockPosition.GetData();
+        DatBool datLockRotation =(DatBool) varLockRotation.GetData();
+        DatBool datLockScale =(DatBool) varLockScale.GetData();
 
-
-        if (activeTab == tabMove)
-        {
-            transform.DOMove(position, datDuration.Value);
-            return;
-        }
-
-        if (activeTab == tabRotate)
-        {
-            transform.DORotateQuaternion(rotation, datDuration.Value);
-            return;
-        }
-
-        if (activeTab == tabScale)
-        {
-            transform.DOScale(localScale, datDuration.Value);
-            return;
-        }
 
 
         if (activeTab == tabTransform)
         {
-
-            transform.DOMove(position, datDuration.Value);
-            transform.DOScale(localScale, datDuration.Value);
-            transform.DORotateQuaternion(rotation, datDuration.Value);
+            if(!datLockPosition.Value)
+                transform.DOMove(position, datDuration.Value);
+            if (!datLockRotation.Value)
+                transform.DORotateQuaternion(rotation, datDuration.Value);
+            if (!datLockScale.Value)
+                transform.DOScale(localScale, datDuration.Value);
             return;
         }
         if(activeTab == tabRecording)
@@ -600,6 +588,8 @@ public class PropButton : VRProperty
 
         button.onClick.AddListener(() => 
         {
+            if (!isActive)
+                return;
             varTrigger.SetData(new DatEvent(VRManager.tickIndex++));
         });
 
@@ -715,6 +705,9 @@ public class PropColor : VRProperty
     }
     public void SetData(VRData vrData)
     {
+        if (!isActive)
+            return;
+
         VRTab activeTab = GetActiveTab();
         if(activeTab == tabColor)
         {

@@ -2,17 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class VisTab : VisLogicElement
 {
     VRTab vrTab;
     Toggle toggle;
     VisLogicElement otherVisLogicElement;
+    public event Action OnHide;
+
     public override bool IsType(VRLogicElement vrLogicElement)
     {
         return vrLogicElement is VRTab;
     }
 
+    public void Hide()
+    {
+        OnHide?.Invoke();
+    }
 
     public override void Setup(VRLogicElement element)
     {

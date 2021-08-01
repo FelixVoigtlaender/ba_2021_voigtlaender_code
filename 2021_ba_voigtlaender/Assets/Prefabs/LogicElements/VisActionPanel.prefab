@@ -133,13 +133,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myButton: {fileID: 0}
+  showButton: {fileID: 0}
   inputHolder: {fileID: 4051609707849888243}
   outputHolder: {fileID: 2563401726321071069}
   variableHolder: {fileID: 5383676845751756254}
   tabHolder: {fileID: 0}
   tabToggleHolder: {fileID: 0}
   tabDropdown: {fileID: 0}
+  toggleIsActive: {fileID: 0}
   textName: {fileID: 3108828457029027144}
+  blockProperties: {fileID: 0}
   visInPorts: []
   visOutPorts: []
   visVariables: []
