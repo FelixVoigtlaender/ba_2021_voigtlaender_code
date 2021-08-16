@@ -208,21 +208,32 @@ public class WaitEvent : VREvent
 }
 
 
+
 [System.Serializable]
-public class EventRandom : VREvent
+public class EverySecond : VREvent
 {
     VRPort outEvent;
+    VRPort inEvent;
 
+    VRVariable varDuration;
 
-    VRVariable varDistance;
-    VRVariable varObjA;
-    VRVariable varObjB;
+    Coroutine myCoroutine;
 
     public override string Name()
     {
-        return "RandomEvent";
+        return "Every Second";
     }
-
+    public override void Setup()
+    {
+        base.Setup();
+        myCoroutine = VRManager.instance.StartCoroutine(Wait());
+    }
+    public override void SetupInputs()
+    {
+        base.SetupInputs();
+        inEvent = new VRPort(SetData, new DatEvent(0f));
+        //vrInputs.Add(inEvent);
+    }
     public override void SetupOutputs()
     {
         base.SetupOutputs();
@@ -232,52 +243,34 @@ public class EventRandom : VREvent
     public override void SetupVariables()
     {
         base.SetupVariables();
+        varDuration = new VRVariable(new DatFloat(1), "Seconds");
+        vrVariables.Add(varDuration);
 
-        varDistance = new VRVariable();
-        varDistance.Setup(new DatFloat(0));
-        //vrVariables.Add(varDistance);
-
-        varObjA = new VRVariable();
-        varObjA.Setup(new DatObj(null));
-        vrVariables.Add(varObjA);
-
-        varObjB = new VRVariable();
-        varObjB.Setup(new DatObj(null));
-        vrVariables.Add(varObjB);
     }
-
-    public override void Update(DatEvent vREventDat)
+    public void SetData(VRData vrData)
     {
-
-        VRDebug.SetLog($"{Name()}: UPDATE {vREventDat.Value.ToString("0.0")}");
-
-        DatObj datObjA = (DatObj)varObjA.GetData();
-        DatObj datObjB = (DatObj)varObjB.GetData();
-        DatFloat datDistance = (DatFloat)varDistance.GetData();
-
-
-        VRDebug.SetLog($"{Name()}: {datObjA.Value != null} {datObjB.Value != null} {datDistance.Value}");
-        if (datObjA.Value == null || datObjB.Value == null)
-            return;
-
-        Vector3 posA = datObjA.Value.gameObject.transform.position;
-        Vector3 posB = datObjB.Value.gameObject.transform.position;
-        float distance = datDistance.Value;
-
-        if (Vector3.Distance(posA, posB) < distance)
-        {
-            outEvent.SetData(vREventDat);
-            VRDebug.SetLog($"{Name()}: TRIGGERED");
-        }
-        else
-        {
-            VRDebug.SetLog($"{Name()}: NOT-TRIGGERED");
-        }
-
     }
 
+    IEnumerator Wait()
+    {
+        while (true)
+        {
+            DatFloat datDuration = (DatFloat)varDuration.vrData;
+
+            DatEvent datEvent = new DatEvent(VRManager.tickIndex++);
+
+            yield return new WaitForSeconds(datDuration.Value);
+            outEvent.SetData(datEvent);
+        }
+    }
     public VRData GetData()
     {
         return null;
+    }
+    public override void Delete()
+    {
+        VRManager.instance.StopCoroutine(myCoroutine);
+
+        base.Delete();
     }
 }
