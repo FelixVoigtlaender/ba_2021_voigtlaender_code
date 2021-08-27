@@ -1058,6 +1058,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d4ed0b80426d564f91cfda2a6c541e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element:
+    id: 0
   myButton: {fileID: 4955002309319942701}
   showButton: {fileID: 0}
   inputHolder: {fileID: 2474315835839318187}
@@ -1074,6 +1076,10 @@ MonoBehaviour:
   visVariables: []
   visTab: []
   isDeleteAble: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!1 &6075770183597383610
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,12 @@ public abstract class VRAction : VRLogicElement
 {
 
     static List<VRAction> allActions;
+
+    public VRAction()
+    {
+        isRoot = true;
+    }
+
     public override void Setup()
     {
         base.Setup();

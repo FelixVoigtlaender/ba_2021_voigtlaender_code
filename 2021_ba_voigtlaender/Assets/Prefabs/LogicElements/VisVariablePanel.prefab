@@ -2898,6 +2898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33add5a4b0e899947a2a7458f602506a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element:
+    id: 0
   myButton: {fileID: 0}
   showButton: {fileID: 0}
   inputHolder: {fileID: 4997171928100693605}
@@ -2922,6 +2924,10 @@ MonoBehaviour:
   betterTogglePlay: {fileID: 7964008622742166885}
   betterToggleRecord: {fileID: 1344519327276804409}
   colorPicker: {fileID: 2917502780493103979}
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!114 &1387166393761881002
 MonoBehaviour:
   m_ObjectHideFlags: 0

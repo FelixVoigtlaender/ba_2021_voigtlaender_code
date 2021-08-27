@@ -39,7 +39,7 @@ public class VisManager : MonoBehaviour
 
     private void Start()
     {
-        VRManager.instance.OnInitVRObject += OnInitVRObject;
+        VRManager.instance.OnInitVRObject += OnInitVRObjectNORETURN;
         VRManager.instance.OnInitVREvent += OnInitVREvent;
         VRManager.instance.OnInitVRVariable += OnInitVRVariable;
     }
@@ -58,9 +58,9 @@ public class VisManager : MonoBehaviour
         return visVector;
     }
 
-    public GhostObject DemandGhostObject( DatTransform datTransform)
+    public GhostObject DemandGhostObject(DatTransform datTransform)
     {
-        if ( datTransform == null)
+        if (datTransform == null)
             return null;
 
 
@@ -90,12 +90,17 @@ public class VisManager : MonoBehaviour
 
         return ghostObject;
     }
-
-    public void OnInitVRObject(VRObject vrObject)
+    public void OnInitVRObjectNORETURN(VRObject vrObject)
+    {
+        OnInitVRObject(vrObject);
+    }
+    public VisObject OnInitVRObject(VRObject vrObject)
     {
         GameObject visObjectObj = Instantiate(prefabVisObject);
         VisObject visObject = visObjectObj.GetComponent<VisObject>();
         visObject.Setup(vrObject);
+
+        return visObject;
     }
     // TODO:
     public void OnInitVREvent(VREvent vrEvent)
@@ -112,7 +117,7 @@ public class VisManager : MonoBehaviour
         Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
         visElementObj.transform.position = position;
         // Setip event
-        VisEvent visEvent = visElementObj.GetComponent<VisEvent>(); 
+        VisEvent visEvent = visElementObj.GetComponent<VisEvent>();
         visEvent.Setup(vrEvent);
     }
 
@@ -149,7 +154,7 @@ public class VisManager : MonoBehaviour
     }
     public GameObject InitPrefabWithCanvas(GameObject prefab, Vector3 position)
     {
-        GameObject obj =null;
+        GameObject obj = null;
         if (!prefab.TryGetComponent(out Canvas canvas))
         {
             GameObject objCanvas = Instantiate(prefabUICanvas);
@@ -157,10 +162,10 @@ public class VisManager : MonoBehaviour
 
             PanelHolder panelHolder = objCanvas.GetComponentInChildren<PanelHolder>();
 
-            if(panelHolder)
+            if (panelHolder)
                 obj = Instantiate(prefab, panelHolder.transform);
             else
-                obj = Instantiate(prefab,objCanvas.transform);
+                obj = Instantiate(prefab, objCanvas.transform);
         }
         else
         {
@@ -173,7 +178,7 @@ public class VisManager : MonoBehaviour
 
     public GameObject GetVisPropertyPrefab(VRProperty vrPorperty)
     {
-        foreach(GameObject prefab in prefabVisProperties)
+        foreach (GameObject prefab in prefabVisProperties)
         {
             VisProperty visProperty = prefab.GetComponent<VisProperty>();
 
@@ -197,6 +202,71 @@ public class VisManager : MonoBehaviour
             return prefab;
         }
         return null;
+    }
+
+    public void VisProgramm(VRProgramm vrProgramm)
+    {
+        foreach (SaveElement saveElement in vrProgramm.saveElements)
+        {
+            print(saveElement.ToString() + " " + saveElement.isRoot);
+            if (!saveElement.isRoot)
+                continue;
+
+            if (saveElement is VRObject)
+            {
+                VRObject vrObject = (VRObject)saveElement;
+                print(vrObject.gameObject.name);
+                VisObject visObject = OnInitVRObject(vrObject);
+                visObject.transform.position = saveElement.position;
+                continue;
+            }
+            if(saveElement is VRConnection)
+            {
+                VRConnection vrConnection = (VRConnection)saveElement;
+
+                GameObject objVisConnection = Instantiate(prefabVisConnection);
+                objVisConnection.GetComponent<VisConnection>().Setup(vrConnection);
+                continue;
+            }
+            if(saveElement is VRLogicElement)
+            {
+                VRLogicElement vrLogicElement = (VRLogicElement)saveElement;
+                InstantiateElement(vrLogicElement, saveElement.position);
+                continue;
+            }
+
+            Debug.LogError($"Couldn't load {saveElement.ToString()}");
+        }
+    }
+    public VisLogicElement InstantiateElement(VRLogicElement logicElement, Vector3 position)
+    {
+        GameObject elementPrefab = VisManager.instance.GetVisLogicPrefab(logicElement);
+        GameObject objLogicElement = VisManager.instance.InitPrefabWithCanvas(elementPrefab, position);
+        VisLogicElement visElement = objLogicElement.GetComponent<VisLogicElement>();
+        visElement.Setup(logicElement);
+        return visElement;
+    } 
+
+
+    [ContextMenu("Destroy Program")]
+    public void DestroyVisProgram()
+    {
+        VisLogicElement[] visLogicElements = FindObjectsOfType<VisLogicElement>();
+        foreach (VisLogicElement visElement in visLogicElements)
+        {
+            if (visElement.GetElement().isRoot && visElement.isDeleteAble)
+                Destroy(visElement.GetRootCanvas().gameObject);
+        }
+        VisObject[] visObjects = FindObjectsOfType<VisObject>();
+        foreach (VisObject visObject in visObjects)
+        {
+            Destroy(visObject.gameObject);
+        }
+        VisConnection[] visConnections = FindObjectsOfType<VisConnection>();
+        foreach (var item in visConnections)
+        {
+            Destroy(item.gameObject);
+        }
     }
 }
 

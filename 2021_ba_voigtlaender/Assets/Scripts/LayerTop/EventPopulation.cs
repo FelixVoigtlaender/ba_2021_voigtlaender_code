@@ -28,6 +28,7 @@ public class EventPopulation : MonoBehaviour
             VREvent vrEvent =(VREvent) allVREvents[i].CreateInstance();
             vrEvent.Setup();
             visEvent.Setup(vrEvent);
+            vrEvent.isRoot = false;
 
             visEvents.Add(visEvent);
         }
@@ -56,8 +57,9 @@ public class EventPopulation : MonoBehaviour
         currentVREvent.Setup();
 
         currentVisEvent.Setup(currentVREvent);
-
+        currentVREvent.isRoot = false;
         oldVisEvent.isDeleteAble = true;
+        oldVisEvent.GetElement().isRoot = true;
 
         // override old visEvent
         visEvents[index] = currentVisEvent;

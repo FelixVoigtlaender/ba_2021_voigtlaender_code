@@ -35,6 +35,11 @@ public class VisObject : MonoBehaviour
         canvas = GetComponentInParent<Canvas>();
     }
 
+    private void Update()
+    {
+        vrObject.position = canvas.transform.position;
+    }
+
     public void Setup(VRObject vrObject)
     {
         ghostObject = VisManager.instance.DemandGhostObject(new DatTransform(new DatObj(vrObject)));

@@ -40,6 +40,41 @@ public class VisConnection : MonoBehaviour
         StartCoroutine(ResetActive(0.3f));
     }
 
+    public void Setup(VRConnection vrConnection)
+    {
+        this.vrConnection = vrConnection; 
+        
+        normalColor = vrConnection.start.dataType.GetColor();
+        bezierCurve.SetColor(normalColor);
+        bezierCurve.SetWidth(inactiveWidth);
+        vrConnection.OnActive += OnActive;
+        ResetColor();
+        StartCoroutine(ResetActive(0.3f));
+
+        StartCoroutine(ConnectVisPorts(vrConnection));
+    }
+    IEnumerator ConnectVisPorts(VRConnection vrConnection)
+    {
+        while (!startVisPort && !endVisPort)
+        {
+            yield return new WaitForSeconds(1);
+            VisPort[] visPorts = FindObjectsOfType<VisPort>();
+            foreach(VisPort visPort in visPorts)
+            {
+                if(visPort.vrPort == vrConnection.start)
+                {
+                    startVisPort = visPort;
+
+                }
+                if (visPort.vrPort == vrConnection.end)
+                {
+                    endVisPort = visPort;
+                }
+            }
+        }
+        Release();
+    }
+
     public void OnActive(VRData vrData)
     {
 
@@ -90,6 +125,9 @@ public class VisConnection : MonoBehaviour
     {
         if (!endVisPort)
         {
+            Delete();
+            return;
+
             VRVariable vrVariable = VRManager.instance.InitVRVariable(startVisPort.vrPort.dataType, false);
             GameObject objVisVariable = VisManager.instance.InitVRLogicElement(vrVariable);
 
@@ -143,5 +181,15 @@ public class VisConnection : MonoBehaviour
 
         if (vrConnection != null)
             vrConnection.OnDelete -= OnDelete;
+    }
+
+    public void OnDestroy()
+    {
+        if (vrConnection == null)
+            return;
+
+        bezierCurve?.Delete();
+        vrConnection.OnDelete -= OnDelete;
+        vrConnection.OnActive -= OnActive;
     }
 }

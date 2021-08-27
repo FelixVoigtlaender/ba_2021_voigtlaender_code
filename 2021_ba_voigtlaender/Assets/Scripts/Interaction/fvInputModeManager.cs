@@ -90,7 +90,6 @@ public class fvInputModeManager : MonoBehaviour
     }
 
 
-    [System.Serializable]
     public class Mode
     {
         public string name = "";

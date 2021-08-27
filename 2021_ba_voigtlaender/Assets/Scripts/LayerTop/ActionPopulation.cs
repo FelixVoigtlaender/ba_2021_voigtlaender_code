@@ -9,7 +9,7 @@ public class ActionPopulation : MonoBehaviour
     public List<VisAction> visActions;
     void Start()
     {
-        PopulateList(content);
+        //PopulateList(content);
     }
     public void PopulateList(RectTransform rect)
     {
@@ -27,7 +27,6 @@ public class ActionPopulation : MonoBehaviour
             VRAction vrAction = (VRAction)allVRActions[i].CreateInstance();
             vrAction.Setup();
             visAction.Setup(vrAction);
-
             visActions.Add(visAction);
         }
     }
@@ -39,6 +38,7 @@ public class ActionPopulation : MonoBehaviour
         {
             if (visActions[i].GetRootCanvas().transform.parent != content.transform)
             {
+                visActions[i].vrAction.isRoot = true;
                 RepopulateList(i);
             }
         }
@@ -71,6 +71,7 @@ public class ActionPopulation : MonoBehaviour
         visAction.GetRootCanvas().transform.SetParent(content.transform);
         visAction.GetRootCanvas().transform.SetSiblingIndex(index);
         visAction.isDeleteAble = false;
+        visAction.GetElement().isRoot = false;
         return visAction;
     }
 }

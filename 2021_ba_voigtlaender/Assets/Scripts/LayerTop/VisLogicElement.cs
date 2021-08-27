@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class VisLogicElement : MonoBehaviour
 {
-    protected VRLogicElement element;
+    [SerializeReference] protected VRLogicElement element;
     public Button myButton;
     public Button showButton;
     public RectTransform inputHolder;
@@ -83,6 +83,21 @@ public class VisLogicElement : MonoBehaviour
 
             };
         }
+    }
+
+
+    private void Update()
+    {
+        if (!GetRootCanvas())
+            return;
+
+        if(element == null)
+        {
+            print(name + " . " + gameObject.name);
+            return;
+        }
+
+        element.position = GetRootCanvas().transform.position;
     }
 
     public virtual void Init()
@@ -365,6 +380,11 @@ public class VisLogicElement : MonoBehaviour
             }
 
         }
+    }
+
+    public VRLogicElement GetElement()
+    {
+        return element;
     }
 
     public void Trigger()

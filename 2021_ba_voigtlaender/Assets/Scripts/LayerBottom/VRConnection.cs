@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class VRConnection 
+public class VRConnection : SaveElement
 {
     public event Action OnPortChanged;
-    public event Action OnDelete;
     public event Action<VRData> OnActive;
 
-    public VRPort start;
-    public VRPort end;
+    [SerializeReference] public VRPort start;
+    [SerializeReference] public VRPort end;
 
     int lastTick = 0;
+
+    public VRConnection()
+    {
+        isRoot = true;
+    }
     public VRPort GetOtherPort(VRPort myPort)
     {
         VRPort otherPort = null;
@@ -146,12 +150,13 @@ public class VRConnection
         return null;
     }
 
-    public void Delete()
+    public override void Delete()
     {
         start?.RemoveConnection(this);
         end?.RemoveConnection(this);
 
         start = end = null;
-        OnDelete?.Invoke();
+
+        base.Delete();
     }
 }

@@ -7,6 +7,10 @@ using System;
 public abstract class VREvent : VRLogicElement
 {
     static List<VREvent> allEvents;
+    public VREvent()
+    {
+        isRoot = true;
+    }
     public virtual void Update(DatEvent vREventDat)
     {
 
@@ -22,6 +26,7 @@ public abstract class VREvent : VRLogicElement
         foreach (Type type in subClasses)
         {
             VREvent obj = (VREvent)Activator.CreateInstance(type);
+            SaveManager.RemoveSaveElement(obj);
             allEvents.Add(obj);
         }
         return allEvents;
@@ -40,17 +45,75 @@ public abstract class VREvent : VRLogicElement
     }
 }
 
+[System.Serializable]
+public class WaitEvent : VREvent
+{
+    [SerializeReference] VRPort outEvent;
+    [SerializeReference] VRPort inEvent;
+
+    [SerializeReference] VRVariable varDuration;
+
+    Coroutine myWaitCoroutine;
+    [SerializeField] bool isWaiting = false;
+
+    public override string Name()
+    {
+        return "Wait";
+    }
+    public override void Setup()
+    {
+        base.Setup();
+    }
+    public override void SetupInputs()
+    {
+        base.SetupInputs();
+        inEvent = new VRPort(SetData, new DatEvent(0f));
+        vrInputs.Add(inEvent);
+    }
+    public override void SetupOutputs()
+    {
+        base.SetupOutputs();
+        outEvent = new VRPort(GetData, new DatEvent(0f));
+        vrOutputs.Add(outEvent);
+    }
+    public override void SetupVariables()
+    {
+        base.SetupVariables();
+        varDuration = new VRVariable(new DatFloat(1), "Duration");
+        vrVariables.Add(varDuration);
+    }
+    public void SetData(VRData vrData)
+    {
+        if (isWaiting)
+            return;
+
+        DatFloat datDuration = (DatFloat)varDuration.vrData;
+        VRManager.instance.StartCoroutine(Wait(datDuration.Value, vrData));
+    }
+
+    IEnumerator Wait(float duration, VRData vrData)
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(duration);
+        outEvent.SetData(vrData);
+        isWaiting = false;
+    }
+    public VRData GetData()
+    {
+        return null;
+    }
+}
 
 [System.Serializable]
 public class EventProximity : VREvent
 {
-    VRPort outEvent;
-    VRPort inEvent;
+    [SerializeReference] VRPort outEvent;
+    [SerializeReference] VRPort inEvent;
 
 
-    VRVariable varDistance;
-    VRVariable varObjA;
-    VRVariable varObjB;
+    [SerializeReference] VRVariable varDistance;
+    [SerializeReference] VRVariable varObjA;
+    [SerializeReference] VRVariable varObjB;
 
     public override string Name()
     {
@@ -148,64 +211,6 @@ public class EventProximity : VREvent
 
 
 
-[System.Serializable]
-public class WaitEvent : VREvent
-{
-    VRPort outEvent;
-    VRPort inEvent;
-
-    VRVariable varDuration;
-
-    Coroutine myWaitCoroutine;
-    bool isWaiting = false;
-
-    public override string Name()
-    {
-        return "Wait";
-    }
-    public override void Setup()
-    {
-        base.Setup();
-    }
-    public override void SetupInputs()
-    {
-        base.SetupInputs();
-        inEvent = new VRPort(SetData, new DatEvent(0f));
-        vrInputs.Add(inEvent);
-    }
-    public override void SetupOutputs()
-    {
-        base.SetupOutputs();
-        outEvent = new VRPort(GetData, new DatEvent(0f));
-        vrOutputs.Add(outEvent);
-    }
-    public override void SetupVariables()
-    {
-        base.SetupVariables();
-        varDuration = new VRVariable(new DatFloat(1), "Duration");
-        vrVariables.Add(varDuration);
-    }
-    public void SetData(VRData vrData)
-    {
-        if (isWaiting)
-            return;
-
-        DatFloat datDuration =(DatFloat)varDuration.vrData;
-        VRManager.instance.StartCoroutine(Wait(datDuration.Value, vrData));
-    }
-
-    IEnumerator Wait(float duration, VRData vrData)
-    {
-        isWaiting = true;
-        yield return new WaitForSeconds(duration);
-        outEvent.SetData(vrData);
-        isWaiting = false;
-    }
-    public VRData GetData()
-    {
-        return null;
-    }
-}
 
 
 

@@ -102,4 +102,12 @@ public class VisEvent : VisLogicElement
                 break;
         }
     }
+
+    private void OnDestroy()
+    {
+        if (vrEvent == null)
+            return;
+
+
+    }
 }

@@ -6,9 +6,9 @@ using DG.Tweening;
 using UnityEngine.UI;
 public abstract class VRProperty : VRLogicElement
 {
-    protected VRObject vrObject;
-    protected VRPort output;
-    protected VRPort input;
+    [SerializeReference] protected VRObject vrObject;
+    [SerializeReference] protected VRPort output;
+    [SerializeReference] protected VRPort input;
 
     static List<VRProperty> allProperties;
 
@@ -37,7 +37,8 @@ public abstract class VRProperty : VRLogicElement
         foreach(Type type in subClasses)
         {
             VRProperty vrProperty = (VRProperty) Activator.CreateInstance(type);
-            if(vrProperty.CanBeUsed())
+            SaveManager.RemoveSaveElement(vrProperty);
+            if (vrProperty.CanBeUsed())
                 allProperties.Add(vrProperty);
         }
         return allProperties;
@@ -48,7 +49,7 @@ public abstract class VRProperty : VRLogicElement
 
 public class PropTrigger : VRProperty
 {
-    VRVariable eventVariable;
+    [SerializeReference] VRVariable eventVariable;
     public override string Name()
     {
         return "Apply Changes";
@@ -105,7 +106,7 @@ public class PropTrigger : VRProperty
 
 public class PropEnabled : VRProperty
 {
-    VRVariable varEnabled;
+    [SerializeReference] VRVariable varEnabled;
     public override string Name()
     {
         return "Enabled";
@@ -190,7 +191,7 @@ public class PropObj : VRProperty
 
 public class PropPosition : VRProperty
 {
-    VRVariable positionVariable;
+    [SerializeReference] VRVariable positionVariable;
 
     public override bool CanBeUsed()
     {
@@ -252,12 +253,12 @@ public class PropPosition : VRProperty
 public class PropMovement : VRProperty
 {
     // Teleport
-    VRTab tabTeleport;
-    VRTab tabMove;
+    [SerializeReference] VRTab tabTeleport;
+    [SerializeReference] VRTab tabMove;
 
     // Variables
-    VRVariable varPosition;
-    VRVariable varDuration;
+    [SerializeReference] VRVariable varPosition;
+    [SerializeReference] VRVariable varDuration;
     public override string Name()
     {
         return "Movement";
@@ -327,7 +328,7 @@ public class PropMovement : VRProperty
 
 public class PropScale : VRProperty
 {
-    VRVariable scaleVariable;
+    [SerializeReference] VRVariable scaleVariable;
     public override string Name()
     {
         return "Do Scale";
@@ -392,17 +393,17 @@ public class PropScale : VRProperty
 public class PropTransform : VRProperty
 {
     // Teleport
-    VRTab tabTransform;
-    VRTab tabRecording;
+    [SerializeReference] VRTab tabTransform;
+    [SerializeReference] VRTab tabRecording;
     // Variables
-    VRVariable varTransform;
-    VRVariable varDuration;
-    VRVariable varRecording;
-    VRVariable varLoop;
+    [SerializeReference] VRVariable varTransform;
+    [SerializeReference] VRVariable varDuration;
+    [SerializeReference] VRVariable varRecording;
+    [SerializeReference] VRVariable varLoop;
 
-    VRVariable varLockPosition;
-    VRVariable varLockRotation;
-    VRVariable varLockScale;
+    [SerializeReference] VRVariable varLockPosition;
+    [SerializeReference] VRVariable varLockRotation;
+    [SerializeReference] VRVariable varLockScale;
 
 
     bool playing = false;
@@ -557,9 +558,9 @@ public class PropTransform : VRProperty
 
 public class PropButton : VRProperty
 {
-    VRVariable varTrigger;
+    [SerializeReference] VRVariable varTrigger;
 
-    Button button;
+    [SerializeReference] Button button;
     public override string Name()
     {
         return "Button Pressed";
@@ -604,9 +605,9 @@ public class PropButton : VRProperty
 }
 public class PropColor : VRProperty
 {
-    VRVariable varColor;
+    [SerializeReference] VRVariable varColor;
 
-    VRTab tabColor;
+    [SerializeReference] VRTab tabColor;
 
     Renderer renderer;
     Image image;

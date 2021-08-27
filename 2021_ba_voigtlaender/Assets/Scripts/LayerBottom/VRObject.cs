@@ -4,15 +4,19 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class VRObject
+public class VRObject : SaveElement
 {
-    public List<VRProperty> properties = new List<VRProperty>();
-    public List<VRPort> vrInputs = new List<VRPort>();
-    public List<VRPort> vrOutputs = new List<VRPort>();
-    public GameObject gameObject;
-    public event Action OnDelete;
-    public Rigidbody rigid;
+    [SerializeReference] public List<VRProperty> properties = new List<VRProperty>();
+    [SerializeReference] public List<VRPort> vrInputs = new List<VRPort>();
+    [SerializeReference] public List<VRPort> vrOutputs = new List<VRPort>();
+    [SerializeReference] public GameObject gameObject;
+    [SerializeReference] public Rigidbody rigid;
 
+    public VRObject()
+    {
+        isRoot = true;
+        Debug.Log("WHO THE FUCK CALLS ME");
+    }
 
     public void Setup(GameObject gameObject)
     {
@@ -70,7 +74,7 @@ public class VRObject
         }
     }
 
-    public void Delete()
+    public override void Delete()
     {
         foreach(VRProperty prop in properties)
         {
@@ -84,6 +88,7 @@ public class VRObject
         {
             output?.Delete();
         }
-        OnDelete?.Invoke();
+
+        base.Delete();
     }
 }

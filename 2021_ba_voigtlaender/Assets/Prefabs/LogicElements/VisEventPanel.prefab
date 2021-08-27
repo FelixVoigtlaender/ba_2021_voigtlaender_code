@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104b3a049836e4a41a6573688b4c7f13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element:
+    id: 0
   myButton: {fileID: 0}
   showButton: {fileID: 0}
   inputHolder: {fileID: 4051609707849888243}
@@ -185,6 +187,10 @@ MonoBehaviour:
   visTab: []
   isDeleteAble: 1
   eventName: Distance
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!1 &386227793406815814
 GameObject:
   m_ObjectHideFlags: 0

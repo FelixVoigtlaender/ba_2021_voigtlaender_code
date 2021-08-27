@@ -1270,6 +1270,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee9071fbc0b28c94e948c6cce203cd35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element:
+    id: 0
   myButton: {fileID: 4955002309319942701}
   showButton: {fileID: 4951467332904436311}
   inputHolder: {fileID: 2474315835839318187}
@@ -1286,6 +1288,10 @@ MonoBehaviour:
   visVariables: []
   visTab: []
   isDeleteAble: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!114 &3649809627333327969
 MonoBehaviour:
   m_ObjectHideFlags: 0

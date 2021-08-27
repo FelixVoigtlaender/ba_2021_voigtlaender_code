@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class VRPort
+public class VRPort : SaveElement
 {
     public PortType portType = PortType.INPUT;
-    public VRData dataType;
+    [SerializeReference] public VRData dataType;
     //public VRConnection connection;
-    public List<VRConnection> connections = new List<VRConnection>();
+    [SerializeReference] public List<VRConnection> connections = new List<VRConnection>();
     public string toolTip = "";
 
     public event Func<VRData> GetElementData;
     public event Action<VRData> SetElementData;
-    public event Action OnDelete;
     public event Action OnConnect;
-    VRLogicElement element;
+    [SerializeReference] VRLogicElement element;
     public VRPort(Func<VRData> GetElementData, VRData dataType)
     {
         this.GetElementData = GetElementData;
@@ -108,10 +107,10 @@ public class VRPort
         }
 
     }
-    public void Delete()
+    public override void Delete()
     {
         Detach();
-        OnDelete?.Invoke();
+        base.Delete();
     }
     public void RemoveConnection(VRConnection connection)
     {

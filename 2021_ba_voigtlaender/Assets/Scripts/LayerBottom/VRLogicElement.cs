@@ -4,15 +4,16 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public abstract class VRLogicElement 
+public abstract class VRLogicElement : SaveElement
 {
-    public List<VRPort> vrInputs = new List<VRPort>();
-    public List<VRPort> vrOutputs = new List<VRPort>();
-    public List<VRVariable> vrVariables = new List<VRVariable>();
-    public List<VRTab> vrTabs = new List<VRTab>();
+    
+    [SerializeReference] public List<VRPort> vrInputs = new List<VRPort>();
+    [SerializeReference] public List<VRPort> vrOutputs = new List<VRPort>();
+    [SerializeReference] public List<VRVariable> vrVariables = new List<VRVariable>();
+    [SerializeReference] public List<VRTab> vrTabs = new List<VRTab>();
 
     public event Action<bool> OnActiveChanged;
-    protected bool _isActive = true;
+    [SerializeField] protected bool _isActive = true;
     public bool isActive
     {
         get { return _isActive; }
@@ -25,12 +26,10 @@ public abstract class VRLogicElement
 
     }
 
-    public event Action OnDelete; 
     public abstract string Name();
 
     public virtual void Setup()
     {
-        OnDelete = null;
         SetupPorts();
         SetupVariables();
         SetupTabs();
@@ -90,7 +89,7 @@ public abstract class VRLogicElement
     {
     }
 
-    public virtual void Delete()
+    public override void Delete()
     {
         VRDebug.Log("DELETING: " + this.ToString());
         foreach(VRPort input in vrInputs)
@@ -109,8 +108,7 @@ public abstract class VRLogicElement
         {
             tab?.Delete();
         }
-
-        OnDelete?.Invoke();
+        base.Delete();
     }
 
     public virtual void Detach()
