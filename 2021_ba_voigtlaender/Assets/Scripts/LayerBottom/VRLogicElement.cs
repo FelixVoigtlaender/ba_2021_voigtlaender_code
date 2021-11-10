@@ -40,6 +40,17 @@ public abstract class VRLogicElement : SaveElement
         SetupOutputs();
     }
 
+    public virtual VRData GetData()
+    {
+        return null;
+    }
+
+    public virtual void SetData(VRData vrData)
+    {
+        
+    }
+    
+
     public virtual void SetupInputs()
     {
         vrInputs = new List<VRPort>();

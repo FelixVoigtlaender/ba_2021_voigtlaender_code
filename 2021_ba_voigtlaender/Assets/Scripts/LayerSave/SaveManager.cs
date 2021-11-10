@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -10,8 +12,6 @@ public class SaveManager : MonoBehaviour
     public VRProgramm programm;
     //[TextArea(10,100)]
     string jsonText;
-
-    public VRProgramm programmB;
     private void Awake()
     {
         instance = this;
@@ -72,6 +72,43 @@ public class SaveManager : MonoBehaviour
         VisManager.instance.DestroyVisProgram();
 
     }
+
+
+    public void Save()
+    {
+        if(programm == null)
+            return;
+        
+        string jsonString = ToJson(programm);
+        string path = Application.persistentDataPath;
+        string filePath = path + "/program.json";
+        File.WriteAllText(filePath, jsonString);
+        
+        Debug.Log($"Saved program to {filePath} \n {jsonString}");
+    }
+
+    public void Load()
+    {
+        DestroyVisProgram();
+        
+        
+        string path = Application.persistentDataPath;
+        string filePath = path + "/program.json";
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            Debug.Log($"Couldn't Load {filePath}");
+            return;
+        }
+
+        string jsonString = File.ReadAllText(filePath);
+        programm = ToProgramm(jsonString);
+        VisManager.instance.VisProgramm(programm);
+        
+        Debug.Log($"Loaded Program {filePath} \n {jsonString}");
+    }
+    
+    
     [ContextMenu("Load Program")]
     public void LoadProgram()
     {
@@ -89,18 +126,18 @@ public class VRProgramm
     [SerializeReference]
     public List<SaveElement> saveElements = new List<SaveElement>();
     
-    public void Update()
+    public void Update(DatEvent datEvent)
     {
         foreach (var element in saveElements)
         {
-            element.Update();
+            element.Update(datEvent);
         }
     }
-    public void FixedUpdate()
+    public void FixedUpdate(DatEvent datEvent)
     {
         foreach (var element in saveElements)
         {
-            element.FixedUpdate();
+            element.FixedUpdate(datEvent);
         }
     }
 }

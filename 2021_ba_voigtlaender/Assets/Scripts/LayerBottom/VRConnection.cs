@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[Serializable]
 public class VRConnection : SaveElement
 {
-    public event Action OnPortChanged;
-    public event Action<VRData> OnActive;
 
     [SerializeReference] public VRPort start;
     [SerializeReference] public VRPort end;
+    
+    
+    public event Action OnPortChanged;
+    public event Action<VRData> OnActive;
 
     int lastTick = 0;
 
@@ -62,11 +65,6 @@ public class VRConnection : SaveElement
         return true;
     }
     
-    public void Trigger()
-    {
-        if (end == null)
-            return;
-    }
 
 
     public void ConnectStart(VRPort port)
@@ -152,6 +150,7 @@ public class VRConnection : SaveElement
 
     public override void Delete()
     {
+        Debug.Log("DEEEELLLEEETEEE");
         start?.RemoveConnection(this);
         end?.RemoveConnection(this);
 

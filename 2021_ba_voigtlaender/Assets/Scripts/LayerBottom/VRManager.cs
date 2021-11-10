@@ -13,50 +13,32 @@ public class VRManager : MonoBehaviour
     public event Action<VRAction> OnInitVRAction;
     public static int tickIndex = 0;
 
-
-    public List<VRObject> vrObjects = new List<VRObject>();
-    public List<VRAction> vrActions = new List<VRAction>();
-    public List<VREvent> vrEvents = new List<VREvent>();
-
-    public event Action<DatEvent> OnUpdate;
-    public event Action<DatEvent> OnFixedUpdate;
-    public event Action<DatEvent> OnSecond;
-
     private void Awake()
     {
         instance = this;
     }
-    private void Start()
-    {
-        StartCoroutine(SecondUpdate());
-    }
 
     private void Update()
     {
-        tickIndex++;
-        DatEvent datEvent = new DatEvent(Time.time);
+        if(SaveManager.instance.programm==null)
+            return;
 
-        OnUpdate?.Invoke(datEvent);
+        DatEvent datEvent = new DatEvent(tickIndex++);
 
-        foreach (VREvent vrEvent in vrEvents)
-        {
-            vrEvent.Update(datEvent);
-        }
+        //SaveManager.instance.programm.Update(datEvent);
+
     }
+    
+    
     private void FixedUpdate()
     {
-        DatEvent datEvent = new DatEvent(Time.time);
-        OnFixedUpdate?.Invoke(datEvent);
-    }
+        if(SaveManager.instance.programm==null)
+            return;
+        
+        DatEvent datEvent = new DatEvent(tickIndex++);
+        
+        //SaveManager.instance.programm.FixedUpdate(datEvent);
 
-    private IEnumerator SecondUpdate()
-    {
-        while (true)
-        {
-            DatEvent datEvent = new DatEvent(Time.time);
-            OnSecond?.Invoke(datEvent);
-            yield return new WaitForSeconds(1);
-        }
     }
 
     public VREvent InitVREvent(string name, bool notify = true)
@@ -65,8 +47,6 @@ public class VRManager : MonoBehaviour
         if (vrEvent == null)
             return null;
 
-        vrEvent.Setup();
-        vrEvents.Add(vrEvent);
 
         if (notify)
             OnInitVREvent?.Invoke(vrEvent);
@@ -105,10 +85,12 @@ public class VRManager : MonoBehaviour
 
         VRObject vrObject = new VRObject();
         vrObject.Setup(gameObject);
-        vrObjects.Add(vrObject);
 
         if (notify)
+        {
             OnInitVRObject?.Invoke(vrObject);
+            vrObject.Save();
+        }
 
         return vrObject;
     }
@@ -122,16 +104,6 @@ public class VRManager : MonoBehaviour
             OnInitVRVariable?.Invoke(vrVariable);
 
         return vrVariable;
-    }
-
-    public VRObject FindVRObject(GameObject go)
-    {
-        foreach(VRObject vrObject in vrObjects)
-        {
-            if (vrObject.gameObject == go)
-                return vrObject;
-        }
-        return null;
     }
 
     public static IEnumerable<Type> GetAllSubclassOf(Type parent)

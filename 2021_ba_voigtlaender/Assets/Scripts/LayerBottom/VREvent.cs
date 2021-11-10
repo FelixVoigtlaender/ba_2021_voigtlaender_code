@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.PlayerLoop;
 
 [System.Serializable]
 public abstract class VREvent : VRLogicElement
@@ -10,10 +11,6 @@ public abstract class VREvent : VRLogicElement
     public VREvent()
     {
         isRoot = true;
-    }
-    public virtual void Update(DatEvent vREventDat)
-    {
-
     }
     public static List<VREvent> GetAllEvents()
     {
@@ -67,13 +64,13 @@ public class WaitEvent : VREvent
     public override void SetupInputs()
     {
         base.SetupInputs();
-        inEvent = new VRPort(SetData, new DatEvent(0f));
+        inEvent = new VRPort(this, new DatEvent(0f), PortType.INPUT);
         vrInputs.Add(inEvent);
     }
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        outEvent = new VRPort(GetData, new DatEvent(0f));
+        outEvent = new VRPort(this, new DatEvent(0f), PortType.OUTPUT);
         vrOutputs.Add(outEvent);
     }
     public override void SetupVariables()
@@ -82,7 +79,7 @@ public class WaitEvent : VREvent
         varDuration = new VRVariable(new DatFloat(1), "Duration");
         vrVariables.Add(varDuration);
     }
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         if (isWaiting)
             return;
@@ -97,10 +94,6 @@ public class WaitEvent : VREvent
         yield return new WaitForSeconds(duration);
         outEvent.SetData(vrData);
         isWaiting = false;
-    }
-    public VRData GetData()
-    {
-        return null;
     }
 }
 
@@ -122,19 +115,18 @@ public class EventProximity : VREvent
     public override void Setup()
     {
         base.Setup();
-        VRManager.instance.OnFixedUpdate += Update;
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
-        inEvent = new VRPort(SetData, new DatEvent(0f));
+        inEvent = new VRPort(this, new DatEvent(0f), PortType.INPUT);
         inEvent.toolTip = "Require Event";
         vrInputs.Add(inEvent);
     }
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        outEvent = new VRPort(GetData, new DatEvent(0f));
+        outEvent = new VRPort(this, new DatEvent(0f), PortType.OUTPUT);
         vrOutputs.Add(outEvent);
     }
     public override void SetupVariables()
@@ -161,7 +153,7 @@ public class EventProximity : VREvent
         SetData(datEvent);
     }
 
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         DatEvent datEvent = (DatEvent)vrData;
 
@@ -196,17 +188,6 @@ public class EventProximity : VREvent
             VRDebug.SetLog($"{Name()}: NOT-TRIGGERED");
         }
     }
-    public VRData GetData()
-    {
-        return null;
-    }
-
-    public override void Delete()
-    {
-        VRManager.instance.OnFixedUpdate -= Update;
-
-        base.Delete();
-    }
 }
 
 
@@ -217,32 +198,27 @@ public class EventProximity : VREvent
 [System.Serializable]
 public class EverySecond : VREvent
 {
-    VRPort outEvent;
-    VRPort inEvent;
+    [SerializeReference] VRPort outEvent;
+    [SerializeReference] VRPort inEvent;
 
-    VRVariable varDuration;
+    [SerializeReference] VRVariable varDuration;
 
-    Coroutine myCoroutine;
+    private float lastTime = 0;
 
     public override string Name()
     {
         return "Every Second";
     }
-    public override void Setup()
-    {
-        base.Setup();
-        myCoroutine = VRManager.instance.StartCoroutine(Wait());
-    }
     public override void SetupInputs()
     {
         base.SetupInputs();
-        inEvent = new VRPort(SetData, new DatEvent(0f));
+        inEvent = new VRPort(this, new DatEvent(0f), PortType.INPUT);
         //vrInputs.Add(inEvent);
     }
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        outEvent = new VRPort(GetData, new DatEvent(0f));
+        outEvent = new VRPort(this, new DatEvent(0f), PortType.OUTPUT);
         vrOutputs.Add(outEvent);
     }
     public override void SetupVariables()
@@ -252,30 +228,16 @@ public class EverySecond : VREvent
         vrVariables.Add(varDuration);
 
     }
-    public void SetData(VRData vrData)
-    {
-    }
 
-    IEnumerator Wait()
+    public override void FixedUpdate(DatEvent datEvent)
     {
-        while (true)
+        DatFloat datDuration = (DatFloat)varDuration.vrData;
+
+        if (Time.time - lastTime > datDuration.Value)
         {
-            DatFloat datDuration = (DatFloat)varDuration.vrData;
-
-            DatEvent datEvent = new DatEvent(VRManager.tickIndex++);
-
-            yield return new WaitForSeconds(datDuration.Value);
             outEvent.SetData(datEvent);
+            lastTime = Time.time;
         }
-    }
-    public VRData GetData()
-    {
-        return null;
-    }
-    public override void Delete()
-    {
-        VRManager.instance.StopCoroutine(myCoroutine);
-
-        base.Delete();
+        
     }
 }

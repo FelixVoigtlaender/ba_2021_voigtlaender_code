@@ -55,10 +55,6 @@ public class VRObject : SaveElement
     public virtual void SetupOutputs()
     {
         vrOutputs = new List<VRPort>();
-        VRPort outObj = new VRPort(GetData, new DatObj(this));
-        outObj.toolTip = "Get Object";
-        vrOutputs.Add(outObj);
-
     }
 
     public VRData GetData()

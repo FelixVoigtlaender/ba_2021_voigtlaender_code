@@ -345,12 +345,13 @@ public class DatObj : VRData
     }
 }
 
+[System.Serializable]
 public class DatTransform : VRData
 {
-    public DatObj datObj;
-    public DatVector3 datPosition;
-    public DatQuaternion datRotation;
-    public DatVector3 datLocalScale;
+    [SerializeReference] public DatObj datObj;
+    [SerializeReference] public DatVector3 datPosition;
+    [SerializeReference] public DatQuaternion datRotation;
+    [SerializeReference] public DatVector3 datLocalScale;
     public DatTransform(DatObj datObj, DatVector3 datPosition, DatQuaternion datRotation, DatVector3 datLocalScale)
     {
         this.datPosition = datPosition;
@@ -394,10 +395,11 @@ public class DatTransform : VRData
 }
 
 
+[System.Serializable]
 public class DatRecording : VRData
 {
-    public DatTransform datTransform;
-    List<DatTransform> value;
+    [SerializeReference] public DatTransform datTransform;
+    [SerializeReference] List<DatTransform> value;
     public List<DatTransform> Value
     {
         get { return value; }

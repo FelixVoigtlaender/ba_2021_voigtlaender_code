@@ -2835,9 +2835,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6876090112250038675, guid: bf26dcca2fd69f444911655ca36ca074, type: 3}
+      propertyPath: end.normal.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6876090112250038675, guid: bf26dcca2fd69f444911655ca36ca074, type: 3}
       propertyPath: end.transform
       value: 
       objectReference: {fileID: 2448328427769764306}
+    - target: {fileID: 6876090112250038675, guid: bf26dcca2fd69f444911655ca36ca074, type: 3}
+      propertyPath: start.normal.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6876090112250038675, guid: bf26dcca2fd69f444911655ca36ca074, type: 3}
       propertyPath: start.transform
       value: 

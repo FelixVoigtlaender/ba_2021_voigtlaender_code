@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+[System.Serializable]
 public abstract class VRProperty : VRLogicElement
 {
     [SerializeReference] protected VRObject vrObject;
@@ -12,7 +13,6 @@ public abstract class VRProperty : VRLogicElement
 
     static List<VRProperty> allProperties;
 
-    public abstract VRData GetData();
     
     public abstract bool IsType(VRObject vrObject);
     public virtual void Setup(VRObject vrObject) 
@@ -30,6 +30,7 @@ public abstract class VRProperty : VRLogicElement
     {
         if (allProperties != null)
             return allProperties;
+        
 
 
         allProperties = new List<VRProperty>();
@@ -46,7 +47,7 @@ public abstract class VRProperty : VRLogicElement
 
 }
 
-
+[System.Serializable]
 public class PropTrigger : VRProperty
 {
     [SerializeReference] VRVariable eventVariable;
@@ -77,13 +78,13 @@ public class PropTrigger : VRProperty
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        output = new VRPort(GetData, new DatEvent(-1));
+        output = new VRPort(this, new DatEvent(-1), PortType.OUTPUT);
         //vrOutputs.Add(output);
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
-        input = new VRPort(SetData, new DatEvent(-1));
+        input = new VRPort(this, new DatEvent(-1), PortType.INPUT);
         //vrInputs.Add(input);
     }
 
@@ -91,7 +92,7 @@ public class PropTrigger : VRProperty
     {
         return new DatEvent(-1);
     }
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         VRDebug.Log("Applying to: " + vrObject.gameObject.name);
         vrObject.Trigger();
@@ -103,7 +104,7 @@ public class PropTrigger : VRProperty
 
 }
 
-
+[System.Serializable]
 public class PropEnabled : VRProperty
 {
     [SerializeReference] VRVariable varEnabled;
@@ -130,7 +131,7 @@ public class PropEnabled : VRProperty
         vrVariables.Add(varEnabled);
     }
 
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         Trigger();
     }
@@ -146,7 +147,7 @@ public class PropEnabled : VRProperty
         return varEnabled.GetData();
     }
 }
-
+[System.Serializable]
 public class PropObj : VRProperty
 {
     public override bool CanBeUsed()
@@ -166,13 +167,13 @@ public class PropObj : VRProperty
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        output = new VRPort(GetData, new DatObj(new VRObject()));
+        output = new VRPort(this, new DatObj(new VRObject()), PortType.OUTPUT);
         vrOutputs.Add(output);
     }
     public override void SetupInputs()
     {
         base.SetupInputs();
-        input = new VRPort(this, new DatObj(new VRObject()));
+        input = new VRPort(this, new DatObj(new VRObject()), PortType.INPUT);
         //vrInputs.Add(input);
     }
 
@@ -188,7 +189,7 @@ public class PropObj : VRProperty
 
 }
 
-
+[System.Serializable]
 public class PropPosition : VRProperty
 {
     [SerializeReference] VRVariable positionVariable;
@@ -235,7 +236,7 @@ public class PropPosition : VRProperty
         return new DatVector3(vrObject.gameObject.transform.position);
     }
 
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         DatVector3 datVector = (DatVector3)vrData;
         vrObject.gameObject.transform.position = datVector.Value;
@@ -249,7 +250,7 @@ public class PropPosition : VRProperty
 
 }
 
-
+[System.Serializable]
 public class PropMovement : VRProperty
 {
     // Teleport
@@ -325,7 +326,7 @@ public class PropMovement : VRProperty
         return null;
     }
 }
-
+[System.Serializable]
 public class PropScale : VRProperty
 {
     [SerializeReference] VRVariable scaleVariable;
@@ -371,7 +372,7 @@ public class PropScale : VRProperty
         return new DatFloat(vrObject.gameObject.transform.localScale.x);
     }
 
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         if (!isActive)
             return;
@@ -389,7 +390,7 @@ public class PropScale : VRProperty
     }
 }
 
-
+[System.Serializable]
 public class PropTransform : VRProperty
 {
     // Teleport
@@ -425,7 +426,7 @@ public class PropTransform : VRProperty
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        VRPort outTransform = new VRPort(GetData,new DatTransform(new DatObj(vrObject)));
+        VRPort outTransform = new VRPort(this,new DatTransform(new DatObj(vrObject)), PortType.OUTPUT);
         outTransform.toolTip = "Get current Transform";
 
         //vrOutputs.Add(outTransform);
@@ -555,7 +556,7 @@ public class PropTransform : VRProperty
     }
 }
 
-
+[System.Serializable]
 public class PropButton : VRProperty
 {
     [SerializeReference] VRVariable varTrigger;
@@ -603,6 +604,7 @@ public class PropButton : VRProperty
         return null;
     }
 }
+[System.Serializable]
 public class PropColor : VRProperty
 {
     [SerializeReference] VRVariable varColor;
@@ -635,7 +637,7 @@ public class PropColor : VRProperty
     public override void SetupOutputs()
     {
         base.SetupOutputs();
-        VRPort outColor = new VRPort(GetData, new DatColor(Color.white));
+        VRPort outColor = new VRPort(this, new DatColor(Color.white), PortType.OUTPUT);
         outColor.toolTip = "Get current Color";
         //vrOutputs.Add(outColor);
     }
@@ -704,7 +706,7 @@ public class PropColor : VRProperty
         base.Trigger();
         SetData(varColor.GetData());
     }
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         if (!isActive)
             return;

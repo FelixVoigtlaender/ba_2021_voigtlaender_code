@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
+[System.Serializable]
 public class VRTab : VRLogicElement
 {
-    bool isActive = false;
     public event Action<bool> OnIsActiveChanged;
     public bool IsActive
     {

@@ -60,6 +60,7 @@ public class EventPopulation : MonoBehaviour
         currentVREvent.isRoot = false;
         oldVisEvent.isDeleteAble = true;
         oldVisEvent.GetElement().isRoot = true;
+        oldVisEvent.vrEvent.Save();
 
         // override old visEvent
         visEvents[index] = currentVisEvent;

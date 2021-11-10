@@ -220,18 +220,21 @@ public class VisManager : MonoBehaviour
                 visObject.transform.position = saveElement.position;
                 continue;
             }
-            if(saveElement is VRConnection)
-            {
-                VRConnection vrConnection = (VRConnection)saveElement;
-
-                GameObject objVisConnection = Instantiate(prefabVisConnection);
-                objVisConnection.GetComponent<VisConnection>().Setup(vrConnection);
-                continue;
-            }
             if(saveElement is VRLogicElement)
             {
                 VRLogicElement vrLogicElement = (VRLogicElement)saveElement;
                 InstantiateElement(vrLogicElement, saveElement.position);
+                continue;
+            }
+            if(saveElement is VRConnection)
+            {
+                VRConnection vrConnection = (VRConnection)saveElement;
+
+                Debug.Log(JsonUtility.ToJson(vrConnection, true));
+                
+                
+                GameObject objVisConnection = Instantiate(prefabVisConnection);
+                objVisConnection.GetComponent<VisConnection>().Setup(vrConnection);
                 continue;
             }
 

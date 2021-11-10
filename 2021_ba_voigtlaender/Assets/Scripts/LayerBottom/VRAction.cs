@@ -13,10 +13,6 @@ public abstract class VRAction : VRLogicElement
         isRoot = true;
     }
 
-    public override void Setup()
-    {
-        base.Setup();
-    }
 
     public static List<VRAction> GetAllActions()
     {
@@ -89,7 +85,7 @@ public class ActMove : VRAction
     {
         base.SetupInputs();
 
-        inTrigger = new VRPort(SetData, new DatEvent(0f));
+        inTrigger = new VRPort(this, new DatEvent(0f), PortType.INPUT);
         vrInputs.Add(inTrigger);
     }
 
@@ -98,7 +94,7 @@ public class ActMove : VRAction
         base.SetupOutputs();
     }
 
-    public void SetData(VRData datEvent)
+    public override void SetData(VRData datEvent)
     {
         VRDebug.SetLog($"{Name()}: TRIGGERED");
 

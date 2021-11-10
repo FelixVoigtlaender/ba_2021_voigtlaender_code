@@ -7,10 +7,13 @@ public class VRVariable : VRLogicElement
 {
     public string name = "";
     public bool allowDatName = false;
-    public VRData vrData;
-    protected VRPort output;
-    protected VRPort input;
+    [SerializeReference] protected VRPort output;
+    [SerializeReference] protected VRPort input;
 
+    [SerializeReference] public VRData vrData;
+    [SerializeReference] private VRLogicElement mainElement;
+    
+    
     public bool blockPorts = false;
     public bool blockInputs = false;
     public bool blockOutputs = false;
@@ -53,7 +56,7 @@ public class VRVariable : VRLogicElement
         base.SetupOutputs();
 
 
-        output = new VRPort(GetData, vrData);
+        output = new VRPort(this, vrData,PortType.OUTPUT);
         if(name.Length != 0)
             output.toolTip = "Get " + name;
         vrOutputs.Add(output);
@@ -67,7 +70,7 @@ public class VRVariable : VRLogicElement
         base.SetupInputs();
 
 
-        input = new VRPort(SetData, vrData);
+        input = new VRPort(this, vrData, PortType.INPUT);
         input.OnConnect += () => GetData();
         if (name.Length != 0)
             input.toolTip = "Set " + name;
@@ -78,7 +81,7 @@ public class VRVariable : VRLogicElement
             vrInputs.Clear();
     }
 
-    public VRData GetData()
+    public override VRData GetData()
     {
         if (input.IsConnected())
         {
@@ -102,7 +105,7 @@ public class VRVariable : VRLogicElement
     {
         return output.IsConnected();
     }
-    public void SetData(VRData vrData)
+    public override void SetData(VRData vrData)
     {
         vrData.SetData(vrData);
         OnVariableChanged?.Invoke(vrData);

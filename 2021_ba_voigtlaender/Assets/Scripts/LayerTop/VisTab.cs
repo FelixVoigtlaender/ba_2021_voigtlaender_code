@@ -48,7 +48,7 @@ public class VisTab : VisLogicElement
         this.otherVisLogicElement = visProperty;
     }
 
-    public void Trigger()
+    public override void Trigger()
     {
         if (otherVisLogicElement)
             otherVisLogicElement.Trigger();

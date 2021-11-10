@@ -8,17 +8,21 @@ public class SaveElement
 {
     [SerializeField] public string nameElement;
     public event Action OnDelete;
+    public event Action OnSave;
     [SerializeField] private int id;
     [SerializeField] public bool isRoot = false;
     [SerializeField] public bool isDummy = false;
     [SerializeField] public Vector3 position = Vector3.zero;
-    public SaveElement()
+
+
+    public virtual void Save()
     {
         nameElement = this.ToString();
         id = SaveManager.GenerateID();
         SaveManager.AddSaveElement(this);
+        
+        OnSave?.Invoke();
     }
-
 
     public virtual void Delete()
     {
@@ -27,12 +31,12 @@ public class SaveElement
     }
     
     
-    public virtual void Update()
+    public virtual void Update(DatEvent datEvent)
     {
         
     }
 
-    public virtual void FixedUpdate()
+    public virtual void FixedUpdate(DatEvent datEvent)
     {
         
     }

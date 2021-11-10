@@ -310,9 +310,9 @@ public class VisVariable : VisLogicElement
                 textName.text = vrVariable.Name();
             return;
         }
-        VRObject vrObject = VRManager.instance.FindVRObject(go);
-        if(vrObject == null)
-            vrObject = VRManager.instance.InitVRObject(go,false);
+        
+        
+        VRObject vrObject = VRManager.instance.InitVRObject(go,false);
         
 
         DatObj datObj = new DatObj(vrObject);

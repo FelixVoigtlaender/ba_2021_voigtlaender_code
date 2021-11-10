@@ -3,35 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[System.Serializable]
 public class VRPort : SaveElement
 {
     public PortType portType = PortType.INPUT;
     [SerializeReference] public VRData dataType;
-    //public VRConnection connection;
     [SerializeReference] public List<VRConnection> connections = new List<VRConnection>();
+    [SerializeReference] VRLogicElement element;
+    
+    
     public string toolTip = "";
 
-    public event Func<VRData> GetElementData;
-    public event Action<VRData> SetElementData;
     public event Action OnConnect;
-    [SerializeReference] VRLogicElement element;
-    public VRPort(Func<VRData> GetElementData, VRData dataType)
-    {
-        this.GetElementData = GetElementData;
-        this.portType = PortType.OUTPUT;
-        this.dataType = dataType;
-    }
-    public VRPort(VRLogicElement element, VRData dataType)
+
+    public VRPort(VRLogicElement element, VRData dataType, PortType portType)
     {
         this.element = element;
-        this.portType = PortType.INPUT;
         this.dataType = dataType;
-    }
-    public VRPort(Action<VRData> SetElementData, VRData dataType)
-    {
-        this.SetElementData = SetElementData;
-        this.portType = PortType.INPUT;
-        this.dataType = dataType;
+        this.portType = portType;
     }
 
     public bool IsConnected()
@@ -51,7 +40,7 @@ public class VRPort : SaveElement
                 data = connections[0].GetData();
                 break;
             case PortType.OUTPUT:
-                data = GetElementData();
+                data = element.GetData();
                 break;
         }
 
@@ -65,31 +54,16 @@ public class VRPort : SaveElement
         switch (portType)
         {
             case PortType.INPUT:
-                SetElementData(data);
+                element.SetData(data);
                 break;
             case PortType.OUTPUT:
                 foreach(VRConnection connection in connections)
                 {
-
                     connection.SetData(data);
                 }
                 break;
         }
     }
-
-    public void Trigger()
-    {
-        if (portType == PortType.INPUT && element != null)
-            element.Trigger();
-        if (portType == PortType.OUTPUT && connections.Count == 0)
-        {
-            foreach (VRConnection connection in connections)
-            {
-                connection.Trigger();
-            }
-        }
-    }
-
 
     public bool CanConnect(VRData data)
     {

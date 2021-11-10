@@ -163,6 +163,10 @@ public class VisConnection : MonoBehaviour
         bezierCurve.end.dynamicNormals = false;
         bezierCurve.end.normal = Vector3.left;
 
+        
+        
+        vrConnection.Save();
+        
         VRDebug.Log($"Connected {isConnected}");
     }
 

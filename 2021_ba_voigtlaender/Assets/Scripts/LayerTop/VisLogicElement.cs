@@ -387,7 +387,7 @@ public class VisLogicElement : MonoBehaviour
         return element;
     }
 
-    public void Trigger()
+    public virtual void Trigger()
     {
         element.Trigger();
     }
