@@ -24,7 +24,7 @@ public abstract class VRData
 [System.Serializable]
 public class DatString : VRData
 {
-    private string value;
+    [SerializeField]private string value;
     public string Value 
     {
         get { return value; }
@@ -63,7 +63,7 @@ public class DatString : VRData
 [System.Serializable]
 public class DatFloat : VRData
 {
-    private float value;
+    [SerializeField]private float value;
     public float Value
     {
         get { return value; }
@@ -102,7 +102,7 @@ public class DatFloat : VRData
 [System.Serializable]
 public class DatColor : VRData
 {
-    private Color value;
+    [SerializeField]private Color value;
     public Color Value
     {
         get { return value; }
@@ -138,7 +138,7 @@ public class DatColor : VRData
 [System.Serializable]
 public class DatInt : VRData
 {
-    private int value;
+    [SerializeField]private int value;
     public int Value
     {
         get { return value; }
@@ -173,7 +173,7 @@ public class DatInt : VRData
 [System.Serializable]
 public class DatVector3 : VRData
 {
-    private Vector3 value;
+    [SerializeField]private Vector3 value;
     public Vector3 Value
     {
         get { return value; }
@@ -208,7 +208,7 @@ public class DatVector3 : VRData
 [System.Serializable]
 public class DatQuaternion : VRData
 {
-    private Quaternion value;
+    [SerializeField]private Quaternion value;
     public Quaternion Value
     {
         get { return value; }
@@ -242,7 +242,7 @@ public class DatQuaternion : VRData
 [System.Serializable]
 public class DatEvent : VRData
 {
-    private float value;
+    [SerializeField]private float value;
     public float Value
     {
         get { return value; }
@@ -276,7 +276,7 @@ public class DatEvent : VRData
 [System.Serializable]
 public class DatBool : VRData
 {
-    private bool value;
+    [SerializeField] private bool value;
     public bool Value
     {
         get { return value; }
@@ -310,7 +310,7 @@ public class DatBool : VRData
 [System.Serializable]
 public class DatObj : VRData
 {
-    private VRObject value;
+    [SerializeReference] private VRObject value;
     public VRObject Value
     {
         get { return value; }
