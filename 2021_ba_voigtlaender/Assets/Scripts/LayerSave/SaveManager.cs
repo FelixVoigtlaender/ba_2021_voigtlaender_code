@@ -65,10 +65,6 @@ public class SaveManager : MonoBehaviour
         return JsonUtility.FromJson<VRProgramm>(jsonText);
     }
 
-    public void GenerateProgramB()
-    {
-        programmB = ToProgramm(jsonText);
-    }
 
     [ContextMenu("Destroy VisProgram")]
     public void DestroyVisProgram()
@@ -92,4 +88,19 @@ public class VRProgramm
 {
     [SerializeReference]
     public List<SaveElement> saveElements = new List<SaveElement>();
+    
+    public void Update()
+    {
+        foreach (var element in saveElements)
+        {
+            element.Update();
+        }
+    }
+    public void FixedUpdate()
+    {
+        foreach (var element in saveElements)
+        {
+            element.FixedUpdate();
+        }
+    }
 }

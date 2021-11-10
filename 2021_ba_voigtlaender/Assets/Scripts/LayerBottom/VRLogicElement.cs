@@ -172,4 +172,5 @@ public abstract class VRLogicElement : SaveElement
     {
         return (VRLogicElement)Activator.CreateInstance(this.GetType());
     }
+
 }

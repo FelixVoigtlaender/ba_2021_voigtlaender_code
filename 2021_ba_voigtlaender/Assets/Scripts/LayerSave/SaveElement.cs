@@ -24,6 +24,16 @@ public class SaveElement
     {
         SaveManager.RemoveSaveElement(this);
         OnDelete?.Invoke();
+    }
+    
+    
+    public virtual void Update()
+    {
+        
+    }
 
+    public virtual void FixedUpdate()
+    {
+        
     }
 }
