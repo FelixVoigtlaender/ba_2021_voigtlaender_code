@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,7 @@ public class VisLogicElement : MonoBehaviour
     public List<VisTab> visTab;
 
     public bool isDeleteAble = true;
+
 
     public virtual void Setup(VRLogicElement element)
     {

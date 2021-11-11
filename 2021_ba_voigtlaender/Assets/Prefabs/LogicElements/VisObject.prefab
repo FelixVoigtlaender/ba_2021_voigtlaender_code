@@ -88,7 +88,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1135005589823400801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ MonoBehaviour:
   minScaleRatio: 0.001
   useDistance: 0
   centerType: 1
-  useXRRigScale: 1
+  useXRRigScale: 0
 --- !u!114 &254559994376980574
 MonoBehaviour:
   m_ObjectHideFlags: 0

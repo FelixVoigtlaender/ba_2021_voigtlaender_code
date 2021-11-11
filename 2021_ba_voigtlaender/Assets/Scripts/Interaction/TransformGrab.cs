@@ -85,7 +85,7 @@ public class TransformGrab : MonoBehaviour
             {
                 grabbedObject = new GrabbedObject(canvas.transform, transform, result.worldPosition);
                 Vector3 worldPosition = canvas.transform.position;
-                canvas.transform.SetParent(null, false);
+                canvas.transform.SetParent(VisManager.instance.programParent, false);
                 canvas.transform.position = worldPosition;
             }
         }

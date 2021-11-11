@@ -31,14 +31,19 @@ public class VisManager : MonoBehaviour
     private Transform visVectorTrans;
     private GhostObject ghostObject;
 
-    private GameObject programParent;
+    public Transform programParent;
 
 
     private void Awake()
     {
         instance = this;
 
-        programParent = new GameObject("Program Parent");
+        programParent = new GameObject("Program Parent").transform;
+        programParent.parent = gameObject.transform;
+        programParent.localPosition = Vector3.zero;
+        programParent.localRotation = Quaternion.identity;
+        programParent.localScale = Vector3.one;
+        
     }
 
     private void Start()
@@ -101,6 +106,7 @@ public class VisManager : MonoBehaviour
     public VisObject OnInitVRObject(VRObject vrObject)
     {
         GameObject visObjectObj = Instantiate(prefabVisObject);
+        visObjectObj.transform.parent = programParent;
         VisObject visObject = visObjectObj.GetComponent<VisObject>();
         visObject.Setup(vrObject);
 
@@ -163,6 +169,7 @@ public class VisManager : MonoBehaviour
         {
             GameObject objCanvas = Instantiate(prefabUICanvas);
             objCanvas.transform.position = position;
+            objCanvas.transform.parent = programParent;
 
             PanelHolder panelHolder = objCanvas.GetComponentInChildren<PanelHolder>();
 

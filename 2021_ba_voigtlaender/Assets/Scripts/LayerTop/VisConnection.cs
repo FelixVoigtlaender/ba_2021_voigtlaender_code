@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,12 @@ public class VisConnection : MonoBehaviour
     VisPort startVisPort;
     VisPort endVisPort;
     Vector3 lastPosition;
+
+
+    private void Start()
+    {
+        transform.parent = VisManager.instance.programParent;
+    }
 
 
     public void Setup(VisPort start)

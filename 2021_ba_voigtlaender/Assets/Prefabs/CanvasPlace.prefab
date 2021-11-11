@@ -136,7 +136,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleRatio: 0.001
   minScaleRatio: 0.001
+  useDistance: 0
   centerType: 1
+  useXRRigScale: 0
 --- !u!114 &4724832187191713754
 MonoBehaviour:
   m_ObjectHideFlags: 0
