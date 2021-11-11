@@ -95,7 +95,7 @@ public class VisLogicElement : MonoBehaviour
 
         if(element == null)
         {
-            print(name + " . " + gameObject.name);
+            //print(name + " . " + gameObject.name);
             return;
         }
 

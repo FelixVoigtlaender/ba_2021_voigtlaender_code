@@ -25,7 +25,7 @@ public class VRManager : MonoBehaviour
 
         DatEvent datEvent = new DatEvent(tickIndex++);
 
-        //SaveManager.instance.programm.Update(datEvent);
+        SaveManager.instance.programm.Update(datEvent);
 
     }
     
@@ -37,7 +37,7 @@ public class VRManager : MonoBehaviour
         
         DatEvent datEvent = new DatEvent(tickIndex++);
         
-        //SaveManager.instance.programm.FixedUpdate(datEvent);
+        SaveManager.instance.programm.FixedUpdate(datEvent);
 
     }
 
