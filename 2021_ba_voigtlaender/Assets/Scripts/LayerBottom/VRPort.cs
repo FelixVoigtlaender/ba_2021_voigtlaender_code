@@ -92,6 +92,9 @@ public class VRPort : SaveElement
     }
     public void AddConnection(VRConnection connection)
     {
+        if(connections.Contains(connection))
+            return;
+        
         connections.Add(connection);
         OnConnect?.Invoke();
     }

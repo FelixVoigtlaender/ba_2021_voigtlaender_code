@@ -48,6 +48,7 @@ public class VisConnection : MonoBehaviour
         bezierCurve.SetColor(normalColor);
         bezierCurve.SetWidth(inactiveWidth);
         vrConnection.OnActive += OnActive;
+        vrConnection.OnDelete += OnDelete;
         ResetColor();
         StartCoroutine(ResetActive(0.3f));
 
@@ -174,7 +175,8 @@ public class VisConnection : MonoBehaviour
     {
         vrConnection?.Delete();
     }
-    public void OnDelete()
+
+    private void OnDelete()
     {
         VRDebug.Log("Deleting VisConnection");
 

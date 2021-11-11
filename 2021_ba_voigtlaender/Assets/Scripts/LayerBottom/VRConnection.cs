@@ -150,7 +150,6 @@ public class VRConnection : SaveElement
 
     public override void Delete()
     {
-        Debug.Log("DEEEELLLEEETEEE");
         start?.RemoveConnection(this);
         end?.RemoveConnection(this);
 

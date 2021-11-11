@@ -37,6 +37,9 @@ public class SaveManager : MonoBehaviour
 
         if (instance.programm == null)
             instance.programm = CreateVRProgramm();
+        
+        if(instance.programm.saveElements.Contains(saveElement))
+            return;
 
         //print($"isRoot: {saveElement.isRoot} Saving: {saveElement.ToString()}");
 
