@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,13 +29,16 @@ public class VisManager : MonoBehaviour
     [Header("Ghost")]
     private VisVector visVector;
     private Transform visVectorTrans;
-
     private GhostObject ghostObject;
+
+    private GameObject programParent;
 
 
     private void Awake()
     {
         instance = this;
+
+        programParent = new GameObject("Program Parent");
     }
 
     private void Start()
@@ -204,42 +208,54 @@ public class VisManager : MonoBehaviour
         return null;
     }
 
-    public void VisProgramm(VRProgramm vrProgramm)
+    public bool VisProgramm(VRProgramm vrProgramm)
     {
-        foreach (SaveElement saveElement in vrProgramm.saveElements)
+        try
         {
-            print(saveElement.ToString() + " " + saveElement.isRoot);
-            if (!saveElement.isRoot)
-                continue;
+            foreach (SaveElement saveElement in vrProgramm.saveElements)
+            {
+                print(saveElement.ToString() + " " + saveElement.isRoot);
+                if (!saveElement.isRoot)
+                    continue;
 
-            if (saveElement is VRObject)
-            {
-                VRObject vrObject = (VRObject)saveElement;
-                print(vrObject.gameObject.name);
-                VisObject visObject = OnInitVRObject(vrObject);
-                visObject.transform.position = saveElement.position;
-                continue;
-            }
-            if(saveElement is VRLogicElement)
-            {
-                VRLogicElement vrLogicElement = (VRLogicElement)saveElement;
-                InstantiateElement(vrLogicElement, saveElement.position);
-                continue;
-            }
-            if(saveElement is VRConnection)
-            {
-                VRConnection vrConnection = (VRConnection)saveElement;
+                if (saveElement is VRObject)
+                {
+                    VRObject vrObject = (VRObject)saveElement;
+                    print(vrObject.gameObject.name);
+                    VisObject visObject = OnInitVRObject(vrObject);
+                    visObject.transform.position = saveElement.position;
+                    continue;
+                }
+                if(saveElement is VRLogicElement)
+                {
+                    VRLogicElement vrLogicElement = (VRLogicElement)saveElement;
+                    InstantiateElement(vrLogicElement, saveElement.position);
+                    continue;
+                }
+                if(saveElement is VRConnection)
+                {
+                    VRConnection vrConnection = (VRConnection)saveElement;
 
-                Debug.Log(JsonUtility.ToJson(vrConnection, true));
+                    Debug.Log(JsonUtility.ToJson(vrConnection, true));
                 
                 
-                GameObject objVisConnection = Instantiate(prefabVisConnection);
-                objVisConnection.GetComponent<VisConnection>().Setup(vrConnection);
-                continue;
+                    GameObject objVisConnection = Instantiate(prefabVisConnection);
+                    objVisConnection.GetComponent<VisConnection>().Setup(vrConnection);
+                    continue;
+                }
+
+                Debug.LogError($"Couldn't load {saveElement.ToString()}");
             }
 
-            Debug.LogError($"Couldn't load {saveElement.ToString()}");
         }
+        catch (Exception e)
+        {
+            Debug.Log("Coudn't visualize the program!");
+            DestroyVisProgram();
+            return false;
+        }
+
+        return true;
     }
     public VisLogicElement InstantiateElement(VRLogicElement logicElement, Vector3 position)
     {

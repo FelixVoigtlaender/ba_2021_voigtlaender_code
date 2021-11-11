@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class SaveManager : MonoBehaviour
@@ -90,6 +89,18 @@ public class SaveManager : MonoBehaviour
         Debug.Log($"Saved program to {filePath} \n {jsonString}");
     }
 
+    public void Delete()
+    {
+        string path = Application.persistentDataPath;
+        string filePath = path + "/program.json";
+
+        if (System.IO.File.Exists(filePath))
+            File.Delete(filePath);
+        
+        
+        Debug.Log($"Deleted program at {filePath}");
+    }
+
     public void Load()
     {
         DestroyVisProgram();
@@ -106,20 +117,18 @@ public class SaveManager : MonoBehaviour
 
         string jsonString = File.ReadAllText(filePath);
         programm = ToProgramm(jsonString);
-        VisManager.instance.VisProgramm(programm);
-        
-        Debug.Log($"Loaded Program {filePath} \n {jsonString}");
-    }
+        bool success = VisManager.instance.VisProgramm(programm);
+
+        if (!success)
+        {
+            Debug.Log($"Loaded Program {filePath} \n {jsonString}");
+        }
+        else
+        {
+            Delete();
+            Debug.Log($"Something went wrong while visualising the program {filePath} \n {jsonString}");
+        }
     
-    
-    [ContextMenu("Load Program")]
-    public void LoadProgram()
-    {
-        if (programm == null)
-            return;
-        VRProgramm oldProgram = programm;
-        programm = CreateVRProgramm();
-        VisManager.instance.VisProgramm(oldProgram);
     }
 }
 
