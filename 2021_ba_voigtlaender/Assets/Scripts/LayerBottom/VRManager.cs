@@ -80,11 +80,12 @@ public class VRManager : MonoBehaviour
         return vrConnection;
     }
 
-    public VRObject InitVRObject(GameObject gameObject, bool notify = true)
+    public VRObject InitVRObject(GameObject gameObject, Vector3 position, bool notify = true)
     {
 
         VRObject vrObject = new VRObject();
         vrObject.Setup(gameObject);
+        vrObject.position = position;
 
         if (notify)
         {

@@ -2251,6 +2251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646179ef0a56c5e46a14c27ead59345b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingLayer: 5
 --- !u!114 &368530066412594777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2910,6 +2911,7 @@ MonoBehaviour:
   tabDropdown: {fileID: 0}
   toggleIsActive: {fileID: 0}
   textName: {fileID: 6929113719766877456}
+  closeButton: {fileID: 0}
   blockProperties: {fileID: 0}
   visInPorts: []
   visOutPorts: []
@@ -3904,6 +3906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646179ef0a56c5e46a14c27ead59345b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingLayer: 5
 --- !u!114 &5297782234699126976
 MonoBehaviour:
   m_ObjectHideFlags: 0

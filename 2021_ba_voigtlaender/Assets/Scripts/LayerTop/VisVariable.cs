@@ -312,7 +312,7 @@ public class VisVariable : VisLogicElement
         }
         
         
-        VRObject vrObject = VRManager.instance.InitVRObject(go,false);
+        VRObject vrObject = VRManager.instance.InitVRObject(go,go.transform.position,false);
         
 
         DatObj datObj = new DatObj(vrObject);

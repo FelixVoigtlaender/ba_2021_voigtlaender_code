@@ -76,6 +76,12 @@ public class GhostObject : MonoBehaviour
         // Set Mesh and Collider
         myMeshFilter.sharedMesh = otherMeshFilter.sharedMesh;
         Collider cloneCollider  = (Collider)collider.CopyComponent(gameObject);
+        if (cloneCollider is MeshCollider)
+        {
+            MeshCollider meshCollider = (MeshCollider) cloneCollider;
+            meshCollider.convex = true;
+        }
+
         cloneCollider.isTrigger = true;
         // Set Transform
         

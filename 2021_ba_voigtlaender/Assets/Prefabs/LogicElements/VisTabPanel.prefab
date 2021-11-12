@@ -1070,6 +1070,7 @@ MonoBehaviour:
   tabDropdown: {fileID: 0}
   toggleIsActive: {fileID: 0}
   textName: {fileID: 515139303254322142}
+  closeButton: {fileID: 0}
   blockProperties: {fileID: 0}
   visInPorts: []
   visOutPorts: []

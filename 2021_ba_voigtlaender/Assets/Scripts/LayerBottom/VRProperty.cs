@@ -18,6 +18,7 @@ public abstract class VRProperty : VRLogicElement
     public virtual void Setup(VRObject vrObject) 
     {
         this.vrObject = vrObject;
+        isActive = false;
         base.Setup();
     }
 
@@ -64,6 +65,12 @@ public class PropTrigger : VRProperty
         return true;
     }
 
+    public override void Setup(VRObject vrObject)
+    {
+        base.Setup(vrObject);
+        isActive = true;
+    }
+
     public override void SetupVariables()
     {
         base.SetupVariables();
@@ -107,10 +114,13 @@ public class PropTrigger : VRProperty
 [System.Serializable]
 public class PropEnabled : VRProperty
 {
-    [SerializeReference] VRVariable varEnabled;
+    [SerializeReference] private VRTab activeTab;
+    [SerializeReference] private VRTab inactiveTab;
+    
+    
     public override string Name()
     {
-        return "Enabled";
+        return "Change Visibility";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -122,13 +132,23 @@ public class PropEnabled : VRProperty
         return true;
     }
 
+
+    public override void SetupTabs()
+    {
+        base.SetupTabs();
+
+        activeTab = new VRTab("Visible");
+        vrTabs.Add(activeTab);
+        
+        inactiveTab = new VRTab("Invisible");
+        inactiveTab.isActive = false;
+        vrTabs.Add(inactiveTab);
+
+    }
+
     public override void SetupVariables()
     {
         base.SetupVariables();
-        varEnabled = new VRVariable(new DatBool(vrObject.gameObject.activeSelf),"Visibility", true);
-        varEnabled.OnSetData += SetData;
-
-        vrVariables.Add(varEnabled);
     }
 
     public override void SetData(VRData vrData)
@@ -138,15 +158,140 @@ public class PropEnabled : VRProperty
 
     public override void Trigger()
     {
-        DatBool datEnabled = (DatBool)varEnabled.GetData();
-        vrObject.gameObject.SetActive(datEnabled.Value);
+        vrObject.gameObject.SetActive(activeTab.isActive);
     }
 
     public override VRData GetData()
     {
-        return varEnabled.GetData();
+        return new DatBool(activeTab.isActive);
     }
 }
+
+
+
+[System.Serializable]
+public class PropPhysics : VRProperty
+{
+    [SerializeReference] private VRTab activeTab;
+    [SerializeReference] private VRTab inactiveTab;
+
+    
+    private Rigidbody _rigid;
+
+    private Rigidbody rigid
+    {
+        get
+        {
+            if (_rigid)
+                return _rigid;
+
+            _rigid = vrObject.gameObject.GetComponent<Rigidbody>();
+            if (_rigid)
+                return _rigid;
+
+            _rigid = vrObject.gameObject.AddComponent<Rigidbody>();
+
+            return _rigid;
+        }
+    }
+    
+    public override string Name()
+    {
+        return "Physics";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
+
+        // Gameobject always can be enabled
+        return true;
+    }
+    
+    public override void SetData(VRData vrData)
+    {
+        Trigger();
+    }
+
+    public override void Trigger()
+    {
+        rigid.isKinematic = !isActive;
+    }
+}
+
+
+
+[System.Serializable]
+public class PropLight : VRProperty
+{
+    [SerializeReference] private VRTab settingsTab;
+    [SerializeReference] private VRVariable varColor;
+    [SerializeReference] private VRVariable varRange;
+
+    
+    private Light _light;
+
+    private Light light
+    {
+        get
+        {
+            if (_light)
+                return _light;
+
+            _light = vrObject.gameObject.GetComponent<Light>();
+            if (_light)
+                return _light;
+
+            _light = vrObject.gameObject.AddComponent<Light>();
+
+            return _light;
+        }
+    }
+    
+    public override string Name()
+    {
+        return "Light";
+    }
+    public override bool IsType(VRObject vrObject)
+    {
+        RectTransform rect = vrObject.gameObject.GetComponent<RectTransform>();
+        if (rect)
+            return false;
+
+        // Gameobject always can be enabled
+        return true;
+    }
+
+    public override void SetupTabs()
+    {
+        base.SetupTabs();
+
+        settingsTab = new VRTab("Settings");
+
+        varColor = new VRVariable(new DatColor(Color.white), "Color", true);
+        settingsTab.vrVariables.Add(varColor);
+
+        varRange = new VRVariable(new DatFloat(10), "Range", true);
+        settingsTab.vrVariables.Add(varRange);
+        
+        vrTabs.Add(settingsTab);
+
+    }
+
+    public override void Trigger()
+    {
+        light.enabled = isActive;
+
+        DatColor datColor = (DatColor) varColor.vrData;
+        DatFloat datFloat = (DatFloat) varRange.vrData;
+
+        light.color = datColor.Value;
+        light.range = datFloat.Value;
+    }
+}
+
+
 [System.Serializable]
 public class PropObj : VRProperty
 {
@@ -262,7 +407,7 @@ public class PropMovement : VRProperty
     [SerializeReference] VRVariable varDuration;
     public override string Name()
     {
-        return "Movement";
+        return "Move";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -410,7 +555,7 @@ public class PropTransform : VRProperty
     bool playing = false;
     public override string Name()
     {
-        return "Transform";
+        return "Move";
     }
     public override bool IsType(VRObject vrObject)
     {
@@ -461,6 +606,7 @@ public class PropTransform : VRProperty
         tabRecording.vrVariables.Add(varRecording);
         tabRecording.vrVariables.Add(varDuration);
         tabRecording.vrVariables.Add(varLoop);
+        tabTransform.isActive = false;
         vrTabs.Add(tabRecording);
 
     }
@@ -618,7 +764,7 @@ public class PropColor : VRProperty
 
     public override string Name()
     {
-        return "Color";
+        return "Change Color";
     }
     public override bool IsType(VRObject vrObject)
     {

@@ -92,7 +92,7 @@ public class InitLogic : MonoBehaviour
 
 
         if(percent > 1){
-            VRManager.instance.InitVRObject(logicObject.gameObject);
+            VRManager.instance.InitVRObject(logicObject.gameObject, loadingCircle.transform.position);
             logicObject = null;
         }
 

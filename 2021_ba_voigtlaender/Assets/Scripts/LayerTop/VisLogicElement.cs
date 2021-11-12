@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Windows.Speech;
 
 public class VisLogicElement : MonoBehaviour
 {
@@ -18,9 +19,13 @@ public class VisLogicElement : MonoBehaviour
     public Dropdown tabDropdown;
     public BetterToggle toggleIsActive;
     public Text textName;
+    public Button closeButton;
+    
     Canvas rootCanvas;
     RectTransform rect;
-
+    
+    
+    
     public CanvasGroup blockProperties;
 
     public List<VisPort> visInPorts;
@@ -58,33 +63,29 @@ public class VisLogicElement : MonoBehaviour
         rootCanvas = GetRootCanvas();
         rect = GetComponent<RectTransform>();
 
-        
-        if (toggleIsActive)
+        if (closeButton)
         {
             if (element.vrInputs.Count > 0 || element.vrVariables.Count > 0)
-                toggleIsActive.gameObject.SetActive(false);
+                closeButton.gameObject.SetActive(false);
             else
-                toggleIsActive.gameObject.SetActive(true);
-
-
-            TooltipContent tooltipContent = toggleIsActive.GetComponent<TooltipContent>();
-            toggleIsActive.isOn = element.isActive;
-            toggleIsActive.OnValueChanged.AddListener((value) =>
-            {
-                tooltipContent.description = value ? "On" : "Off";
-                if (element.isActive == value)
-                    return;
-                element.isActive = value;
-            });
-            element.OnActiveChanged += (value) =>
-            {
-                tooltipContent.description = value ? "On" : "Off";
-                if (toggleIsActive.isOn == value)
-                    return;
-                toggleIsActive.isOn = value;
-
-            };
+                closeButton.gameObject.SetActive(true);
+            
+            closeButton.onClick.AddListener(Close);
+            element.OnActiveChanged += OnIsActiveChanged;
+            OnIsActiveChanged(element.isActive);
         }
+    }
+
+    public void Close()
+    {
+        if(element == null)
+            return;
+        element.isActive = false;
+    }
+
+    public void OnIsActiveChanged(bool value)
+    {
+        gameObject.SetActive(value);
     }
 
 
@@ -123,6 +124,8 @@ public class VisLogicElement : MonoBehaviour
         {
             if (tabToggleHolder)
                 tabToggleHolder.gameObject.SetActive(false);
+            if(tabDropdown)
+                tabDropdown.gameObject.SetActive(false);
             return new List<VisTab>();
         }
 
@@ -137,8 +140,11 @@ public class VisLogicElement : MonoBehaviour
 
         //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
 
-        foreach (VRTab vrTab in element.vrTabs)
+        int activeIndex = 0;
+        for (int i = 0; i < element.vrTabs.Count; i++)
         {
+            VRTab vrTab = element.vrTabs[i];
+            
             GameObject prefabVisTab = VisManager.instance.GetVisLogicPrefab(vrTab);
             if (!prefabVisTab)
             {
@@ -160,6 +166,10 @@ public class VisLogicElement : MonoBehaviour
 
             // Add Dropdownoption
             Dropdown.OptionData option = new Dropdown.OptionData(vrTab.name);
+
+            if (vrTab.isActive)
+                activeIndex = i;
+            
             options.Add(option);
 
             visTabs.Add(visTab);
@@ -167,7 +177,8 @@ public class VisLogicElement : MonoBehaviour
         //Setup Dropdown
         tabDropdown.ClearOptions();
         tabDropdown.AddOptions(options);
-        textName.text = options[0].text;
+        tabDropdown.value = activeIndex;
+        textName.text = options[activeIndex].text;
 
 
 
@@ -189,11 +200,14 @@ public class VisLogicElement : MonoBehaviour
                 }
             }
         });
-        visTabs[0].OnIsActiveChanged(true);
         tabDropdown.gameObject.SetActive(options.Count > 1);
 
         tabHolder.gameObject.SetActive(false);
         tabHolder.transform.localScale = new Vector3(0, 1, 1);
+        
+        
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tabHolder.GetComponent<RectTransform>());
 
 
         if (showButton)
@@ -207,73 +221,13 @@ public class VisLogicElement : MonoBehaviour
 
         return visTabs;
     }
-    List<VisTab> PopulateVisTabsA(VRLogicElement element, Transform holder)
-    {
-        if (!holder || element == null)
-            return new List<VisTab>();
-        
-        if (element.vrTabs.Count == 0)
-        {
-            if(tabToggleHolder)
-                tabToggleHolder.gameObject.SetActive(false);
-            return new List<VisTab>();
-        }
-
-
-
-
-        List<VisTab> visTabs = new List<VisTab>();
-        GameObject prefabTabToggle = VisManager.instance.prefabTabToggle;
-        //VRDebug.Log("POPULATING VARIABLES " + element.vrVariables.Count);
-        ToggleGroup toggleGroup = tabToggleHolder.GetComponent<ToggleGroup>();
-
-
-        foreach (VRTab vrTab in element.vrTabs)
-        {
-            GameObject prefabVisTab = VisManager.instance.GetVisLogicPrefab(vrTab);
-            if (!prefabVisTab)
-            {
-
-                VRDebug.Log("Couldn't find tab Prefab");
-                continue;
-            }
-
-            GameObject objTabToggle = Instantiate(prefabTabToggle, tabToggleHolder);
-            GameObject objVisTab = Instantiate(prefabVisTab, holder);
-            VisTab visTab = objVisTab.GetComponent<VisTab>();
-            visTab.Setup(vrTab);
-
-            Toggle toggle = objTabToggle.GetComponent<Toggle>();
-            if (toggle.TryGetComponent(out TooltipContent tooltipContent))
-                tooltipContent.description = vrTab.Name();
-            toggle.onValueChanged.AddListener((value) => 
-            {
-                if (value)
-                    SetTabs(true);
-            });
-            visTab.SetToggle(toggle);
-            toggle.group = toggleGroup;
-
-            visTabs.Add(visTab);
-        }
-        // Setup for visibility
-        myButton.onClick.AddListener(ToggleTabs);
-
-        tabHolder.gameObject.SetActive(false);
-        tabHolder.transform.localScale = new Vector3(0, 1, 1);
-
-
-        return visTabs;
-    }
-
-    public void ToggleTabs()
-    {
-        bool invValue = !tabHolder.gameObject.activeSelf;
-        SetTabs(invValue);
-    }
+    
 
     public void SetTabs(bool value)
     {
+        
+        
+        
         //tabToggleHolder.gameObject.SetActive(value);
         float easeTime = 0.1f;
         if (value)
@@ -301,6 +255,8 @@ public class VisLogicElement : MonoBehaviour
                 tabHolder.DOAnchorPos3DZ(0, easeTime);
             });
         }
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(tabHolder.GetComponent<RectTransform>());
     }
 
     List<VisVariable> PopulateVisVariables(VRLogicElement element, Transform holder)
@@ -327,6 +283,10 @@ public class VisLogicElement : MonoBehaviour
             visVariable.Setup(vrVariable);
             visVariables.Add(visVariable);
         }
+        
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(holder.GetComponent<RectTransform>());
+        
         return visVariables;
     }
 

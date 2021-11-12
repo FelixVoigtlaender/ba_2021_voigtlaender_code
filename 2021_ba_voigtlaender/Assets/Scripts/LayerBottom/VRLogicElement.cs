@@ -19,9 +19,12 @@ public abstract class VRLogicElement : SaveElement
         get { return _isActive; }
         set
         {
-            if(_isActive != value)
-                OnActiveChanged?.Invoke(value);
+            bool changed = _isActive != value;
             _isActive = value;
+            if (changed)
+            {
+                OnActiveChanged?.Invoke(value);
+            }
         }
 
     }

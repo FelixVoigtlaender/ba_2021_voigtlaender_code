@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class VisObject : MonoBehaviour
 {
     VRObject vrObject;
-    List<VisProperty> visProperties = new List<VisProperty>();
+    private List<VisProperty> visProperties = new List<VisProperty>();
     public List<VisPort> visInPorts;
     public List<VisPort> visOutPorts;
 
@@ -26,13 +26,15 @@ public class VisObject : MonoBehaviour
     public MiniatureMaker miniature;
     public GhostObject ghostObject;
 
-
+    public Dropdown dropdown;
 
     public Canvas canvas;
+    public RectTransform rectTransform;
 
     private void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
+        rectTransform = GetComponent<RectTransform>();
     }
 
     private void Update()
@@ -44,7 +46,7 @@ public class VisObject : MonoBehaviour
     {
         ghostObject = VisManager.instance.DemandGhostObject(new DatTransform(new DatObj(vrObject)));
 
-        canvas.transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
+        canvas.transform.position = vrObject.position + Vector3.up*hoverDistance;
 
         this.vrObject = vrObject;
         textName.text ="Object: "+ vrObject.gameObject.name;
@@ -65,11 +67,16 @@ public class VisObject : MonoBehaviour
         PopulateProperties();
         PopulateVisPorts(vrObject.vrInputs,vrObject.vrOutputs);
 
+        
+        dropdown.onValueChanged.AddListener(OnPropertySelected);
 
+        OnPropertyChanged(false);
     }
 
     public void PopulateProperties()
     {
+
+        RectTransform layoutRect = propertyHolder.GetComponent<RectTransform>();
         foreach(VRProperty vrProperty in vrObject.properties)
         {
             GameObject propertyPrefab = VisManager.instance.GetVisPropertyPrefab(vrProperty);
@@ -80,6 +87,45 @@ public class VisObject : MonoBehaviour
             VisProperty visProperty = propertyObj.GetComponent<VisProperty>();
             visProperty.Setup(vrProperty);
             visProperties.Add(visProperty);
+
+            vrProperty.OnActiveChanged += OnPropertyChanged;
+            vrProperty.OnActiveChanged += (value) =>
+            {
+                LayoutRebuilder.ForceRebuildLayoutImmediate(layoutRect);
+            };
+        }
+    }
+
+    public void OnPropertyChanged(bool value)
+    {
+        List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+
+        Dropdown.OptionData noneOption = new Dropdown.OptionData("Add Action");
+        options.Add(noneOption);
+        
+        foreach(VRProperty vrProperty in vrObject.properties)
+        {
+            if (!vrProperty.isActive)
+            {
+                Dropdown.OptionData propOption = new Dropdown.OptionData(vrProperty.Name());
+                options.Add(propOption);
+            }
+        }
+        dropdown.ClearOptions();
+        dropdown.AddOptions(options);
+        
+    }
+
+    public void OnPropertySelected(int value)
+    {
+        Dropdown.OptionData selection = dropdown.options[value];
+        foreach(VRProperty vrProperty in vrObject.properties)
+        {
+            if (vrProperty.Name() == selection.text)
+            {
+                vrProperty.isActive = true;
+                return;
+            }
         }
     }
 
