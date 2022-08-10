@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LayerTop;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -112,8 +113,8 @@ public class TransformGrab : MonoBehaviour
     public void Update()
     {
         HandleDrag();
-        HandlePull();
-        HandleScale();
+        //HandlePull();
+        //HandleScale();
     }
 
 

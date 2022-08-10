@@ -1,0 +1,9 @@
+@startuml
+class VisPort {
+    + vrPort : VRPort
+    + image : Image
+    + tooltipContent : TooltipContent
+    + Setup(vrPort:VRPort) : void
+}
+MonoBehaviour <|-- VisPort
+@enduml

@@ -23,6 +23,9 @@ public class MoveGrab : MonoBehaviour
     public bool isGrabbing;
     public bool isDominant;
     MoveGrab otherHand;
+    [Header("Display")]
+    public LineRenderer lineRenderer;
+    public Text sizeText;
 
     GameObject helperObject;
     private void Start()
@@ -64,7 +67,10 @@ public class MoveGrab : MonoBehaviour
     public void Update()
     {
         if (!isGrabbing)
+        {
+            lineRenderer.gameObject.SetActive(false);
             return;
+        }
 
         HandleGrabbing();
     }
@@ -93,7 +99,6 @@ public class MoveGrab : MonoBehaviour
     {
         if (!isDominant)
             return;
-        
 
         Vector3 otherInitialWorld = otherHand.worldGrabPos;
         Vector3 otherCurrentWorld = otherHand.transform.position;
@@ -138,6 +143,16 @@ public class MoveGrab : MonoBehaviour
         Debug.DrawRay(xrRig.TransformPoint(currentMidLocal), Vector3.up * 0.01f);
         Debug.DrawRay(initialMid, dif);
         xrRig.transform.position += dif;
+        
+        
+        // Display
+        lineRenderer.gameObject.SetActive(true);
+        lineRenderer.positionCount = 2;
+        lineRenderer.SetPosition(0, otherCurrentWorld);
+        lineRenderer.SetPosition(1,currentWorld);
+        lineRenderer.transform.position = currentMid;
+        sizeText.text = (xrRig.transform.localScale.x).ToString("0.0") + "x";
+
     }
 
 

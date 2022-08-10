@@ -1,0 +1,29 @@
+@startuml
+class MoveGrab {
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    inputManager : fvInputManager
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    + xrRig : Transform
+    + worldGrabPos : Vector3
+    + localGrabPos : Vector3
+    + isGrabbing : bool
+    + isDominant : bool
+    otherHand : MoveGrab
+    + lineRenderer : LineRenderer
+    + sizeText : Text
+    helperObject : GameObject
+    - Start() : void
+    FindOtherHand() : MoveGrab
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + Update() : void
+    + HandleGrabbing() : void
+    + HandleSingleWeild() : void
+    + HandleDualWeild() : void
+    + HandleFirstIterationGrab() : void
+    + OnButtonUp(context:InputAction.CallbackContext) : void
+}
+MonoBehaviour <|-- MoveGrab
+@enduml

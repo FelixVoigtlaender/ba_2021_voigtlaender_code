@@ -1,0 +1,28 @@
+@startuml
+class VisConnection {
+    + bezierCurve : BezierCurve
+    + vrConnection : VRConnection
+    + activeColor : Color
+    + inactiveColor : Color
+    + errorColor : Color
+    + activeWidth : float = 0.02f
+    + inactiveWidth : float = 0.01f
+    normalColor : Color
+    startVisPort : VisPort
+    endVisPort : VisPort
+    lastPosition : Vector3
+    - Start() : void
+    + Setup(start:VisPort) : void
+    + Setup(vrConnection:VRConnection) : void
+    ConnectVisPorts(vrConnection:VRConnection) : IEnumerator
+    + OnActive(vrData:VRData) : void
+    - ResetActive(waitTime:float) : IEnumerator
+    + ResetColor() : void
+    + Drag(position:Vector3, uiObject:GameObject) : void
+    + Release() : void
+    + Delete() : void
+    - OnDelete() : void
+    + OnDestroy() : void
+}
+MonoBehaviour <|-- VisConnection
+@enduml

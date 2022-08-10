@@ -1,160 +1,162 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using LayerSave;
+using UnityEngine;
 
-[Serializable]
-public class VRConnection : SaveElement
+namespace LayerBottom
 {
+    [Serializable]
+    public class VRConnection : SaveElement
+    {
 
-    [SerializeReference] public VRPort start;
-    [SerializeReference] public VRPort end;
+        [SerializeReference] public VRPort start;
+        [SerializeReference] public VRPort end;
     
     
-    public event Action OnPortChanged;
-    public event Action<VRData> OnActive;
+        public event Action OnPortChanged;
+        public event Action<VRData> OnActive;
 
-    int lastTick = 0;
+        int lastTick = 0;
 
-    public VRConnection()
-    {
-        isRoot = true;
-    }
-    public VRPort GetOtherPort(VRPort myPort)
-    {
-        VRPort otherPort = null;
-        if (start == myPort)
-            otherPort = end;
-        if (end == myPort)
-            otherPort = start;
-        return otherPort;
-    }
-
-
-    public VRData GetData()
-    {
-
-        if (start == null || !CheckTick())
-            return null;
-
-        VRData vrData = start.GetData();
-        OnActive?.Invoke(vrData);
-
-
-        return vrData;
-    }
-    public void SetData(VRData data)
-    {
-        if (end == null || !CheckTick())
-            return;
-
-        OnActive?.Invoke(data);
-
-        end.SetData(data);
-    }
-
-    public bool CheckTick()
-    {
-
-        if (lastTick == VRManager.tickIndex)
+        public VRConnection()
         {
-            OnActive?.Invoke(null);
-            return false;
+            isRoot = true;
         }
-        lastTick = VRManager.tickIndex;
-        return true;
-    }
+        public VRPort GetOtherPort(VRPort myPort)
+        {
+            VRPort otherPort = null;
+            if (start == myPort)
+                otherPort = end;
+            if (end == myPort)
+                otherPort = start;
+            return otherPort;
+        }
+
+
+        public VRData GetData()
+        {
+
+            if (start == null || !CheckTick())
+                return null;
+
+            VRData vrData = start.GetData();
+            OnActive?.Invoke(vrData);
+
+
+            return vrData;
+        }
+        public void SetData(VRData data)
+        {
+            if (end == null || !CheckTick())
+                return;
+
+            OnActive?.Invoke(data);
+
+            end.SetData(data);
+        }
+
+        public bool CheckTick()
+        {
+
+            if (lastTick == VRManager.tickIndex)
+            {
+                OnActive?.Invoke(null);
+                return false;
+            }
+            lastTick = VRManager.tickIndex;
+            return true;
+        }
     
 
 
-    public void ConnectStart(VRPort port)
-    {
-        if (start == port)
-            return;
+        public void ConnectStart(VRPort port)
+        {
+            if (start == port)
+                return;
 
-        this.start = port;
+            this.start = port;
 
-        OnPortChanged?.Invoke();
-    }
+            OnPortChanged?.Invoke();
+        }
 
-    public void ConnectEnd(VRPort port)
-    {
-        if (end == port)
-            return;
+        public void ConnectEnd(VRPort port)
+        {
+            if (end == port)
+                return;
 
-        this.end = port;
+            this.end = port;
 
-        OnPortChanged?.Invoke();
-    }
+            OnPortChanged?.Invoke();
+        }
 
-    public bool Connect(VRPort portA)
-    {
-        if (!CanConnect(portA))
-            return false;
+        public bool Connect(VRPort portA)
+        {
+            if (!CanConnect(portA))
+                return false;
         
-        //TODO
+            //TODO
 
-        return true;
-    }
-    public bool Connect(VRPort portA, VRPort portB)
-    {
-        if (!CanConnect(portA, portB))
-            return false;
-        if (!portA.CanConnect(portB.dataType))
-            return false;
-        if (!portA.CanConnect(portB.dataType))
-            return false;
-
-        start = portA.portType == PortType.OUTPUT ? portA : portB;
-        end = portA.portType == PortType.INPUT ? portA : portB;
-
-        start.AddConnection(this);
-        end.AddConnection(this);
-
-        return true;
-    }
-
-    public bool CanConnect(VRPort portA, VRPort portB)
-    {
-        if (portA == null && portB == null)
-            return false;
-        if (portA == null ^ portB == null)
             return true;
-        if (!portA.CanConnect(portB.dataType))
-            return false;
-        if (!portB.CanConnect(portA.dataType))
-            return false;
+        }
+        public bool Connect(VRPort portA, VRPort portB)
+        {
+            if (!CanConnect(portA, portB))
+                return false;
+            if (!portA.CanConnect(portB.dataType))
+                return false;
+            if (!portA.CanConnect(portB.dataType))
+                return false;
 
-        return true;
-    }
+            start = portA.portType == PortType.OUTPUT ? portA : portB;
+            end = portA.portType == PortType.INPUT ? portA : portB;
 
-    public bool CanConnect(VRPort port)
-    {
-        if (GetActivePort() == null)
+            start.AddConnection(this);
+            end.AddConnection(this);
+
             return true;
+        }
 
-        return CanConnect(GetActivePort(), port);   
-    }
+        public bool CanConnect(VRPort portA, VRPort portB)
+        {
+            if (portA == null && portB == null)
+                return false;
+            if (portA == null ^ portB == null)
+                return true;
+            if (!portA.CanConnect(portB.dataType))
+                return false;
+            if (!portB.CanConnect(portA.dataType))
+                return false;
 
-    public VRPort GetActivePort()
-    {
+            return true;
+        }
 
-        if (start != null)
-            return start;
+        public bool CanConnect(VRPort port)
+        {
+            if (GetActivePort() == null)
+                return true;
 
-        if (end != null)
-            return end;
+            return CanConnect(GetActivePort(), port);   
+        }
 
-        return null;
-    }
+        public VRPort GetActivePort()
+        {
 
-    public override void Delete()
-    {
-        start?.RemoveConnection(this);
-        end?.RemoveConnection(this);
+            if (start != null)
+                return start;
 
-        start = end = null;
+            if (end != null)
+                return end;
 
-        base.Delete();
+            return null;
+        }
+
+        public override void Delete()
+        {
+            start?.RemoveConnection(this);
+            end?.RemoveConnection(this);
+
+            start = end = null;
+
+            base.Delete();
+        }
     }
 }

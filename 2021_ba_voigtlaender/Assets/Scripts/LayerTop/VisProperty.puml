@@ -1,0 +1,6 @@
+@startuml
+class VisProperty {
+    + <<override>> IsType(vrLogicElement:VRLogicElement) : bool
+}
+VisLogicElement <|-- VisProperty
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class OnHoverLine {
+    + inactiveAlpha : float = 0
+    + activeAlpha : float = 1
+    + linerenderer : LineRenderer
+    + <<override>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<override>> OnPointerExit(eventData:PointerEventData) : void
+    + Revert() : void
+}
+UIOnHoverEvent <|-- OnHoverLine
+@enduml

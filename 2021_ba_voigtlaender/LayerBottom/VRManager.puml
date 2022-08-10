@@ -1,0 +1,21 @@
+@startuml
+class VRManager {
+    + {static} instance : VRManager
+    +  <<event>> OnInitVRObject : Action<VRObject> 
+    +  <<event>> OnInitVREvent : Action<VREvent> 
+    +  <<event>> OnInitVRVariable : Action<VRVariable> 
+    +  <<event>> OnInitVRConnection : Action<VRConnection> 
+    +  <<event>> OnInitVRAction : Action<VRAction> 
+    + {static} tickIndex : int = 0
+    - Awake() : void
+    - Update() : void
+    - FixedUpdate() : void
+    + InitVREvent(name:string, notify:bool) : VREvent
+    + InitVRAction(name:string, notify:bool) : VRAction
+    + InitVRConnection(start:VRPort, end:VRPort, notify:bool) : VRConnection
+    + InitVRObject(gameObject:GameObject, position:Vector3, notify:bool) : VRObject
+    + InitVRVariable(vrData:VRData, notify:bool) : VRVariable
+    + {static} GetAllSubclassOf(parent:Type) : IEnumerable<Type>
+}
+MonoBehaviour <|-- VRManager
+@enduml

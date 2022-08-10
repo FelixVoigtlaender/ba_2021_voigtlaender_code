@@ -1,0 +1,13 @@
+@startuml
+class TestLoad {
+    + testData : TestData
+    + testDataB : TestData
+    + jsonString : string
+    - Start() : void
+}
+class TestData {
+    + type : Type
+}
+MonoBehaviour <|-- TestLoad
+TestLoad +-- TestData
+@enduml

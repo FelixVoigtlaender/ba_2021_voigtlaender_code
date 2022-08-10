@@ -1,40 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
-[System.Serializable]
-public class VRTab : VRLogicElement
+
+namespace LayerBottom
 {
-    public event Action<bool> OnIsActiveChanged;
-    public bool IsActive
+    [System.Serializable]
+    public class VRTab : VRLogicElement
     {
-        get 
+        public event Action<bool> OnIsActiveChanged;
+        public bool IsActive
         {
-            return isActive;
+            get 
+            {
+                return isActive;
+            }
+            set
+            {
+                isActive = value;
+                OnIsActiveChanged?.Invoke(value);
+                if(!isActive)
+                    Detach();
+            }
         }
-        set
+        public string name = "UNASSIGNED";
+
+
+        public VRTab(string name = "UNASSIGNED")
         {
-            isActive = value;
-            OnIsActiveChanged?.Invoke(value);
-            if(!isActive)
-                Detach();
+            Setup(name);
         }
-    }
-    public string name = "UNASSIGNED";
+        public void Setup(string name)
+        {
+            this.name = name;
+            base.Setup();
+        }
 
-
-    public VRTab(string name = "UNASSIGNED")
-    {
-        Setup(name);
-    }
-    public void Setup(string name)
-    {
-        this.name = name;
-        base.Setup();
-    }
-
-    public override string Name()
-    {
-        return name;
+        public override string Name()
+        {
+            return name;
+        }
     }
 }

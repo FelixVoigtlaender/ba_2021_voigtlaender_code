@@ -195,7 +195,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &3734418854554584024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clampUpDown: 1
-  centerType: 1
+  centerType: 0
+  useParentAngle: 1
 --- !u!114 &3734418854554584023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,9 +261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleRatio: 0.001
   minScaleRatio: 0.001
-  useDistance: 0
-  centerType: 1
-  useXRRigScale: 1
+  useDistance: 1
+  centerType: 0
+  useXRRigScale: 0
 --- !u!222 &2519630159420553249
 CanvasRenderer:
   m_ObjectHideFlags: 0

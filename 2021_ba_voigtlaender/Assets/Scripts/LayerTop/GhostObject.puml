@@ -1,0 +1,25 @@
+@startuml
+class GhostObject {
+    + material : Material
+    + lineRenderer : LineRenderer
+    myMeshFilter : MeshFilter
+    myMeshRenderer : MeshRenderer
+    + datTransform : DatTransform
+    + datRecording : DatRecording
+    playCoroutine : Coroutine
+    recordCoroutine : Coroutine
+    onAbort : Action
+    onComplete : Action
+    skin : Vector3
+    - Awake() : void
+    - Reset() : void
+    - Update() : void
+    + Setup(datTransform:DatTransform) : void
+    + Setup(datRecording:DatRecording) : void
+    + Record(isRecording:bool, OnAbort:Action) : void
+    + Play(isPlaying:bool, OnCompleted:Action) : void
+    - Record(fps:float, datRecording:DatRecording) : IEnumerator
+    - Play(fps:float, datRecording:DatRecording) : IEnumerator
+}
+MonoBehaviour <|-- GhostObject
+@enduml

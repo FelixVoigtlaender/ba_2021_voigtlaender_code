@@ -1,0 +1,7 @@
+@startuml
+class PanelHolder {
+    Start() : void
+    Update() : void
+}
+MonoBehaviour <|-- PanelHolder
+@enduml

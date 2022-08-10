@@ -1,0 +1,13 @@
+@startuml
+class OnHoverTilt {
+    + tiltTransform : Transform
+    + rectTransform : RectTransform
+    + rotation : Vector3
+    cachedRotation : Vector3
+    Start() : void
+    + <<override>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<override>> OnPointerExit(eventData:PointerEventData) : void
+    + Revert() : void
+}
+UIOnHoverEvent <|-- OnHoverTilt
+@enduml

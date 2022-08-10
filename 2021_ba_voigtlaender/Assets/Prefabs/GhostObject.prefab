@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3117259101769172208}
   - component: {fileID: 692660845}
   - component: {fileID: 1847295579162103149}
+  - component: {fileID: 3233324681335292628}
   m_Layer: 0
   m_Name: GhostObject
   m_TagString: Untagged
@@ -98,6 +99,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: fa231237c9800cf4da55a2b154906b31, type: 2}
   lineRenderer: {fileID: 692660845}
+  datTransform:
+    datObj:
+      id: 0
+    datPosition:
+      id: 0
+    datRotation:
+      id: 0
+    datLocalScale:
+      id: 0
+  datRecording:
+    datTransform:
+      id: 0
+    value: []
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!120 &692660845
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -143,7 +161,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.005
+    widthMultiplier: 0.05
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -161,9 +179,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.7490196, b: 1, a: 0.39215687}
+      key0: {r: 0, g: 0.7490196, b: 1, a: 1}
       key1: {r: 0, g: 0.7490196, b: 1, a: 0.39215687}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 0.39215687}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -179,7 +197,7 @@ LineRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -208,3 +226,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d5f7e86ed3d324a8bd51da7ab20350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3233324681335292628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117259101769172210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44607371b5aa9f446845ebf72326cec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modeName: PLAY

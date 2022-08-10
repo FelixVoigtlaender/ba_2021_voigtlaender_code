@@ -1,0 +1,15 @@
+@startuml
+class PanelButton {
+    + panelTransform : Transform
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    inputManager : fvInputManager
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    - Start() : void
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + OnModeChanged(value:bool) : void
+}
+MonoBehaviour <|-- PanelButton
+@enduml

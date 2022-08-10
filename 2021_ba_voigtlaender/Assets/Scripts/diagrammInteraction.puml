@@ -1,0 +1,156 @@
+
+!include .\\BlockCode.puml
+!include .\\BlockDrag.puml
+!include .\\BlockRotate.puml
+!include .\\Extensions.puml
+!include .\\PassDrag.puml
+!include .\\SceneManagement.puml
+!include .\\VRDebug.puml
+!include .\\Interaction\ConnectionGrab.puml
+!include .\\Interaction\DisplayButton.puml
+!include .\\Interaction\fvInputManager.puml
+!include .\\Interaction\fvInputModeManager.puml
+!include .\\Interaction\HandRemover.puml
+!include .\\Interaction\HandSpawner.puml
+!include .\\Interaction\InitLogic.puml
+!include .\\Interaction\ModeSetup.puml
+!include .\\Interaction\MoveFly.puml
+!include .\\Interaction\MoveGrab.puml
+!include .\\Interaction\PanelButton.puml
+!include .\\Interaction\SelectObject.puml
+!include .\\Interaction\TransformGrab.puml
+@startuml
+
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/black-knight/puml-theme-black-knight.puml
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/bluegray/puml-theme-bluegray.puml
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/cerulean-outline/puml-theme-cerulean-outline.puml
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/materia-outline/puml-theme-materia-outline.puml
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/cerulean/puml-theme-cerulean.puml
+'!include https://raw.githubusercontent.com/bschwarz/puml-themes/master/themes/sketchy-outline/puml-theme-sketchy-outline.puml
+
+!theme sketchy
+
+
+left to right direction
+skinparam dpi 500
+
+'skinparam nodesep 100
+skinparam ranksep 150
+
+
+
+namespace LayerSave #DDDDDD {
+    !include .\\LayerSave\SaveElement.puml
+    !include .\\LayerSave\SaveManager.puml
+    
+    SaveManager -- "1" VRProgramm
+    VRProgramm -- "*" SaveElement
+    VRProgramm -- "*" GameObjectReference
+}
+
+
+
+
+
+
+
+/'
+
+namespace LayerBottom #DDDDDD {
+
+
+    namespace Data #DDDDDD {
+        !include .\\LayerBottom\VRData.puml
+    }
+
+    !include .\\LayerBottom\GameModeManager.puml
+    !include .\\LayerBottom\VRManager.puml
+    '!include .\\LayerBottom\VRAction.puml
+        
+    
+    !include .\\LayerBottom\VRObject.puml
+    !include .\\LayerBottom\VRConnection.puml
+    !include .\\LayerBottom\VRLogicElement.puml
+    !include .\\LayerBottom\VRPort.puml
+    
+    
+    !include .\\LayerBottom\VRVariable.puml
+    !include .\\LayerBottom\VRTab.puml
+    !include .\\LayerBottom\VRProperty.puml
+    !include .\\LayerBottom\VREvent.puml
+        
+    'VRLogicElement -d[hidden]--- VRProperty
+    'VRLogicElement -d[hidden]--- VREvent
+        
+    
+}
+
+
+
+namespace LayerTop #DDDDDD {
+
+
+!include .\\LayerTop\VisRecording.puml
+!include .\\LayerTop\MiniatureMaker.puml
+!include .\\LayerTop\ActionPopulation.puml
+!include .\\LayerTop\VisConnection.puml
+!include .\\LayerTop\VisManager.puml
+!include .\\LayerTop\VisLogicElement.puml
+!include .\\LayerTop\VisObject.puml
+!include .\\LayerTop\GhostObject.puml
+!include .\\LayerTop\EventPopulation.puml
+!include .\\LayerTop\VisPort.puml
+
+
+
+'!include .\\LayerTop\VisAction.puml
+!include .\\LayerTop\VisProperty.puml
+!include .\\LayerTop\VisEvent.puml
+!include .\\LayerTop\VisVariable.puml
+!include .\\LayerTop\VisTab.puml
+
+
+}
+
+
+
+
+'VRPort --  PortType
+'VRPort --  VRData
+
+'VRConnection "1" -- "2" VRPort
+'VRConnection -- VRData
+
+'VRVariable -- VRData
+
+
+'VRLogicElement -- "*" VRVariable
+'VRLogicElement -- "*" VRPort
+'VRLogicElement -- "*" VRTab
+
+'/
+
+@enduml
+!include .\\TestScripts\ContentPopulation.puml
+!include .\\TestScripts\TestLoad.puml
+!include .\\UI\BetterColorPicker.puml
+!include .\\UI\BetterToggle.puml
+!include .\\UI\BezierCurve.puml
+!include .\\UI\DropdownWorkaround.puml
+!include .\\UI\DropShadow.puml
+!include .\\UI\LoadingCircle.puml
+!include .\\UI\Panel.puml
+!include .\\UI\PanelHolder.puml
+!include .\\UI\Tooltip.puml
+!include .\\UI\TooltipContent.puml
+!include .\\UI\TweenScaler.puml
+!include .\\UI\UIBillboard.puml
+!include .\\UI\UICenter.puml
+!include .\\UI\UIHover.puml
+!include .\\UI\VRCanvasScaler.puml
+!include .\\UI\HoverFeedback\OnHoverLine.puml
+!include .\\UI\HoverFeedback\OnHoverMove.puml
+!include .\\UI\HoverFeedback\OnHoverScale.puml
+!include .\\UI\HoverFeedback\OnHoverShake.puml
+!include .\\UI\HoverFeedback\OnHoverTilt.puml
+!include .\\UI\HoverFeedback\UIOnHoverEvent.puml

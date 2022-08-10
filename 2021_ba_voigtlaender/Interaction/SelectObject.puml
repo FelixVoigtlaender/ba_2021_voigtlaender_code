@@ -1,0 +1,16 @@
+@startuml
+class SelectObject {
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    inputManager : fvInputManager
+    +  <<event>> OnSelectedObject : Action<GameObject> 
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    - Start() : void
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + OnButtonUp(context:InputAction.CallbackContext) : void
+    + Select() : GameObject
+}
+MonoBehaviour <|-- SelectObject
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class LoadingCircle {
+    + image : Image
+    + canvas : Canvas
+    + canvasGroup : CanvasGroup
+    + fillAmount : float <<get>> <<set>>
+    + alpha : float <<get>> <<set>>
+}
+MonoBehaviour <|-- LoadingCircle
+@enduml

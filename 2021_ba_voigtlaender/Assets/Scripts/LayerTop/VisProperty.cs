@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using LayerBottom;
 
-public class VisProperty : VisLogicElement
+namespace LayerTop
 {
-    public override bool IsType(VRLogicElement vrLogicElement)
+    public class VisProperty : VisLogicElement
     {
-        return vrLogicElement is VRProperty;
-    }
+        public override bool IsType(VRLogicElement vrLogicElement)
+        {
+            return vrLogicElement is VRProperty;
+        }
 
+    }
 }

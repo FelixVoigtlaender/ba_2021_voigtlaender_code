@@ -1,0 +1,32 @@
+@startuml
+abstract class VRLogicElement {
+    + vrInputs : List<VRPort>
+    + vrOutputs : List<VRPort>
+    + vrVariables : List<VRVariable>
+    + vrTabs : List<VRTab>
+    +  <<event>> OnActiveChanged : Action<bool> 
+    # _isActive : bool = true
+    + isActive : bool <<get>> <<set>>
+    + {abstract} Name() : string
+    + <<virtual>> Setup() : void
+    + <<virtual>> SetupPorts() : void
+    + <<virtual>> GetData() : VRData
+    + <<virtual>> SetData(vrData:VRData) : void
+    + <<virtual>> SetupInputs() : void
+    + <<virtual>> SetupOutputs() : void
+    + <<virtual>> SetupVariables() : void
+    + <<virtual>> SetupTabs() : void
+    + <<virtual>> SetTabActive(index:int) : void
+    + <<virtual>> GetActiveTab() : VRTab
+    + <<virtual>> VariablesCheck() : bool
+    + <<virtual>> Trigger() : void
+    + <<override>> Delete() : void
+    + <<virtual>> Detach() : void
+    + FindVariable(name:string) : VRVariable
+    + FindVariables(dataType:VRData) : List<VRVariable>
+    + FindVariable(dataType:VRData) : VRVariable
+    + ShallowCopy() : VRLogicElement
+    + CreateInstance() : VRLogicElement
+}
+SaveElement <|-- VRLogicElement
+@enduml

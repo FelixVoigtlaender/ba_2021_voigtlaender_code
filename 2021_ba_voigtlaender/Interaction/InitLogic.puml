@@ -1,0 +1,27 @@
+@startuml
+class InitLogic {
+    + loadingCircle : LoadingCircle
+    + loadDelay : float = 0.5f
+    loadStart : float = 0
+    logicObject : LogicObject
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    inputManager : fvInputManager
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    + layerMask : LayerMask
+    + maxDistance : float
+    - Start() : void
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + Update() : void
+}
+class LogicObject {
+    + gameObject : GameObject
+    + hitPoint : Vector3
+    + hitNormal : Vector3
+    + LogicObject(gameObject:GameObject, hitPoint:Vector3, hitNormal:Vector3)
+}
+MonoBehaviour <|-- InitLogic
+InitLogic +-- LogicObject
+@enduml

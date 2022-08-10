@@ -38,7 +38,6 @@ public class fvInputModeManager : MonoBehaviour
         {
             displayButton.SetButtonText("");
         }
-        print("switching to mode: " + modeName);
         foreach (Mode mode in modes)
         {
             mode.isActive = false;
@@ -65,6 +64,14 @@ public class fvInputModeManager : MonoBehaviour
         mode.buttonModeHandlers.Add(handler);
         return handler;
     }
+    
+    public ButtonModeHandler AddButtonMode(ButtonSettings buttonSettings)
+    {
+        ButtonModeHandler handler =
+            AddButtonMode(buttonSettings.button, buttonSettings.buttonText, buttonSettings.modeName);
+        buttonSettings.handler = handler;
+        return handler;
+    }
 
     public Mode FindMode(string modeName)
     {
@@ -89,6 +96,32 @@ public class fvInputModeManager : MonoBehaviour
         return null;
     }
 
+
+    [Serializable]
+    public class ButtonSettings
+    {
+        public InputActionReference button;
+        public string modeName = "";
+        public string buttonText = "";
+
+        private ButtonModeHandler _handler;
+
+        public ButtonModeHandler handler
+        {
+            get
+            {
+                if (_handler == null)
+                {
+                    _handler = fvInputModeManager.instance.AddButtonMode(this);
+                }
+                return _handler;
+            }
+            set
+            {
+                _handler = value;
+            }
+        }
+    }
 
     public class Mode
     {

@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using LayerBottom;
+using LayerTop;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -27,6 +30,9 @@ public class InitLogic : MonoBehaviour
     [Header("Raycast")]
     public LayerMask layerMask;
     public float maxDistance;
+
+
+    private OutlineObject prevOutlineObject;
 
     private void Start()
     {
@@ -80,6 +86,8 @@ public class InitLogic : MonoBehaviour
         {
             loadingCircle.alpha = 0;
             logicObject = null;
+            
+            HandleOutline();
             return;
         }
 
@@ -96,6 +104,52 @@ public class InitLogic : MonoBehaviour
             logicObject = null;
         }
 
+    }
+
+    public void HandleOutline()
+    {
+        
+        if(!handler.mode.isActive)
+            return;
+        
+        OutlineObject newOutlineObject = null;
+        if (inputManager.isUIHitClosest)
+        {
+            newOutlineObject = null;
+        }
+        else
+        {
+            if (inputManager.worldRaycastHit.HasValue)
+            {
+                GameObject gameObject = inputManager.worldRaycastHit.Value.collider.gameObject;
+                if (prevOutlineObject != null)
+                {
+                    if (prevOutlineObject.gameObject == gameObject)
+                    {
+                        newOutlineObject = prevOutlineObject;
+                    }
+                    else
+                    {
+                        newOutlineObject = VisManager.instance.FindOutlineObject(gameObject);
+                    }
+                }
+                else
+                {
+                    newOutlineObject = VisManager.instance.FindOutlineObject(gameObject);
+                }
+            }
+        }
+
+
+        if (prevOutlineObject != newOutlineObject)
+        {
+            if(prevOutlineObject!=null)
+                prevOutlineObject.quickOutline.enabled = false;
+            if(newOutlineObject != null)
+                newOutlineObject.quickOutline.enabled = true;
+        }
+
+        prevOutlineObject = newOutlineObject;
     }
 
 

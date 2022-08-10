@@ -1,0 +1,41 @@
+@startuml
+class VisLogicElement {
+    # element : VRLogicElement
+    + myButton : Button
+    + showButton : Button
+    + inputHolder : RectTransform
+    + outputHolder : RectTransform
+    + variableHolder : RectTransform
+    + tabHolder : RectTransform
+    + tabToggleHolder : RectTransform
+    + tabDropdown : Dropdown
+    + toggleIsActive : BetterToggle
+    + textName : Text
+    + closeButton : Button
+    rootCanvas : Canvas
+    rect : RectTransform
+    + blockProperties : CanvasGroup
+    + visInPorts : List<VisPort>
+    + visOutPorts : List<VisPort>
+    + visVariables : List<VisVariable>
+    + visTab : List<VisTab>
+    + isDeleteAble : bool = true
+    + <<virtual>> Setup(element:VRLogicElement) : void
+    + Close() : void
+    + OnIsActiveChanged(value:bool) : void
+    - Update() : void
+    + <<virtual>> Init() : void
+    + GetRootCanvas() : Canvas
+    PopulateVisTabs(element:VRLogicElement, holder:Transform) : List<VisTab>
+    + SetTabs(value:bool) : void
+    PopulateVisVariables(element:VRLogicElement, holder:Transform) : List<VisVariable>
+    + PopulateVisPorts(element:VRLogicElement) : void
+    PopulateVisPort(holder:Transform, ports:List<VRPort>) : List<VisPort>
+    + <<virtual>> IsType(vrLogicElement:VRLogicElement) : bool
+    + <<virtual>> OnDelete() : void
+    + Delete() : void
+    + GetElement() : VRLogicElement
+    + <<virtual>> Trigger() : void
+}
+MonoBehaviour <|-- VisLogicElement
+@enduml

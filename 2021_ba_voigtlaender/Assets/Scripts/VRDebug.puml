@@ -1,0 +1,15 @@
+@startuml
+class VRDebug {
+    {static} instance : VRDebug
+    textField : TMPro.TMP_Text
+    logText : string
+    setLogText : string
+    {static} logCount : int
+    + Awake() : void
+    + LateUpdate() : void
+    + {static} Log(message:string) : void
+    + {static} CutLines(message:string, lineCount:int) : string
+    + {static} SetLog(message:string) : void
+}
+MonoBehaviour <|-- VRDebug
+@enduml

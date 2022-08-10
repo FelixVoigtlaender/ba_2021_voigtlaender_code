@@ -1,0 +1,19 @@
+@startuml
+class ModeSetup {
+    + modeButtons : List<ModeButton>
+    Start() : void
+}
+class ModeButton {
+    + fromMode : string = ""
+    + toMode : string = ""
+    + button : InputActionReference
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    + isInitial : bool = false
+    + Setup(inputModeManager:fvInputModeManager) : void
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + OnButtonUp(context:InputAction.CallbackContext) : void
+}
+MonoBehaviour <|-- ModeSetup
+ModeSetup +-- ModeButton
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class TooltipContent {
+    + description : string = ""
+    + OnPointerEnter(eventData:PointerEventData) : void
+    + OnPointerExit(eventData:PointerEventData) : void
+}
+MonoBehaviour <|-- TooltipContent
+IPointerEnterHandler <|-- TooltipContent
+IPointerExitHandler <|-- TooltipContent
+@enduml

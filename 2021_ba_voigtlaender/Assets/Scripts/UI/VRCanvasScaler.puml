@@ -1,0 +1,18 @@
+@startuml
+class VRCanvasScaler {
+    rect : RectTransform
+    + scaleRatio : float = 0.0005f
+    + minScaleRatio : float = 0.001f
+    + useDistance : bool = true
+    + centerType : CenterType
+    + useXRRigScale : bool = false
+    xrRig : XRRig
+    - Awake() : void
+    - Start() : void
+    + Update() : void
+    + GetDistance() : float
+    - OnValidate() : void
+    + GetRectTransform() : RectTransform
+}
+MonoBehaviour <|-- VRCanvasScaler
+@enduml

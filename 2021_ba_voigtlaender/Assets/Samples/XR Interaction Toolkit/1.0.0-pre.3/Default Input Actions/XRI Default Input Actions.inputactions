@@ -178,6 +178,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Y",
+                    "type": "Button",
+                    "id": "40d40d01-9598-459a-a49a-0d29d7a85043",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -475,6 +483,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Event",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67d4ed9e-d1ef-49b3-ae5c-800efc32f2b8",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

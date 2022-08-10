@@ -1,0 +1,8 @@
+@startuml
+class UIHover {
+    + offset : Vector3
+    - Update() : void
+    - OnValidate() : void
+}
+MonoBehaviour <|-- UIHover
+@enduml

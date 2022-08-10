@@ -1,0 +1,16 @@
+@startuml
+class VisTab {
+    vrTab : VRTab
+    toggle : Toggle
+    otherVisLogicElement : VisLogicElement
+    +  <<event>> OnHide : Action 
+    + <<override>> IsType(vrLogicElement:VRLogicElement) : bool
+    + Hide() : void
+    + <<override>> Setup(element:VRLogicElement) : void
+    + OnIsActiveChanged(value:bool) : void
+    + SetToggle(toggle:Toggle) : void
+    + SetOtherVisElement(visProperty:VisLogicElement) : void
+    + <<override>> Trigger() : void
+}
+VisLogicElement <|-- VisTab
+@enduml

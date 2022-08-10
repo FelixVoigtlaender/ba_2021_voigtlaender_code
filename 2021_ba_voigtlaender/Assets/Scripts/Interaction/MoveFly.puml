@@ -1,0 +1,10 @@
+@startuml
+class MoveFly {
+    inputManager : fvInputManager
+    handler : fvInputManager.ButtonHandler
+    + xrRig : Transform
+    + speed : float = 0.01f
+    - Awake() : void
+}
+MonoBehaviour <|-- MoveFly
+@enduml

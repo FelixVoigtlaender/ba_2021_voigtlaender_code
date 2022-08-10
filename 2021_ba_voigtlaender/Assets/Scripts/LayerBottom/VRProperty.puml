@@ -1,0 +1,172 @@
+@startuml
+abstract class VRProperty {
+    # vrObject : VRObject
+    # output : VRPort
+    # input : VRPort
+    {static} allProperties : List<VRProperty>
+    + {abstract} IsType(vrObject:VRObject) : bool
+    + <<virtual>> Setup(vrObject:VRObject) : void
+    + <<virtual>> CanBeUsed() : bool
+    + {static} GetAllPorperties() : List<VRProperty>
+}
+class PropTrigger {
+    eventVariable : VRVariable
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> Setup(vrObject:VRObject) : void
+    + <<override>> SetupVariables() : void
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupInputs() : void
+    + <<override>> GetData() : VRData
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+}
+class PropEnabled {
+    - activeTab : VRTab
+    - inactiveTab : VRTab
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetupTabs() : void
+    + <<override>> SetupVariables() : void
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+    + <<override>> GetData() : VRData
+}
+class PropPhysics {
+    - _rigid : Rigidbody
+    - rigid : Rigidbody <<get>>
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+}
+class PropWalkable {
+    - _tele : TeleportationArea
+    - tele : TeleportationArea <<get>>
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+}
+class PropGrabbable {
+    - _grab : XRGrabInteractable
+    - grab : XRGrabInteractable <<get>>
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+}
+class PropLight {
+    - settingsTab : VRTab
+    - varColor : VRVariable
+    - varRange : VRVariable
+    - _light : Light
+    - light : Light <<get>>
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetupTabs() : void
+    + <<override>> Trigger() : void
+}
+class PropObj {
+    + <<override>> CanBeUsed() : bool
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupInputs() : void
+    + <<override>> GetData() : VRData
+    + <<override>> Trigger() : void
+}
+class PropPosition {
+    positionVariable : VRVariable
+    + <<override>> CanBeUsed() : bool
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetupVariables() : void
+    + <<override>> GetData() : VRData
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+}
+class PropMovement {
+    tabTeleport : VRTab
+    tabMove : VRTab
+    varPosition : VRVariable
+    varDuration : VRVariable
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> CanBeUsed() : bool
+    + <<override>> SetupTabs() : void
+    + <<override>> Trigger() : void
+    + <<override>> GetData() : VRData
+}
+class PropScale {
+    scaleVariable : VRVariable
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> CanBeUsed() : bool
+    + <<override>> SetupVariables() : void
+    + <<override>> GetData() : VRData
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> Trigger() : void
+}
+class PropTransform {
+    tabTransform : VRTab
+    tabRecording : VRTab
+    varTransform : VRVariable
+    varDuration : VRVariable
+    varRecording : VRVariable
+    varLoop : VRVariable
+    varLockPosition : VRVariable
+    varLockRotation : VRVariable
+    varLockScale : VRVariable
+    playing : bool = false
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupTabs() : void
+    + <<override>> Trigger() : void
+    - Play(duration:float, datRecording:DatRecording, OnComplete:Action) : IEnumerator
+    + <<override>> GetData() : VRData
+}
+class PropButton {
+    varTrigger : VRVariable
+    button : Button
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> CanBeUsed() : bool
+    + <<override>> SetupVariables() : void
+    + <<override>> GetData() : VRData
+}
+class PropColor {
+    varColor : VRVariable
+    tabColor : VRTab
+    renderer : Renderer
+    image : Image
+    rawImage : RawImage
+    text : Text
+    + <<override>> Name() : string
+    + <<override>> IsType(vrObject:VRObject) : bool
+    + <<override>> CanBeUsed() : bool
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupTabs() : void
+    SetupColorComponent(vrObject:VRObject) : bool
+    GetColor() : Color
+    SetColor(color:Color) : void
+    + <<override>> Trigger() : void
+    + <<override>> SetData(vrData:VRData) : void
+    + <<override>> GetData() : VRData
+}
+VRLogicElement <|-- VRProperty
+VRProperty <|-- PropTrigger
+VRProperty <|-- PropEnabled
+VRProperty <|-- PropPhysics
+VRProperty <|-- PropWalkable
+VRProperty <|-- PropGrabbable
+VRProperty <|-- PropLight
+VRProperty <|-- PropObj
+VRProperty <|-- PropPosition
+VRProperty <|-- PropMovement
+VRProperty <|-- PropScale
+VRProperty <|-- PropTransform
+VRProperty <|-- PropButton
+VRProperty <|-- PropColor
+@enduml

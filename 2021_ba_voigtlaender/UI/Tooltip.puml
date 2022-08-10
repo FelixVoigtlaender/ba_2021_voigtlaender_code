@@ -1,0 +1,13 @@
+@startuml
+class Tooltip {
+    + {static} instance : Tooltip
+    activeContent : TooltipContent
+    + textField : Text
+    + background : RectTransform
+    canvas : Canvas
+    - Awake() : void
+    + Enter(content:TooltipContent) : void
+    + Exit(content:TooltipContent) : void
+}
+MonoBehaviour <|-- Tooltip
+@enduml

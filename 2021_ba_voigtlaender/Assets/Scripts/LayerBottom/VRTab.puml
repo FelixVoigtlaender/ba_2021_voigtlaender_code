@@ -1,0 +1,11 @@
+@startuml
+class VRTab {
+    +  <<event>> OnIsActiveChanged : Action<bool> 
+    + IsActive : bool <<get>> <<set>>
+    + name : string = "UNASSIGNED"
+    + VRTab(name:string)
+    + Setup(name:string) : void
+    + <<override>> Name() : string
+}
+VRLogicElement <|-- VRTab
+@enduml

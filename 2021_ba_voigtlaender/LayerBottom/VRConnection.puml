@@ -1,0 +1,23 @@
+@startuml
+class VRConnection {
+    + start : VRPort
+    + end : VRPort
+    +  <<event>> OnPortChanged : Action 
+    +  <<event>> OnActive : Action<VRData> 
+    lastTick : int = 0
+    + VRConnection()
+    + GetOtherPort(myPort:VRPort) : VRPort
+    + GetData() : VRData
+    + SetData(data:VRData) : void
+    + CheckTick() : bool
+    + ConnectStart(port:VRPort) : void
+    + ConnectEnd(port:VRPort) : void
+    + Connect(portA:VRPort) : bool
+    + Connect(portA:VRPort, portB:VRPort) : bool
+    + CanConnect(portA:VRPort, portB:VRPort) : bool
+    + CanConnect(port:VRPort) : bool
+    + GetActivePort() : VRPort
+    + <<override>> Delete() : void
+}
+SaveElement <|-- VRConnection
+@enduml

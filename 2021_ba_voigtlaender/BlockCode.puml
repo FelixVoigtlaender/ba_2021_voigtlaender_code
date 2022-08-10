@@ -1,0 +1,7 @@
+@startuml
+class BlockCode {
+    Start() : void
+    Update() : void
+}
+MonoBehaviour <|-- BlockCode
+@enduml

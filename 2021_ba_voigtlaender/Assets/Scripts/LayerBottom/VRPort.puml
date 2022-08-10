@@ -1,0 +1,24 @@
+@startuml
+class VRPort {
+    + portType : PortType
+    + dataType : VRData
+    + connections : List<VRConnection>
+    element : VRLogicElement
+    + toolTip : string = ""
+    +  <<event>> OnConnect : Action 
+    + VRPort(element:VRLogicElement, dataType:VRData, portType:PortType)
+    + IsConnected() : bool
+    + GetData() : VRData
+    + SetData(data:VRData) : void
+    + CanConnect(data:VRData) : bool
+    + Detach() : void
+    + <<override>> Delete() : void
+    + RemoveConnection(connection:VRConnection) : void
+    + AddConnection(connection:VRConnection) : void
+}
+enum PortType {
+    INPUT,
+    OUTPUT,
+}
+SaveElement <|-- VRPort
+@enduml

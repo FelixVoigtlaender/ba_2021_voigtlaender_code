@@ -1,0 +1,38 @@
+@startuml
+class fvInputManager {
+    + allButtonHandlers : List<ButtonHandler>
+    xrRig : XRRig
+    + rayInteractor : XRRayInteractor
+    + localRayLength : float = 1
+    + relativeRayLength : float = 1
+    + uiRaycastHit : UnityEngine.EventSystems.RaycastResult?
+    + worldRaycastHit : RaycastHit?
+    + isUIHitClosest : bool
+    + joystick : InputActionReference
+    + joystickDir : Vector2
+    + relativeJoystickDir : Vector3
+    controller : ActionBasedController
+    - Awake() : void
+    - Start() : void
+    - Update() : void
+    + HandleRayInteractor() : void
+    + HoverEntered(eventArgs:HoverEnterEventArgs) : void
+    + HoverExited(eventArgs:HoverExitEventArgs) : void
+    + SelectEntered(eventArgs:SelectEnterEventArgs) : void
+    + SelectTargeted(eventArgs:XRBaseInteractable) : void
+    + SelectExited(eventArgs:SelectExitEventArgs) : void
+    - HandleJoystick() : void
+    + FindButtonHandler(button:InputActionReference) : ButtonHandler
+}
+class ButtonHandler {
+    + button : InputActionReference
+    +  <<event>> OnButtonDown : Action<InputAction.CallbackContext> 
+    +  <<event>> OnButtonUp : Action<InputAction.CallbackContext> 
+    + isPressed : bool
+    + ButtonHandler(button:InputActionReference)
+    + ActionPerformed(context:InputAction.CallbackContext) : void
+    + ActionCanceled(context:InputAction.CallbackContext) : void
+}
+MonoBehaviour <|-- fvInputManager
+fvInputManager +-- ButtonHandler
+@enduml

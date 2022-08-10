@@ -1,0 +1,31 @@
+@startuml
+class HandRemover {
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    inputManager : fvInputManager
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    + lineRenderer : LineRenderer
+    previousB : Vector3
+    visConnections : VisConnection[]
+    - Start() : void
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + OnButtonUp(context:InputAction.CallbackContext) : void
+    + FixedUpdate() : void
+    + CheckCollision(polygon:Polygon, visConnection:VisConnection) : bool
+}
+class Polygon {
+    + mid : Vector3
+    + b : Vector3
+    + c : Vector3
+    + normal : Vector3 <<get>>
+    + Polygon(mid:Vector3, b:Vector3, c:Vector3)
+    + DrawDebug() : void
+    + Intersect(start:Vector3, end:Vector3) : bool
+    + Intersect(ray:Ray, rayLength:float) : bool
+    + {static} Intersect(p1:Vector3, p2:Vector3, p3:Vector3, ray:Ray, rayLength:float) : bool
+}
+MonoBehaviour <|-- HandRemover
+HandRemover +-- Polygon
+@enduml
