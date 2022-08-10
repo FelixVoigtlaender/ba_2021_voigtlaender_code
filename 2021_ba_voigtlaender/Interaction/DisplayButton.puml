@@ -1,0 +1,15 @@
+@startuml
+class DisplayButton {
+    + button : InputActionReference
+    + inputManager : fvInputManager
+    handler : fvInputManager.ButtonHandler
+    + buttonToggle : BetterToggle
+    + inactiveText : Text
+    + activeText : Text
+    + OnButtonDown : UnityEvent
+    + OnButtonUp : UnityEvent
+    - Awake() : void
+    + SetButtonText(buttonText:string) : void
+}
+MonoBehaviour <|-- DisplayButton
+@enduml

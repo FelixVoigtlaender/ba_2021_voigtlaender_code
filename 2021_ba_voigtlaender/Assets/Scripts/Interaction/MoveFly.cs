@@ -20,17 +20,4 @@ public class MoveFly : MonoBehaviour
         inputManager = GetComponent<fvInputManager>();
     }
 
-    public void Update()
-    {
-
-
-        return;
-
-        Vector3 difference = inputManager.relativeJoystickDir * speed;
-
-        xrRig.transform.position += new Vector3(difference.x, 0, difference.z);
-        xrRig.transform.localScale += Vector3.one * difference.y;
-
-        xrRig.transform.localScale = Mathf.Clamp(xrRig.transform.localScale.x, 1, 10) * Vector3.one;
-    }
 }

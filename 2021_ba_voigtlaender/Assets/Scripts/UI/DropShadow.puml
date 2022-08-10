@@ -1,0 +1,18 @@
+@startuml
+class DropShadow {
+    - shadowColor : Color
+    - shadowDistance : Vector2
+    - m_UseGraphicAlpha : bool = true
+    + iterations : int = 5
+    + shadowSpread : Vector2
+    # DropShadow()
+    + effectColor : Color <<get>> <<set>>
+    + ShadowSpread : Vector2 <<get>> <<set>>
+    + Iterations : int <<get>> <<set>>
+    + EffectDistance : Vector2 <<get>> <<set>>
+    + useGraphicAlpha : bool <<get>> <<set>>
+    DropShadowEffect(verts:List<UIVertex>) : void
+    + <<override>> ModifyMesh(vh:VertexHelper) : void
+}
+BaseMeshEffect <|-- DropShadow
+@enduml

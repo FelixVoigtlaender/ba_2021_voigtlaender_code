@@ -1,0 +1,7 @@
+@startuml
+class BlockRotate {
+    Start() : void
+    Update() : void
+}
+MonoBehaviour <|-- BlockRotate
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+class ConnectionGrab {
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    inputManager : fvInputManager
+    inputModeManager : fvInputModeManager
+    handler : fvInputModeManager.ButtonModeHandler
+    + objectLayer : LayerMask
+    + connectionPrefab : GameObject
+    currentConnection : BezierCurve
+    distance : float
+    currentVisConnection : VisConnection
+    - Start() : void
+    + Update() : void
+    + OnButtonDown(context:InputAction.CallbackContext) : void
+    + HandleDrag() : void
+    + OnButtonUp(context:InputAction.CallbackContext) : void
+    + InitConnection(start:Transform) : BezierCurve
+    + HandleNormals() : void
+    + GetLocalNormals(start:Vector3, end:Vector3, up:Vector3, right:Vector3) : Vector3
+}
+MonoBehaviour <|-- ConnectionGrab
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+class fvInputModeManager {
+    + {static} instance : fvInputModeManager
+    displayButtons : List<DisplayButton>
+    + modes : List<Mode>
+    + modeStack : Stack<Mode>
+    +  <<event>> OnModeChanged : Action<Mode> 
+    + Awake() : void
+    + PreviousMode() : void
+    + SwitchMode(modeName:string, addToStack:bool) : void
+    ActivateMode(newMode:Mode) : IEnumerator
+    + AddButtonMode(button:InputActionReference, buttonText:string, modeName:string) : ButtonModeHandler
+    + AddButtonMode(buttonSettings:ButtonSettings) : ButtonModeHandler
+    + FindMode(modeName:string) : Mode
+    + FindDisplayButton(button:InputActionReference) : DisplayButton
+}
+class ButtonSettings {
+    + button : InputActionReference
+    + modeName : string = ""
+    + buttonText : string = ""
+    - _handler : ButtonModeHandler
+    + handler : ButtonModeHandler <<get>> <<set>>
+}
+class Mode {
+    + name : string = ""
+    +  <<event>> onModeChange : Action<bool> 
+    + buttonModeHandlers : List<ButtonModeHandler>
+    _isActive : bool = false
+    buttons : List<ButtonModeHandler>
+    + isActive : bool <<get>> <<set>>
+    + Mode(name:string)
+}
+class ButtonModeHandler {
+    + buttonText : string = ""
+    + displayButton : DisplayButton
+    + button : InputActionReference
+    +  <<event>> OnButtonDown : Action<InputAction.CallbackContext> 
+    +  <<event>> OnButtonUp : Action<InputAction.CallbackContext> 
+    + isPressed : bool
+    + mode : Mode
+    + ButtonModeHandler(button:InputActionReference, mode:Mode, displayButton:DisplayButton, buttonText:string)
+    + ActionPerformed(context:InputAction.CallbackContext) : void
+    + ActionCanceled(context:InputAction.CallbackContext) : void
+    + OnModeChanged(value:bool) : void
+}
+MonoBehaviour <|-- fvInputModeManager
+fvInputModeManager +-- ButtonSettings
+fvInputModeManager +-- Mode
+fvInputModeManager +-- ButtonModeHandler
+@enduml

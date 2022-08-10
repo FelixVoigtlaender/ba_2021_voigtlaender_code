@@ -1,50 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniatureMaker : MonoBehaviour
+namespace LayerTop
 {
-    MeshFilter myMeshFilter;
-    MeshRenderer myMeshRenderer;
-    private void Awake()
+    public class MiniatureMaker : MonoBehaviour
     {
-        myMeshFilter = GetComponent<MeshFilter>();
-        myMeshRenderer = GetComponent<MeshRenderer>();
-    }
-
-    public void CopyMesh(GameObject otherObject)
-    {
-        // Get other mesh and meshrenderer
-        MeshFilter otherMeshFilter = otherObject.GetComponent<MeshFilter>();
-        MeshRenderer otherMeshRenderer = otherObject.GetComponent<MeshRenderer>();
-
-        // Interrupt if there are no mesh and meshrenderer
-        if (!otherMeshFilter || !otherMeshRenderer) 
+        MeshFilter myMeshFilter;
+        MeshRenderer myMeshRenderer;
+        private void Awake()
         {
-            gameObject.SetActive(false);
-            VRDebug.Log("No mesh(filter/renderer) found!");
-            return;
+            myMeshFilter = GetComponent<MeshFilter>();
+            myMeshRenderer = GetComponent<MeshRenderer>();
         }
 
-        myMeshFilter.sharedMesh = otherMeshFilter.sharedMesh;
-        myMeshRenderer.material = otherMeshRenderer.material;
+        public void CopyMesh(GameObject otherObject)
+        {
+            // Get other mesh and meshrenderer
+            MeshFilter otherMeshFilter = otherObject.GetComponent<MeshFilter>();
+            if (!otherMeshFilter || !otherMeshFilter.sharedMesh)
+            {
+                myMeshRenderer.enabled = false;
+                return;
+            }
+            MeshRenderer otherMeshRenderer = otherObject.GetComponent<MeshRenderer>();
 
-        Bounds meshBounds = myMeshFilter.sharedMesh.bounds;
-        Vector3 meshSize = meshBounds.size;
-        Vector3 objSize = otherObject.transform.lossyScale;
+            // Interrupt if there are no mesh and meshrenderer
+            if (!otherMeshFilter || !otherMeshRenderer) 
+            {
+                gameObject.SetActive(false);
+                VRDebug.Log("No mesh(filter/renderer) found!");
+                return;
+            }
 
-        Vector3 normObjSize = objSize / Mathf.Max(MaxFromVector3(objSize),0.001f);
-        Vector3 altMeshSize = new Vector3(normObjSize.x * meshSize.x, normObjSize.y * meshSize.y, normObjSize.z * meshSize.z);
-        Vector3 miniSize = normObjSize / Mathf.Max(MaxFromVector3(altMeshSize), 1f);
+            myMeshFilter.sharedMesh = otherMeshFilter.sharedMesh;
+            myMeshRenderer.material = otherMeshRenderer.material;
 
-        transform.localScale = miniSize;
+            Bounds meshBounds = myMeshFilter.sharedMesh.bounds;
+            Vector3 meshSize = meshBounds.size;
+            Vector3 objSize = otherObject.transform.lossyScale;
 
-        //VRDebug.Log(meshBounds.ToString());
-        //VRDebug.Log(normObjSize.ToString());
-    }
+            Vector3 normObjSize = objSize / Mathf.Max(MaxFromVector3(objSize),0.001f);
+            Vector3 altMeshSize = new Vector3(normObjSize.x * meshSize.x, normObjSize.y * meshSize.y, normObjSize.z * meshSize.z);
+            Vector3 miniSize = normObjSize / Mathf.Max(MaxFromVector3(altMeshSize), 1f);
 
-    float MaxFromVector3(Vector3 vector)
-    {
-        return Mathf.Max(vector.x,vector.y,vector.z);
+            transform.localScale = miniSize;
+
+            //VRDebug.Log(meshBounds.ToString());
+            //VRDebug.Log(normObjSize.ToString());
+        }
+
+        float MaxFromVector3(Vector3 vector)
+        {
+            return Mathf.Max(vector.x,vector.y,vector.z);
+        }
     }
 }

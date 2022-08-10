@@ -1,0 +1,131 @@
+@startuml
+abstract class VRData {
+    + {abstract} IsType(data:VRData) : bool
+    + {abstract} GetColor() : Color
+    + {abstract} GetName() : string
+    + {abstract} SetData(data:VRData) : void
+    +  <<event>> OnDataChanged : Action<VRData> 
+    # DataChanged() : void
+    + DecimalToColor(r:int, g:int, b:int) : Color
+}
+class DatString {
+    - value : string
+    + Value : string <<get>> <<set>>
+    + DatString(value:string)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatFloat {
+    - value : float
+    + Value : float <<get>> <<set>>
+    + useMinMax : bool = true
+    + min : float = 0
+    + max : float = 10
+    + DatFloat(value:float)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatColor {
+    - value : Color
+    + Value : Color <<get>> <<set>>
+    + DatColor(value:Color)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatInt {
+    - value : int
+    + Value : int <<get>> <<set>>
+    + DatInt(value:int)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatVector3 {
+    - value : Vector3
+    + Value : Vector3 <<get>> <<set>>
+    + DatVector3(value:Vector3)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatQuaternion {
+    - value : Quaternion
+    + Value : Quaternion <<get>> <<set>>
+    + DatQuaternion(value:Quaternion)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatEvent {
+    - value : int
+    + Value : int <<get>> <<set>>
+    + DatEvent(value:int)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatBool {
+    - value : bool
+    + Value : bool <<get>> <<set>>
+    + DatBool(value:bool)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatObj {
+    - value : VRObject
+    + Value : VRObject <<get>> <<set>>
+    + DatObj(value:VRObject)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatTransform {
+    + datObj : DatObj
+    + datPosition : DatVector3
+    + datRotation : DatQuaternion
+    + datLocalScale : DatVector3
+    + DatTransform(datObj:DatObj, datPosition:DatVector3, datRotation:DatQuaternion, datLocalScale:DatVector3)
+    + DatTransform(datObj:DatObj, position:Vector3, rotation:Quaternion, localScale:Vector3)
+    + DatTransform(datObj:DatObj)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+}
+class DatRecording {
+    + datTransform : DatTransform
+    value : List<DatTransform>
+    + Value : List<DatTransform> <<get>> <<set>>
+    + DatRecording(datTransform:DatTransform, value:List<DatTransform>)
+    + DatRecording(datTransform:DatTransform)
+    + <<override>> IsType(data:VRData) : bool
+    + <<override>> GetColor() : Color
+    + <<override>> GetName() : string
+    + <<override>> SetData(data:VRData) : void
+    + AddDatTransform(datTransform:DatTransform) : void
+}
+VRData <|-- DatString
+VRData <|-- DatFloat
+VRData <|-- DatColor
+VRData <|-- DatInt
+VRData <|-- DatVector3
+VRData <|-- DatQuaternion
+VRData <|-- DatEvent
+VRData <|-- DatBool
+VRData <|-- DatObj
+VRData <|-- DatTransform
+VRData <|-- DatRecording
+@enduml

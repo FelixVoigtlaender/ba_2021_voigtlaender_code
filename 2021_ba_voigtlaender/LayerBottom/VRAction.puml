@@ -1,0 +1,21 @@
+@startuml
+abstract class VRAction {
+    {static} allActions : List<VRAction>
+    + VRAction()
+    + {static} GetAllActions() : List<VRAction>
+    + {static} GetAction(name:string) : VRAction
+}
+class ActMove {
+    varPosition : VRVariable
+    varObject : VRVariable
+    varDuration : VRVariable
+    inTrigger : VRPort
+    + <<override>> Name() : string
+    + <<override>> SetupVariables() : void
+    + <<override>> SetupInputs() : void
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetData(datEvent:VRData) : void
+}
+VRLogicElement <|-- VRAction
+VRAction <|-- ActMove
+@enduml

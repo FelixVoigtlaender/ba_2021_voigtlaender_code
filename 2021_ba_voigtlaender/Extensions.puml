@@ -1,0 +1,5 @@
+@startuml
+class Extensions <<static>> {
+    + {static} CopyComponent(original:Component, destination:GameObject) : Component
+}
+@enduml

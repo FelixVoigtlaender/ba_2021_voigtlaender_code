@@ -1,0 +1,17 @@
+@startuml
+class ColorEvent {
+}
+class BetterColorPicker {
+    + colors : List<Color>
+    + colorToggleTemplate : GameObject
+    toggles : List<Toggle>
+    + OnValueChanged : ColorEvent
+    toggleGroup : ToggleGroup
+    - Awake() : void
+    + PopulateColorList() : void
+    + SetColor(index:int, color:Color) : void
+    + SetColor(color:Color) : void
+}
+"UnityEvent`1" "<Color>" <|-- ColorEvent
+MonoBehaviour <|-- BetterColorPicker
+@enduml

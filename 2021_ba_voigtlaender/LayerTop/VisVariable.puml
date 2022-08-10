@@ -1,0 +1,27 @@
+@startuml
+class VisVariable {
+    vrVariable : VRVariable
+    + slider : Slider
+    + button : Button
+    + toggle : BetterToggle
+    + dropdownInt : Dropdown
+    + dropdownFloat : Dropdown
+    selectObjects : List<SelectObject>
+    visVector : VisVector
+    visObject : VisObject
+    + betterTogglePlay : BetterToggle
+    + betterToggleRecord : BetterToggle
+    + colorPicker : BetterColorPicker
+    - Start() : void
+    + <<override>> Setup(element:VRLogicElement) : void
+    + SetupTypes(data:VRData) : void
+    + OnModeChanged(mode:fvInputModeManager.Mode) : void
+    + OnObjectSelected(go:GameObject) : void
+    + OnDataChanged(vrData:VRData) : void
+    - Update() : void
+    + HandleTypes(data:VRData) : void
+    + <<override>> OnDelete() : void
+    + <<override>> IsType(vrLogicElement:VRLogicElement) : bool
+}
+VisLogicElement <|-- VisVariable
+@enduml

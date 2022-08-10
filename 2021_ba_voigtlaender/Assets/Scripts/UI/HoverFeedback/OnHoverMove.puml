@@ -1,0 +1,12 @@
+@startuml
+class OnHoverMove {
+    + moveTransform : RectTransform
+    + moveZ : float
+    cachedPosition : Vector3
+    Start() : void
+    + <<override>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<override>> OnPointerExit(eventData:PointerEventData) : void
+    + Revert() : void
+}
+UIOnHoverEvent <|-- OnHoverMove
+@enduml

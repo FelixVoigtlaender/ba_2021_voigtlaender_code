@@ -1,0 +1,41 @@
+@startuml
+class SaveManager {
+    + {static} instance : SaveManager
+    indexId : int = 0
+    + programm : VRProgramm
+    jsonText : string
+    - relevantGameObjects : List<GameObject>
+    - Awake() : void
+    GenerateRelevantGameObjects() : void
+    + {static} GenerateID() : int
+    + {static} CreateVRProgramm() : VRProgramm
+    + {static} AddSaveElement(saveElement:SaveElement) : void
+    + {static} RemoveSaveElement(saveElement:SaveElement) : void
+    + {static} ToJson(vrProgramm:VRProgramm) : string
+    + {static} ToProgramm(jsonText:string) : VRProgramm
+    + DestroyVisProgram() : void
+    + Save() : void
+    + Delete() : void
+    + Load() : void
+}
+class VRProgramm {
+    + saveElements : List<SaveElement>
+    + gameObjectReferences : List<GameObjectReference>
+    + Start(datEvent:DatEvent) : void
+    + Update(datEvent:DatEvent) : void
+    + FixedUpdate(datEvent:DatEvent) : void
+    + SaveObjects() : void
+    + LoadObjects() : void
+}
+class GameObjectReference {
+    + gameObject : GameObject
+    + position : Vector3
+    + localScale : Vector3
+    + rotation : Quaternion
+    + isActive : bool
+    + GameObjectReference(gameObject:GameObject)
+    + Save() : void
+    + Load() : void
+}
+MonoBehaviour <|-- SaveManager
+@enduml

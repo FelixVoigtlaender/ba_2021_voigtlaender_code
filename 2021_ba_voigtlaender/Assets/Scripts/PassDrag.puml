@@ -1,0 +1,6 @@
+@startuml
+class PassDrag {
+    + rootCanvas : Canvas
+}
+MonoBehaviour <|-- PassDrag
+@enduml

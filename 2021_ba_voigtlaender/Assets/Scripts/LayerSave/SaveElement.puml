@@ -1,0 +1,15 @@
+@startuml
+class SaveElement {
+    + nameElement : string
+    +  <<event>> OnDelete : Action 
+    +  <<event>> OnSave : Action 
+    + isRoot : bool = false
+    + isDummy : bool = false
+    + position : Vector3
+    + <<virtual>> Save() : void
+    + <<virtual>> Delete() : void
+    + <<virtual>> Update(datEvent:DatEvent) : void
+    + <<virtual>> FixedUpdate(datEvent:DatEvent) : void
+    + <<virtual>> Start(datEvent:DatEvent) : void
+}
+@enduml

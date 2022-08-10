@@ -7,16 +7,41 @@ public class UIBillboard : MonoBehaviour
     public bool clampUpDown = true;
     public CenterType centerType = CenterType.UICenter;
 
+    public bool useParentAngle = true;
+
+    private float smoothVel;
     private void Update()
     {
         Vector3 forward = GetForward();
+        Vector3 currentForward = GetCurrentForward();
 
         //transform.forward = forward;
 
-        Vector3 parentForward = transform.parent ? transform.parent.forward : Vector3.forward;
-        float angle = Vector3.SignedAngle(parentForward, forward, Vector3.up);
-        transform.localEulerAngles = new Vector3(0, angle, 0);
+        if (useParentAngle)
+        {
+            Vector3 parentForward = transform.parent ? transform.parent.forward : Vector3.forward;
+            float angle = Vector3.SignedAngle(parentForward, forward, Vector3.up);
+            float currentAngle = Vector3.SignedAngle(parentForward, currentForward, Vector3.up);
 
+            float lerpedAngle = Mathf.SmoothDamp(currentAngle, angle, ref smoothVel, 0.5f);
+            transform.localEulerAngles = new Vector3(0, lerpedAngle, 0);
+        }
+        else
+        {
+            transform.forward = forward;
+        }
+        
+
+    }
+
+    public Vector3 GetCurrentForward()
+    {
+        Vector3 currentForward = transform.forward;
+        // Look at camera
+        if (clampUpDown)
+            currentForward.y = 0;
+
+        return currentForward;
     }
 
     public Vector3 GetForward()

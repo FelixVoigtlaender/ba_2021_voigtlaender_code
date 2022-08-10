@@ -1,210 +1,358 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using LayerBottom;
+using LayerSave;
 using UnityEngine;
 
-public class VisManager : MonoBehaviour
+namespace LayerTop
 {
-    public static VisManager instance;
-
-    [Header("Canvas")]
-    public GameObject prefabUICanvas; //TODO
-
-    public GameObject prefabVisConnection;
-
-    [Header("Prefabs")]
-    public GameObject prefabVisObject;
-    public GameObject prefabVisVector;
-    public GameObject prefabTabToggle;
-    public GameObject prefabGhostObject;
-    [Header("Property")]
-    public GameObject[] prefabVisProperties;
-    public GameObject[] prefabVisEvents;
-    public GameObject[] prefabLogicElements;
-    public GameObject prefabVisPort;
-    [Header("Debug")]
-    public GameObject prefabDebugSphere;
-    public GameObject prefabDebugLine;
-
-    [Header("Ghost")]
-    private VisVector visVector;
-    private Transform visVectorTrans;
-
-    private GhostObject ghostObject;
-
-
-    private void Awake()
+    public class VisManager : MonoBehaviour
     {
-        instance = this;
-    }
+        public static VisManager instance;
 
-    private void Start()
-    {
-        VRManager.instance.OnInitVRObject += OnInitVRObject;
-        VRManager.instance.OnInitVREvent += OnInitVREvent;
-        VRManager.instance.OnInitVRVariable += OnInitVRVariable;
-    }
+        [Header("Canvas")]
+        public GameObject prefabUICanvas; //TODO
 
-    public VisVector DemandVisVector()
-    {
-        if (!visVectorTrans)
-            visVectorTrans = Instantiate(prefabVisVector).transform;
-        if (visVector != null)
-            visVector.transform = null;
+        public GameObject prefabVisConnection;
 
-        visVector = new VisVector();
-        visVector.transform = visVectorTrans;
-        visVector.transform.gameObject.SetActive(true);
+        [Header("Prefabs")]
+        public GameObject prefabVisObject;
+        public GameObject prefabVisVector;
+        public GameObject prefabTabToggle;
+        public GameObject prefabGhostObject;
+        [Header("Property")]
+        public GameObject[] prefabVisProperties;
+        public GameObject[] prefabVisEvents;
+        public GameObject[] prefabLogicElements;
+        public GameObject prefabVisPort;
+        [Header("Debug")]
+        public GameObject prefabDebugSphere;
+        public GameObject prefabDebugLine;
 
-        return visVector;
-    }
+        [Header("Ghost")]
+        private VisVector visVector;
+        private Transform visVectorTrans;
+        private GhostObject ghostObject;
 
-    public GhostObject DemandGhostObject( DatTransform datTransform)
-    {
-        if ( datTransform == null)
-            return null;
+        public Transform programParent;
 
-        if (!ghostObject)
+
+        private List<OutlineObject> outlineObjects = new List<OutlineObject>();
+
+        private void Awake()
         {
+            instance = this;
+
+            programParent = new GameObject("Program Parent").transform;
+            programParent.parent = gameObject.transform;
+            programParent.localPosition = Vector3.zero;
+            programParent.localRotation = Quaternion.identity;
+            programParent.localScale = Vector3.one;
+            
+            
+        
+        }
+
+            
+        
+        public void HandleOutlines()
+        {
+            Collider[] colliders = FindObjectsOfType<Collider>();
+            foreach (var collider in colliders)
+            {
+                if (collider.gameObject.GetComponentInChildren<Renderer>())
+                {
+                    OutlineObject outlineObject = new OutlineObject(collider.gameObject);
+                    outlineObjects.Add(outlineObject);
+                }
+                
+            }
+        }
+
+        public OutlineObject FindOutlineObject(GameObject gameObject)
+        {
+            foreach (var outlineObject in outlineObjects)
+            {
+                if (outlineObject.gameObject == gameObject)
+                    return outlineObject;
+            }
+
+            return null;
+        }
+
+
+        public void SetVisibility(bool value)
+        {
+            programParent.gameObject.SetActive(value);
+        }
+
+        private void Start()
+        {
+            HandleOutlines();
+            VRManager.instance.OnInitVRObject += OnInitVRObjectNORETURN;
+            VRManager.instance.OnInitVREvent += OnInitVREvent;
+            VRManager.instance.OnInitVRVariable += OnInitVRVariable;
+        }
+
+        public VisVector DemandVisVector()
+        {
+            if (!visVectorTrans)
+                visVectorTrans = Instantiate(prefabVisVector).transform;
+            if (visVector != null)
+                visVector.transform = null;
+
+            visVector = new VisVector();
+            visVector.transform = visVectorTrans;
+            visVector.transform.gameObject.SetActive(true);
+
+            return visVector;
+        }
+
+        public GhostObject DemandGhostObject(DatTransform datTransform)
+        {
+            if (datTransform == null ||  datTransform.datObj == null)
+                return null;
+        
+
             GameObject ghostObj = Instantiate(prefabGhostObject);
             ghostObject = ghostObj.GetComponent<GhostObject>();
+
+            ghostObject.Setup(datTransform);
+            ghostObject.gameObject.SetActive(true);
+
+            return ghostObject;
         }
 
-        ghostObject.Setup(datTransform);
-        ghostObject.gameObject.SetActive(true);
 
-        return ghostObject;
-    }
-
-
-    public GhostObject DemandGhostObject(DatRecording datRecording)
-    {
-        if (datRecording == null)
-            return null;
-
-        if (!ghostObject)
+        public GhostObject DemandGhostObject(DatRecording datRecording)
         {
-            GameObject ghostObj = Instantiate(prefabGhostObject);
-            ghostObject = ghostObj.GetComponent<GhostObject>();
+            if (datRecording == null)
+                return null;
+
+            if (!ghostObject)
+            {
+                GameObject ghostObj = Instantiate(prefabGhostObject);
+                ghostObject = ghostObj.GetComponent<GhostObject>();
+            }
+
+            ghostObject.Setup(datRecording);
+            ghostObject.gameObject.SetActive(true);
+
+            return ghostObject;
+        }
+        public void OnInitVRObjectNORETURN(VRObject vrObject)
+        {
+            OnInitVRObject(vrObject);
+        }
+        public VisObject OnInitVRObject(VRObject vrObject)
+        {
+            GameObject visObjectObj = Instantiate(prefabVisObject);
+            visObjectObj.transform.parent = programParent;
+            VisObject visObject = visObjectObj.GetComponent<VisObject>();
+            visObject.Setup(vrObject);
+
+            return visObject;
+        }
+        // TODO:
+        public void OnInitVREvent(VREvent vrEvent)
+        {
+            GameObject visElemetPrefab = GetVisLogicPrefab(vrEvent);
+            if (!visElemetPrefab)
+            {
+                VRDebug.Log("Couldn't find visElemetPrefab!");
+                return;
+            }
+
+            GameObject visElementObj = Instantiate(visElemetPrefab);
+            // Position element infront of camera
+            Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
+            visElementObj.transform.position = position;
+            // Setip event
+            VisEvent visEvent = visElementObj.GetComponent<VisEvent>();
+            visEvent.Setup(vrEvent);
         }
 
-        ghostObject.Setup(datRecording);
-        ghostObject.gameObject.SetActive(true);
-
-        return ghostObject;
-    }
-
-    public void OnInitVRObject(VRObject vrObject)
-    {
-        GameObject visObjectObj = Instantiate(prefabVisObject);
-        VisObject visObject = visObjectObj.GetComponent<VisObject>();
-        visObject.Setup(vrObject);
-    }
-    // TODO:
-    public void OnInitVREvent(VREvent vrEvent)
-    {
-        GameObject visElemetPrefab = GetVisLogicPrefab(vrEvent);
-        if (!visElemetPrefab)
+        public void OnInitVRVariable(VRVariable vrVariable)
         {
-            VRDebug.Log("Couldn't find visElemetPrefab!");
-            return;
+            GameObject visElemetPrefab = GetVisLogicPrefab(vrVariable);
+            if (!visElemetPrefab)
+            {
+                VRDebug.Log("Couldn't find visElemetPrefab!");
+                return;
+            }
+
+            GameObject visElementObj = Instantiate(visElemetPrefab);
+            // Position element infront of camera
+            Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
+            visElementObj.transform.position = position;
+            // Setup Variable
+            VisVariable visVariable = visElementObj.GetComponent<VisVariable>();
+            visVariable.Setup(vrVariable);
         }
 
-        GameObject visElementObj = Instantiate(visElemetPrefab);
-        // Position element infront of camera
-        Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
-        visElementObj.transform.position = position;
-        // Setip event
-        VisEvent visEvent = visElementObj.GetComponent<VisEvent>(); 
-        visEvent.Setup(vrEvent);
-    }
-
-    public void OnInitVRVariable(VRVariable vrVariable)
-    {
-        GameObject visElemetPrefab = GetVisLogicPrefab(vrVariable);
-        if (!visElemetPrefab)
+        public GameObject InitVRLogicElement(VRLogicElement vrLogicElement)
         {
-            VRDebug.Log("Couldn't find visElemetPrefab!");
-            return;
+            GameObject prefab = GetVisLogicPrefab(vrLogicElement);
+            if (!prefab)
+                return null;
+
+            return InitPrefab(prefab);
         }
-
-        GameObject visElementObj = Instantiate(visElemetPrefab);
-        // Position element infront of camera
-        Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
-        visElementObj.transform.position = position;
-        // Setup Variable
-        VisVariable visVariable = visElementObj.GetComponent<VisVariable>();
-        visVariable.Setup(vrVariable);
-    }
-
-    public GameObject InitVRLogicElement(VRLogicElement vrLogicElement)
-    {
-        GameObject prefab = GetVisLogicPrefab(vrLogicElement);
-        if (!prefab)
-            return null;
-
-        return InitPrefab(prefab);
-    }
-    public GameObject InitPrefab(GameObject prefab)
-    {
-        Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
-        return InitPrefabWithCanvas(prefab, position);
-    }
-    public GameObject InitPrefabWithCanvas(GameObject prefab, Vector3 position)
-    {
-        GameObject obj =null;
-        if (!prefab.TryGetComponent(out Canvas canvas))
+        public GameObject InitPrefab(GameObject prefab)
         {
-            GameObject objCanvas = Instantiate(prefabUICanvas);
-            objCanvas.transform.position = position;
+            Vector3 position = Camera.main.transform.forward * 1 + Camera.main.transform.position;
+            return InitPrefabWithCanvas(prefab, position);
+        }
+        public GameObject InitPrefabWithCanvas(GameObject prefab, Vector3 position)
+        {
+            GameObject obj = null;
+            if (!prefab.TryGetComponent(out Canvas canvas))
+            {
+                GameObject objCanvas = Instantiate(prefabUICanvas);
+                objCanvas.transform.position = position;
+                objCanvas.transform.parent = programParent;
 
-            PanelHolder panelHolder = objCanvas.GetComponentInChildren<PanelHolder>();
+                PanelHolder panelHolder = objCanvas.GetComponentInChildren<PanelHolder>();
 
-            if(panelHolder)
-                obj = Instantiate(prefab, panelHolder.transform);
+                if (panelHolder)
+                    obj = Instantiate(prefab, panelHolder.transform);
+                else
+                    obj = Instantiate(prefab, objCanvas.transform);
+            }
             else
-                obj = Instantiate(prefab,objCanvas.transform);
+            {
+                obj = Instantiate(prefab);
+                obj.transform.position = position;
+            }
+            return obj;
         }
-        else
+
+
+        public GameObject GetVisPropertyPrefab(VRProperty vrPorperty)
         {
-            obj = Instantiate(prefab);
-            obj.transform.position = position;
+            foreach (GameObject prefab in prefabVisProperties)
+            {
+                VisProperty visProperty = prefab.GetComponent<VisProperty>();
+
+                if (!visProperty.IsType(vrPorperty))
+                    continue;
+
+                return prefab;
+            }
+            return null;
         }
-        return obj;
+
+        public GameObject GetVisLogicPrefab(VRLogicElement vrLogicElement)
+        {
+            foreach (GameObject prefab in prefabLogicElements)
+            {
+                VisLogicElement visLogicElement = prefab.GetComponent<VisLogicElement>();
+
+                if (!visLogicElement.IsType(vrLogicElement))
+                    continue;
+
+                return prefab;
+            }
+            return null;
+        }
+
+        public bool VisProgramm(VRProgramm vrProgramm)
+        {
+            try
+            {
+                foreach (SaveElement saveElement in vrProgramm.saveElements)
+                {
+                    print(saveElement.ToString() + " " + saveElement.isRoot);
+                    if (!saveElement.isRoot)
+                        continue;
+
+                    if (saveElement is VRObject)
+                    {
+                        VRObject vrObject = (VRObject)saveElement;
+                        print(vrObject.gameObject.name);
+                        VisObject visObject = OnInitVRObject(vrObject);
+                        visObject.transform.position = saveElement.position;
+                        continue;
+                    }
+                    if(saveElement is VRLogicElement)
+                    {
+                        VRLogicElement vrLogicElement = (VRLogicElement)saveElement;
+                        InstantiateElement(vrLogicElement, saveElement.position);
+                        continue;
+                    }
+                    if(saveElement is VRConnection)
+                    {
+                        VRConnection vrConnection = (VRConnection)saveElement;
+
+                        Debug.Log(JsonUtility.ToJson(vrConnection, true));
+                
+                
+                        GameObject objVisConnection = Instantiate(prefabVisConnection);
+                        objVisConnection.GetComponent<VisConnection>().Setup(vrConnection);
+                        continue;
+                    }
+
+                    Debug.LogError($"Couldn't load {saveElement.ToString()}");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Coudn't visualize the program!");
+                DestroyVisProgram();
+                return false;
+            }
+
+            return true;
+        }
+        public VisLogicElement InstantiateElement(VRLogicElement logicElement, Vector3 position)
+        {
+            GameObject elementPrefab = VisManager.instance.GetVisLogicPrefab(logicElement);
+            GameObject objLogicElement = VisManager.instance.InitPrefabWithCanvas(elementPrefab, position);
+            VisLogicElement visElement = objLogicElement.GetComponent<VisLogicElement>();
+            visElement.Setup(logicElement);
+            return visElement;
+        } 
+
+
+        [ContextMenu("Destroy Program")]
+        public void DestroyVisProgram()
+        {
+            VisLogicElement[] visLogicElements = FindObjectsOfType<VisLogicElement>();
+            foreach (VisLogicElement visElement in visLogicElements)
+            {
+                if (visElement.GetElement().isRoot && visElement.isDeleteAble)
+                    Destroy(visElement.GetRootCanvas().gameObject);
+            }
+            VisObject[] visObjects = FindObjectsOfType<VisObject>();
+            foreach (VisObject visObject in visObjects)
+            {
+                Destroy(visObject.gameObject);
+            }
+            VisConnection[] visConnections = FindObjectsOfType<VisConnection>();
+            foreach (var item in visConnections)
+            {
+                Destroy(item.gameObject);
+            }
+        }
     }
 
 
-    public GameObject GetVisPropertyPrefab(VRProperty vrPorperty)
+    public class VisVector
     {
-        foreach(GameObject prefab in prefabVisProperties)
-        {
-            VisProperty visProperty = prefab.GetComponent<VisProperty>();
-
-            if (!visProperty.IsType(vrPorperty))
-                continue;
-
-            return prefab;
-        }
-        return null;
+        public Transform transform;
     }
 
-    public GameObject GetVisLogicPrefab(VRLogicElement vrLogicElement)
+    public class OutlineObject
     {
-        foreach (GameObject prefab in prefabLogicElements)
+        public GameObject gameObject;
+        public QuickOutline quickOutline;
+        public OutlineObject(GameObject gameObject)
         {
-            VisLogicElement visLogicElement = prefab.GetComponent<VisLogicElement>();
-
-            if (!visLogicElement.IsType(vrLogicElement))
-                continue;
-
-            return prefab;
+            this.gameObject = gameObject;
+            quickOutline = gameObject.AddComponent<QuickOutline>();
+            quickOutline.enabled = false;
         }
-        return null;
     }
 }
-
-
-public class VisVector
-{
-    public Transform transform;
-}
-

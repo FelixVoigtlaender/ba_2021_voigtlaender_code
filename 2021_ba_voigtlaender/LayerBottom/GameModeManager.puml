@@ -1,0 +1,16 @@
+@startuml
+class GameModeManager {
+    + playerTransform : Transform
+    + locomotionSystem : GameObject
+    - playMode : fvInputModeManager.Mode
+    + isPlaying : bool = false
+    - xrRigReference : GameObjectReference
+    - Start() : void
+    + SaveObjects() : void
+    - FixedUpdate() : void
+    SetRayMode(lineType:XRRayInteractor.LineType) : void
+    + LoadObjects() : void
+    + OnModeChanged(mode:fvInputModeManager.Mode) : void
+}
+MonoBehaviour <|-- GameModeManager
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class VisAction {
+    + vrAction : VRAction
+    + actionName : string
+    + <<override>> IsType(vrLogicElement:VRLogicElement) : bool
+    + <<override>> Init() : void
+    + <<override>> Setup(element:VRLogicElement) : void
+}
+VisLogicElement <|-- VisAction
+@enduml

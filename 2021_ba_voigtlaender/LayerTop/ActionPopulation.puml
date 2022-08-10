@@ -1,0 +1,12 @@
+@startuml
+class ActionPopulation {
+    + content : RectTransform
+    + visActions : List<VisAction>
+    Start() : void
+    + PopulateList(rect:RectTransform) : void
+    + FixedUpdate() : void
+    + RepopulateList(index:int) : void
+    + InstantiateElement(prefab:GameObject, index:int) : VisAction
+}
+MonoBehaviour <|-- ActionPopulation
+@enduml

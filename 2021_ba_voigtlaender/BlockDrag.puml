@@ -1,0 +1,7 @@
+@startuml
+class BlockDrag {
+    Start() : void
+    Update() : void
+}
+MonoBehaviour <|-- BlockDrag
+@enduml

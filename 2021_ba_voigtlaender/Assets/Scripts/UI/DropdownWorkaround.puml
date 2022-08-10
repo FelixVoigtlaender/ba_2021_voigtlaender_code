@@ -1,0 +1,7 @@
+@startuml
+class DropdownWorkaround {
+    + sortingLayer : int = 5
+    OnEnable() : void
+}
+MonoBehaviour <|-- DropdownWorkaround
+@enduml

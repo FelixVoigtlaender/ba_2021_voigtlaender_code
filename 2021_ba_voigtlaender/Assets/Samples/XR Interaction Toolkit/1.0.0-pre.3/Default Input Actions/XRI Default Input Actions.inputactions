@@ -178,6 +178,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Y",
+                    "type": "Button",
+                    "id": "40d40d01-9598-459a-a49a-0d29d7a85043",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -195,7 +203,7 @@
                 {
                     "name": "",
                     "id": "79634234-07c9-488b-98bd-7d83eb6895c5",
-                    "path": "<XRController>{LeftHand}/deviceRotation",
+                    "path": "<XRController>{LeftHand}/pointerRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
@@ -477,6 +485,17 @@
                     "action": "Event",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67d4ed9e-d1ef-49b3-ae5c-800efc32f2b8",
+                    "path": "<XRController>{LeftHand}/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Generic XR Controller",
+                    "action": "Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -620,7 +639,7 @@
                 {
                     "name": "",
                     "id": "8d2a5710-51f9-4e4b-a592-021821e5caa7",
-                    "path": "<XRController>{RightHand}/deviceRotation",
+                    "path": "<XRController>{RightHand}/pointerRotation",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",

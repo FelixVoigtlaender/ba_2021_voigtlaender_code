@@ -1,0 +1,8 @@
+@startuml
+class TweenScaler {
+    + target : Transform
+    + easeTime : float = 0.1f
+    + Tween(size:float) : void
+}
+MonoBehaviour <|-- TweenScaler
+@enduml

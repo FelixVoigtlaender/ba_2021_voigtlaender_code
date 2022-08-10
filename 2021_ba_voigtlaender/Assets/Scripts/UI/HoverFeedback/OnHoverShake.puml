@@ -1,0 +1,9 @@
+@startuml
+class OnHoverShake {
+    + shakeTransform : Transform
+    + strength : float = 0.01f
+    + <<override>> OnPointerEnter(eventData:PointerEventData) : void
+    + Shake() : void
+}
+UIOnHoverEvent <|-- OnHoverShake
+@enduml

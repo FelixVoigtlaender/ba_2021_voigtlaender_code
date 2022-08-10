@@ -1,0 +1,19 @@
+@startuml
+class VRObject {
+    + properties : List<VRProperty>
+    + vrInputs : List<VRPort>
+    + vrOutputs : List<VRPort>
+    + gameObject : GameObject
+    + rigid : Rigidbody
+    + VRObject()
+    + Setup(gameObject:GameObject) : void
+    + SetupProperties() : void
+    + <<virtual>> SetupPorts() : void
+    + <<virtual>> SetupInputs() : void
+    + <<virtual>> SetupOutputs() : void
+    + GetData() : VRData
+    + Trigger() : void
+    + <<override>> Delete() : void
+}
+SaveElement <|-- VRObject
+@enduml

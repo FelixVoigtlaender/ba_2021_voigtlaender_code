@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LayerTop;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -66,6 +67,16 @@ public class HandRemover : MonoBehaviour
                 }
             }
         }
+
+        // Ghost Object deactivate
+        if (inputManager.worldRaycastHit.HasValue)
+        {
+            RaycastHit raycastHit = inputManager.worldRaycastHit.Value;
+            GhostObject ghostObject = raycastHit.collider.gameObject.GetComponent<GhostObject>();
+            if (ghostObject)
+                ghostObject.gameObject.SetActive(false);
+        }
+
 
         // Line Deletion
         Vector3 mid = transform.position;
@@ -148,7 +159,7 @@ public class HandRemover : MonoBehaviour
         }
         /// <summary>
         /// Checks if the specified ray hits the triagnlge descibed by p1, p2 and p3.
-        /// Möller–Trumbore ray-triangle intersection algorithm implementation.
+        /// MÃ¶llerâ€“Trumbore ray-triangle intersection algorithm implementation.
         /// </summary>
         /// <param name="p1">Vertex 1 of the triangle.</param>
         /// <param name="p2">Vertex 2 of the triangle.</param>

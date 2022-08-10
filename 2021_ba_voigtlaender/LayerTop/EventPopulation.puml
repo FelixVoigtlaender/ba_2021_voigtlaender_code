@@ -1,0 +1,12 @@
+@startuml
+class EventPopulation {
+    + content : RectTransform
+    + visEvents : List<VisEvent>
+    Start() : void
+    + PopulateList(rect:RectTransform) : void
+    + FixedUpdate() : void
+    + RepopulateList(index:int) : void
+    + InstantiateElement(prefab:GameObject, index:int) : VisEvent
+}
+MonoBehaviour <|-- EventPopulation
+@enduml

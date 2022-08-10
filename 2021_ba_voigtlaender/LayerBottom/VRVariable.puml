@@ -1,0 +1,24 @@
+@startuml
+class VRVariable {
+    + name : string = ""
+    + allowDatName : bool = false
+    # output : VRPort
+    # input : VRPort
+    + vrData : VRData
+    - mainElement : VRLogicElement
+    + blockPorts : bool = false
+    + blockInputs : bool = false
+    + blockOutputs : bool = false
+    + <<override>> Name() : string
+    + VRVariable()
+    + VRVariable(vrData:VRData, mainElement:VRLogicElement, name:string, blockPorts:bool, blockInputs:bool, blockOutputs:bool)
+    + Setup(vrData:VRData, mainElement:VRLogicElement) : void
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupInputs() : void
+    + <<override>> GetData() : VRData
+    + IsInputConnected() : bool
+    + IsOutputConnected() : bool
+    + <<override>> SetData(vrData:VRData) : void
+}
+VRLogicElement <|-- VRVariable
+@enduml

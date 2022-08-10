@@ -1,0 +1,30 @@
+@startuml
+class BezierCurve {
+    + line : LineRenderer
+    + pointCount : int = 100
+    + start : BezierConnection
+    + end : BezierConnection
+    + Awake() : void
+    + SetColor(color:Color) : void
+    + SetWidth(width:float) : void
+    + Update() : void
+    + UpdateBezier() : void
+    - OnValidate() : void
+    + HandleNormals() : void
+    BezierPathCalculation(p0:Vector3, p1:Vector3, p2:Vector3, p3:Vector3, t:float) : Vector3
+    + GetLocalNormals(start:Vector3, end:Vector3, up:Vector3, right:Vector3) : Vector3
+    + Delete() : void
+}
+class BezierConnection {
+    + transform : Transform
+    + offset : Vector3
+    + normal : Vector3
+    + dynamicNormals : bool = true
+    + useLocalSpace : bool = true
+    + Connect(parent:Transform) : void
+    + Hover(parent:Transform) : void
+    + Delete() : void
+}
+MonoBehaviour <|-- BezierCurve
+BezierCurve +-- BezierConnection
+@enduml

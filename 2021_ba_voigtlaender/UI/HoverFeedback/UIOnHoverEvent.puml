@@ -1,0 +1,13 @@
+@startuml
+abstract class UIOnHoverEvent {
+    + easeTime : float = .1f
+    + waitTime : float = 5f
+    # lastEntry : float
+    # lastExit : float
+    + <<virtual>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<virtual>> OnPointerExit(eventData:PointerEventData) : void
+}
+MonoBehaviour <|-- UIOnHoverEvent
+IPointerEnterHandler <|-- UIOnHoverEvent
+IPointerExitHandler <|-- UIOnHoverEvent
+@enduml

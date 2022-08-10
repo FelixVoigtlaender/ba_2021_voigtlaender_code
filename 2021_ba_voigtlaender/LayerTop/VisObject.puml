@@ -1,0 +1,34 @@
+@startuml
+class VisObject {
+    vrObject : VRObject
+    - visProperties : List<VisProperty>
+    + visInPorts : List<VisPort>
+    + visOutPorts : List<VisPort>
+    + propertyHolder : Transform
+    + inputHolder : RectTransform
+    + outputHolder : RectTransform
+    + secondaryInputHolder : RectTransform
+    + secondaryOutputHolder : RectTransform
+    + tabHolder : RectTransform
+    + blockProperties : CanvasGroup
+    + textName : Text
+    + lineToObject : BezierCurve
+    + hoverDistance : float = 2
+    + miniature : MiniatureMaker
+    + ghostObject : GhostObject
+    + dropdown : Dropdown
+    + canvas : Canvas
+    + rectTransform : RectTransform
+    - Awake() : void
+    - Update() : void
+    + Setup(vrObject:VRObject) : void
+    + PopulateProperties() : void
+    + OnPropertyChanged(value:bool) : void
+    + OnPropertySelected(value:int) : void
+    + PopulateVisPorts(inputs:List<VRPort>, outputs:List<VRPort>) : void
+    PopulateVisPort(holder:Transform, ports:List<VRPort>) : List<VisPort>
+    + Delete() : void
+    + OnDelete() : void
+}
+MonoBehaviour <|-- VisObject
+@enduml

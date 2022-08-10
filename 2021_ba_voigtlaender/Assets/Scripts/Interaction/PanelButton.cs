@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
 
 public class PanelButton : MonoBehaviour
 {
-    public Panel panel;
+    public Transform panelTransform;
 
 
 
@@ -25,9 +26,19 @@ public class PanelButton : MonoBehaviour
 
         handler = inputModeManager.AddButtonMode(button, buttonText, modeName);
         handler.OnButtonDown += OnButtonDown;
+        handler.mode.onModeChange += OnModeChanged;
+        
+        OnModeChanged(false);
+
     }
     public void OnButtonDown(InputAction.CallbackContext context)
     {
-        panel.Toggle();
+        Vector3 position = transform.position + transform.TransformVector(Vector3.forward * 0.2f);
+        panelTransform.DOMove(position, 0.3f);
+    }
+
+    public void OnModeChanged(bool value)
+    {
+        panelTransform.gameObject.SetActive(value);
     }
 }

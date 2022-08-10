@@ -1,0 +1,6 @@
+@startuml
+class SceneManagement {
+    + RestartScene() : void
+}
+MonoBehaviour <|-- SceneManagement
+@enduml

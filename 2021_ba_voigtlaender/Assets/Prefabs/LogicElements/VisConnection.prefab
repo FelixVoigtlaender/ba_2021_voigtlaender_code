@@ -45,11 +45,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bezierCurve: {fileID: 7866749346100581473}
+  vrConnection:
+    nameElement: 
+    isRoot: 1
+    isDummy: 0
+    position: {x: 0, y: 0, z: 0}
+    start:
+      id: 0
+    end:
+      id: 0
   activeColor: {r: 1, g: 1, b: 1, a: 1}
   inactiveColor: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   errorColor: {r: 1, g: 0, b: 0, a: 1}
-  activeWidth: 0.01
-  inactiveWidth: 0.005
+  activeWidth: 0.1
+  inactiveWidth: 0.05
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!1001 &3621045142047284722
 PrefabInstance:
   m_ObjectHideFlags: 0

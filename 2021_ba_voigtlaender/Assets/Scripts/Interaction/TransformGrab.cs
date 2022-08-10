@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using LayerTop;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -74,13 +75,18 @@ public class TransformGrab : MonoBehaviour
 
             Canvas canvas = result.gameObject.GetComponentInParent<Canvas>();
             if (canvas.GetComponent<BlockDrag>())
-                return;
+            {
+                if (canvas.isRootCanvas)
+                    return;
+                else
+                    canvas = canvas.rootCanvas;
+            }
 
             if (canvas)
             {
                 grabbedObject = new GrabbedObject(canvas.transform, transform, result.worldPosition);
                 Vector3 worldPosition = canvas.transform.position;
-                canvas.transform.SetParent(null, false);
+                canvas.transform.SetParent(VisManager.instance.programParent, false);
                 canvas.transform.position = worldPosition;
             }
         }
@@ -107,8 +113,8 @@ public class TransformGrab : MonoBehaviour
     public void Update()
     {
         HandleDrag();
-        HandlePull();
-        HandleScale();
+        //HandlePull();
+        //HandleScale();
     }
 
 

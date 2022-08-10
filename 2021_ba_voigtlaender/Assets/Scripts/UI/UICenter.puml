@@ -1,0 +1,7 @@
+@startuml
+class UICenter {
+    - {static} instance : UICenter
+    + {static} Instance : UICenter <<get>>
+}
+MonoBehaviour <|-- UICenter
+@enduml

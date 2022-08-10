@@ -12,6 +12,8 @@ public class BezierCurve : MonoBehaviour
 	public BezierConnection start;
 	public BezierConnection end;
 
+	public float width = 1;
+
 	public void Awake()
     {
 		line = GetComponent<LineRenderer>();
@@ -23,12 +25,15 @@ public class BezierCurve : MonoBehaviour
 		line.endColor = line.startColor = color;
     }
 	public void SetWidth(float width)
-    {
-		line.startWidth = line.endWidth = width;
+	{
+		this.width = width;
 	}
 
 	public void Update()
     {
+	    if(line)
+		    line.startWidth = line.endWidth = width * transform.lossyScale.x;
+	    
 		UpdateBezier();
 		HandleNormals();
 

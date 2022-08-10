@@ -1,0 +1,14 @@
+@startuml
+class UIBillboard {
+    + clampUpDown : bool = true
+    + centerType : CenterType
+    + useParentAngle : bool = true
+    - Update() : void
+    + GetForward() : Vector3
+}
+enum CenterType {
+    Camera,
+    UICenter,
+}
+MonoBehaviour <|-- UIBillboard
+@enduml

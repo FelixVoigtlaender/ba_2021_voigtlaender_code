@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using LayerBottom;
 using UnityEngine;
 
-public class VisRecording : MonoBehaviour
+namespace LayerTop
 {
-    DatRecording datRecording;
-    public void Setup(DatRecording datRecording)
+    public class VisRecording : MonoBehaviour
     {
-        this.datRecording = datRecording;
+        DatRecording datRecording;
+        public void Setup(DatRecording datRecording)
+        {
+            this.datRecording = datRecording;
+        }
     }
 }

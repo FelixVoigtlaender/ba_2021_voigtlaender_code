@@ -1,0 +1,25 @@
+@startuml
+class BoolEvent {
+}
+class BetterToggle {
+    + on : GameObject
+    + off : GameObject
+    - _isOn : bool
+    + OnValueChanged : BoolEvent
+    + OnValueTrue : UnityEvent
+    + OnValueFalse : UnityEvent
+    abort : bool = false
+    + isOn : bool <<get>> <<set>>
+    - Start() : void
+    + OnPointerDown(eventData:PointerEventData) : void
+    + OnDrag(eventData:PointerEventData) : void
+    + OnPointerUp(eventData:PointerEventData) : void
+    + Toggle() : void
+    + SetWithoutNotify(value:bool) : void
+}
+"UnityEvent`1" "<bool>" <|-- BoolEvent
+MonoBehaviour <|-- BetterToggle
+IDragHandler <|-- BetterToggle
+IPointerUpHandler <|-- BetterToggle
+IPointerDownHandler <|-- BetterToggle
+@enduml

@@ -1,105 +1,176 @@
-using System.Collections;
 using System.Collections.Generic;
+using LayerBottom;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VisObject : MonoBehaviour
+namespace LayerTop
 {
-    VRObject vrObject;
-    List<VisProperty> visProperties = new List<VisProperty>();
-    public List<VisPort> visInPorts;
-    public List<VisPort> visOutPorts;
-
-    public Transform propertyHolder;
-    public RectTransform inputHolder;
-    public RectTransform outputHolder;
-    public RectTransform secondaryInputHolder;
-    public RectTransform secondaryOutputHolder;
-
-    public Text textName;
-    public BezierCurve lineToObject;
-    public float hoverDistance = 2;
-    public MiniatureMaker miniature;
-
-    public Canvas canvas;
-
-    private void Awake()
+    public class VisObject : MonoBehaviour
     {
-        canvas = GetComponentInParent<Canvas>();
-    }
+        VRObject vrObject;
+        private List<VisProperty> visProperties = new List<VisProperty>();
+        public List<VisPort> visInPorts;
+        public List<VisPort> visOutPorts;
 
-    public void Setup(VRObject vrObject)
-    {
-        canvas.transform.position = vrObject.gameObject.transform.position + Vector3.up*hoverDistance;
+        public Transform propertyHolder;
+        public RectTransform inputHolder;
+        public RectTransform outputHolder;
+        public RectTransform secondaryInputHolder;
+        public RectTransform secondaryOutputHolder;
 
-        this.vrObject = vrObject;
-        textName.text ="Object: "+ vrObject.gameObject.name;
-        vrObject.OnDelete += OnDelete;
+        public RectTransform tabHolder;
 
-        miniature.CopyMesh(vrObject.gameObject);
+        public CanvasGroup blockProperties;
 
-        lineToObject.start.Connect(vrObject.gameObject.transform);
-        lineToObject.start.useLocalSpace = false;
-        lineToObject.start.dynamicNormals = false;
-        lineToObject.start.normal = Vector3.up;
+        public Text textName;
+        public TooltipContent tooltipName;
+        public BezierCurve lineToObject;
+        public float hoverDistance = 2;
+        public MiniatureMaker miniature;
+        public GhostObject ghostObject;
 
-        lineToObject.end.Connect(canvas.transform);
-        lineToObject.end.useLocalSpace = false;
-        lineToObject.end.dynamicNormals = false;
-        lineToObject.end.normal = Vector3.down;
+        public Dropdown dropdown;
 
-        PopulateProperties();
-        PopulateVisPorts(vrObject.vrInputs,vrObject.vrOutputs);
-    }
+        public Canvas canvas;
+        public RectTransform rectTransform;
 
-    public void PopulateProperties()
-    {
-        foreach(VRProperty vrProperty in vrObject.properties)
+        private void Awake()
         {
-            GameObject propertyPrefab = VisManager.instance.GetVisPropertyPrefab(vrProperty);
-            if (!propertyPrefab)
-                continue;
-
-            GameObject propertyObj = Instantiate(propertyPrefab, propertyHolder);
-            VisProperty visProperty = propertyObj.GetComponent<VisProperty>();
-            visProperty.Setup(vrProperty);
-            visProperties.Add(visProperty);
+            canvas = GetComponentInParent<Canvas>();
+            rectTransform = GetComponent<RectTransform>();
         }
-    }
 
-    public void PopulateVisPorts(List<VRPort> inputs, List<VRPort> outputs)
-    {
-        //Inputs
-        visInPorts = PopulateVisPort(inputHolder, inputs);
-        visOutPorts = PopulateVisPort(outputHolder, outputs);
-
-
-        visInPorts.AddRange(PopulateVisPort(secondaryInputHolder, inputs));
-        visOutPorts.AddRange(PopulateVisPort(secondaryOutputHolder, outputs));
-    }
-    List<VisPort> PopulateVisPort(Transform holder, List<VRPort> ports)
-    {
-        GameObject prefabVisPort = VisManager.instance.prefabVisPort;
-        List<VisPort> visPorts = new List<VisPort>();
-        foreach (VRPort vrPort in ports)
+        private void Update()
         {
-            GameObject objVisPort = Instantiate(prefabVisPort, holder);
-            VisPort visPort = objVisPort.GetComponent<VisPort>();
-            visPort.Setup(vrPort);
-            visPorts.Add(visPort);
+            vrObject.position = canvas.transform.position;
         }
-        return visPorts;
-    }
-    public void Delete()
-    {
-        vrObject.Delete();
-    }
-    public void OnDelete()
-    {
-        Canvas rootCanvas = GetComponentInParent<Canvas>();
-        if(rootCanvas && rootCanvas.gameObject)
+
+        public void Setup(VRObject vrObject)
         {
-            Destroy(rootCanvas.gameObject);
+            ghostObject = VisManager.instance.DemandGhostObject(new DatTransform(new DatObj(vrObject)));
+            ghostObject.gameObject.SetActive(false); 
+
+            canvas.transform.position = vrObject.position + Vector3.up*hoverDistance;
+
+            this.vrObject = vrObject;
+            textName.text ="Object: "+ vrObject.gameObject.name;
+            if (tooltipName)
+                tooltipName.description = vrObject.gameObject.name;
+            vrObject.OnDelete += OnDelete;
+
+            miniature.CopyMesh(vrObject.gameObject);
+
+            lineToObject.start.Connect(vrObject.gameObject.transform);
+            lineToObject.start.useLocalSpace = false;
+            lineToObject.start.dynamicNormals = false;
+            lineToObject.start.normal = Vector3.up;
+
+            lineToObject.end.Connect(canvas.transform);
+            lineToObject.end.useLocalSpace = false;
+            lineToObject.end.dynamicNormals = false;
+            lineToObject.end.normal = Vector3.down;
+
+            PopulateProperties();
+            PopulateVisPorts(vrObject.vrInputs,vrObject.vrOutputs);
+
+        
+            dropdown.onValueChanged.AddListener(OnPropertySelected);
+
+            OnPropertyChanged(false);
+        }
+
+        public void PopulateProperties()
+        {
+
+            RectTransform layoutRect = propertyHolder.GetComponent<RectTransform>();
+            foreach(VRProperty vrProperty in vrObject.properties)
+            {
+                GameObject propertyPrefab = VisManager.instance.GetVisPropertyPrefab(vrProperty);
+                if (!propertyPrefab)
+                    continue;
+
+                GameObject propertyObj = Instantiate(propertyPrefab, propertyHolder);
+                VisProperty visProperty = propertyObj.GetComponent<VisProperty>();
+                visProperty.Setup(vrProperty);
+                visProperties.Add(visProperty);
+
+                vrProperty.OnActiveChanged += OnPropertyChanged;
+                vrProperty.OnActiveChanged += (value) =>
+                {
+                    LayoutRebuilder.ForceRebuildLayoutImmediate(layoutRect);
+                };
+            }
+        }
+
+        public void OnPropertyChanged(bool value)
+        {
+            List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
+
+            Dropdown.OptionData noneOption = new Dropdown.OptionData("Add Action");
+            options.Add(noneOption);
+        
+            foreach(VRProperty vrProperty in vrObject.properties)
+            {
+                if (!vrProperty.isActive)
+                {
+                    Dropdown.OptionData propOption = new Dropdown.OptionData(vrProperty.Name());
+                    options.Add(propOption);
+                }
+            }
+            dropdown.ClearOptions();
+            dropdown.AddOptions(options);
+        
+        }
+
+        public void OnPropertySelected(int value)
+        {
+            Dropdown.OptionData selection = dropdown.options[value];
+            foreach(VRProperty vrProperty in vrObject.properties)
+            {
+                if (vrProperty.Name() == selection.text)
+                {
+                    vrProperty.isActive = true;
+                    return;
+                }
+            }
+        }
+
+        public void PopulateVisPorts(List<VRPort> inputs, List<VRPort> outputs)
+        {
+            //Inputs
+            visInPorts = PopulateVisPort(inputHolder, inputs);
+            visOutPorts = PopulateVisPort(outputHolder, outputs);
+
+
+            visInPorts.AddRange(PopulateVisPort(secondaryInputHolder, inputs));
+            visOutPorts.AddRange(PopulateVisPort(secondaryOutputHolder, outputs));
+        }
+        List<VisPort> PopulateVisPort(Transform holder, List<VRPort> ports)
+        {
+            GameObject prefabVisPort = VisManager.instance.prefabVisPort;
+            List<VisPort> visPorts = new List<VisPort>();
+            foreach (VRPort vrPort in ports)
+            {
+                GameObject objVisPort = Instantiate(prefabVisPort, holder);
+                VisPort visPort = objVisPort.GetComponent<VisPort>();
+                visPort.Setup(vrPort);
+                visPorts.Add(visPort);
+            }
+            return visPorts;
+        }
+        public void Delete()
+        {
+            vrObject.Delete();
+        }
+        public void OnDelete()
+        {
+            Canvas rootCanvas = GetComponentInParent<Canvas>();
+            if(rootCanvas && rootCanvas.gameObject)
+            {
+                Destroy(rootCanvas.gameObject);
+            }
+
+            Destroy(ghostObject.gameObject);
         }
     }
 }

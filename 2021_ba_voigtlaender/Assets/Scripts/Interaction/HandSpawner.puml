@@ -1,0 +1,16 @@
+@startuml
+class HandSpawner {
+    + spawnTransform : Transform
+    + buttonSpawns : List<ButtonSpawn>
+    currentElement : Transform
+    - Start() : void
+    - Update() : void
+    OnButtonClick(buttonSpawn:ButtonSpawn) : void
+}
+class ButtonSpawn {
+    + button : Button
+    + prefab : GameObject
+}
+MonoBehaviour <|-- HandSpawner
+HandSpawner +-- ButtonSpawn
+@enduml

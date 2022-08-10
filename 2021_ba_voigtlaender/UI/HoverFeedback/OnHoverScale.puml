@@ -1,0 +1,11 @@
+@startuml
+class OnHoverScale {
+    + scaleTransform : Transform
+    cachedScale : Vector3
+    Start() : void
+    + <<override>> OnPointerEnter(eventData:PointerEventData) : void
+    + <<override>> OnPointerExit(eventData:PointerEventData) : void
+    + Close() : void
+}
+UIOnHoverEvent <|-- OnHoverScale
+@enduml

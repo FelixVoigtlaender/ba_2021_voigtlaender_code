@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using LayerBottom;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VisPort : MonoBehaviour
+namespace LayerTop
 {
-    public VRPort vrPort;
-    public Image image;
-    public TooltipContent tooltipContent;
-    public void Setup(VRPort vrPort)
+    public class VisPort : MonoBehaviour
     {
-        this.vrPort = vrPort;
-        image.color = vrPort.dataType.GetColor();
+        public VRPort vrPort;
+        public Image image;
+        public TooltipContent tooltipContent;
+        public void Setup(VRPort vrPort)
+        {
+            this.vrPort = vrPort;
+            image.color = vrPort.dataType.GetColor();
 
-        tooltipContent.description = vrPort.toolTip;
+            tooltipContent.description = vrPort.toolTip;
+        }
     }
 }

@@ -1,0 +1,43 @@
+@startuml
+class VisManager {
+    + {static} instance : VisManager
+    + prefabUICanvas : GameObject
+    + prefabVisConnection : GameObject
+    + prefabVisObject : GameObject
+    + prefabVisVector : GameObject
+    + prefabTabToggle : GameObject
+    + prefabGhostObject : GameObject
+    + prefabVisProperties : GameObject[]
+    + prefabVisEvents : GameObject[]
+    + prefabLogicElements : GameObject[]
+    + prefabVisPort : GameObject
+    + prefabDebugSphere : GameObject
+    + prefabDebugLine : GameObject
+    - visVector : VisVector
+    - visVectorTrans : Transform
+    - ghostObject : GhostObject
+    + programParent : Transform
+    - Awake() : void
+    + SetVisibility(value:bool) : void
+    - Start() : void
+    + DemandVisVector() : VisVector
+    + DemandGhostObject(datTransform:DatTransform) : GhostObject
+    + DemandGhostObject(datRecording:DatRecording) : GhostObject
+    + OnInitVRObjectNORETURN(vrObject:VRObject) : void
+    + OnInitVRObject(vrObject:VRObject) : VisObject
+    + OnInitVREvent(vrEvent:VREvent) : void
+    + OnInitVRVariable(vrVariable:VRVariable) : void
+    + InitVRLogicElement(vrLogicElement:VRLogicElement) : GameObject
+    + InitPrefab(prefab:GameObject) : GameObject
+    + InitPrefabWithCanvas(prefab:GameObject, position:Vector3) : GameObject
+    + GetVisPropertyPrefab(vrPorperty:VRProperty) : GameObject
+    + GetVisLogicPrefab(vrLogicElement:VRLogicElement) : GameObject
+    + VisProgramm(vrProgramm:VRProgramm) : bool
+    + InstantiateElement(logicElement:VRLogicElement, position:Vector3) : VisLogicElement
+    + DestroyVisProgram() : void
+}
+class VisVector {
+    + transform : Transform
+}
+MonoBehaviour <|-- VisManager
+@enduml

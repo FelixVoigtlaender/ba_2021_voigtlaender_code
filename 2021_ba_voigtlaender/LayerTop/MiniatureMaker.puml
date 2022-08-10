@@ -1,0 +1,10 @@
+@startuml
+class MiniatureMaker {
+    myMeshFilter : MeshFilter
+    myMeshRenderer : MeshRenderer
+    - Awake() : void
+    + CopyMesh(otherObject:GameObject) : void
+    MaxFromVector3(vector:Vector3) : float
+}
+MonoBehaviour <|-- MiniatureMaker
+@enduml

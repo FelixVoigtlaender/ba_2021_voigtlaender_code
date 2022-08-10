@@ -1,0 +1,10 @@
+@startuml
+class ContentPopulation {
+    + content : RectTransform
+    + prefab : GameObject
+    + amount : int = 10
+    Start() : void
+    + PopulateList(rect:RectTransform, amount:int) : void
+}
+MonoBehaviour <|-- ContentPopulation
+@enduml

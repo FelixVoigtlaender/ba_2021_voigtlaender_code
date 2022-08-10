@@ -1,0 +1,14 @@
+@startuml
+class Panel {
+    isOpen : bool
+    + IsOpen : bool <<get>> <<set>>
+    + easeTime : float = 0.1f
+    cachedScale : Vector3
+    canvasGroup : CanvasGroup
+    - Start() : void
+    + Open() : void
+    + Close() : void
+    + Toggle() : void
+}
+MonoBehaviour <|-- Panel
+@enduml

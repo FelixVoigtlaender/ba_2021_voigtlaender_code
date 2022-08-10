@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class DropdownWorkaround : MonoBehaviour
 {
-
+    public int sortingLayer = 5;
     void OnEnable()
     {
-        Canvas canvas = GetComponent<Canvas>();
-        if (canvas != null)
+        if(TryGetComponent(out Canvas canvas))
         {
-            canvas.sortingOrder = 1;
+            canvas.sortingOrder = sortingLayer;
         }
     }
+
+
 }

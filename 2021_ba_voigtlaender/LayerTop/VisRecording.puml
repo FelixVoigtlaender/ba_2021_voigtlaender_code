@@ -1,0 +1,7 @@
+@startuml
+class VisRecording {
+    datRecording : DatRecording
+    + Setup(datRecording:DatRecording) : void
+}
+MonoBehaviour <|-- VisRecording
+@enduml

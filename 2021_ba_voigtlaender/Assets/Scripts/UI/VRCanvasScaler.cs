@@ -35,8 +35,8 @@ public class VRCanvasScaler : MonoBehaviour
 
         float scale = minScaleRatio;
         if(useDistance)
-            scale = Mathf.Max(minScaleRatio, scaleRatio * distance);
-        if (useXRRigScale && !transform.parent)
+            scale = Mathf.Max(minScaleRatio, scaleRatio * distance / xrRig.transform.localScale.x);
+        if (useXRRigScale)
             scale *= xrRig.transform.localScale.x;
         rect.localScale = Vector3.one * (scale);
     }

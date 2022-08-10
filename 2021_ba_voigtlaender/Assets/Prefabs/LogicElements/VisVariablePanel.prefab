@@ -2251,6 +2251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646179ef0a56c5e46a14c27ead59345b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingLayer: 5
 --- !u!114 &368530066412594777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2760,6 +2761,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
+--- !u!114 &7380333636598075917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6311631950167777098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 256503c1b0cdfb74bba34e9286ba7af6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6594920457516108982
 GameObject:
   m_ObjectHideFlags: 0
@@ -2898,14 +2911,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33add5a4b0e899947a2a7458f602506a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element:
+    id: 0
   myButton: {fileID: 0}
+  showButton: {fileID: 0}
   inputHolder: {fileID: 4997171928100693605}
   outputHolder: {fileID: 8196595305851757208}
   variableHolder: {fileID: 0}
   tabHolder: {fileID: 0}
   tabToggleHolder: {fileID: 0}
   tabDropdown: {fileID: 0}
+  toggleIsActive: {fileID: 0}
   textName: {fileID: 6929113719766877456}
+  closeButton: {fileID: 0}
+  tooltipName: {fileID: 0}
+  blockProperties: {fileID: 0}
   visInPorts: []
   visOutPorts: []
   visVariables: []
@@ -2919,6 +2939,10 @@ MonoBehaviour:
   betterTogglePlay: {fileID: 7964008622742166885}
   betterToggleRecord: {fileID: 1344519327276804409}
   colorPicker: {fileID: 2917502780493103979}
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!114 &1387166393761881002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3895,6 +3919,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646179ef0a56c5e46a14c27ead59345b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortingLayer: 5
 --- !u!114 &5297782234699126976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4566,11 +4591,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
---- !u!224 &3666305969232432217 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
-  m_PrefabInstance: {fileID: 2937405701886622597}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1344519327276804409 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4209585649899246268, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
@@ -4582,6 +4602,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e64e60ead1a97b249a47832766103bb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3666305969232432217 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1883233854992873436, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
+  m_PrefabInstance: {fileID: 2937405701886622597}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6311631950167777098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9175144421541881039, guid: 18abad8a297d668419f0946e48c7cd0f, type: 3}
+  m_PrefabInstance: {fileID: 2937405701886622597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6120009803967385561
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,0 +1,56 @@
+@startuml
+abstract class VREvent {
+    {static} allEvents : List<VREvent>
+    + VREvent()
+    + {static} GetAllEvents() : List<VREvent>
+    + {static} GetEvent(name:string) : VREvent
+}
+class WaitEvent {
+    outEvent : VRPort
+    inEvent : VRPort
+    varDuration : VRVariable
+    myWaitCoroutine : Coroutine
+    isWaiting : bool = false
+    + <<override>> Name() : string
+    + <<override>> Setup() : void
+    + <<override>> SetupInputs() : void
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupVariables() : void
+    + <<override>> SetData(vrData:VRData) : void
+    Wait(duration:float, vrData:VRData) : IEnumerator
+}
+class EventProximity {
+    outEvent : VRPort
+    inEvent : VRPort
+    varDistance : VRVariable
+    varObjA : VRVariable
+    varObjB : VRVariable
+    + <<override>> Name() : string
+    + <<override>> Setup() : void
+    + <<override>> SetupInputs() : void
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupVariables() : void
+    + <<override>> Update(datEvent:DatEvent) : void
+    + <<override>> SetData(vrData:VRData) : void
+}
+class EverySecond {
+    outEvent : VRPort
+    varDuration : VRVariable
+    - lastTime : float = 0
+    + <<override>> Name() : string
+    + <<override>> SetupOutputs() : void
+    + <<override>> SetupVariables() : void
+    + <<override>> FixedUpdate(datEvent:DatEvent) : void
+}
+class EventStart {
+    outEvent : VRPort
+    + <<override>> Name() : string
+    + <<override>> SetupOutputs() : void
+    + <<override>> Start(datEvent:DatEvent) : void
+}
+VRLogicElement <|-- VREvent
+VREvent <|-- WaitEvent
+VREvent <|-- EventProximity
+VREvent <|-- EverySecond
+VREvent <|-- EventStart
+@enduml
